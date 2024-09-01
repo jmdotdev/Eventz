@@ -1,24 +1,45 @@
-<div class="main">
- <div class="form-container">
-    <div class="container-wrapper">
-        <div class="header">
-            <h2>Login</h2>
-            <p>Dont have an account? <a routerLink="/">Register</a></p>
-           </div>
-           <div class="form">
-              <div class="input-wrapper">
-               <label>Email</label>
-               <input type="email" placeholder="Enter Email" />
-              </div>
-              <div class="input-wrapper">
-               <label>Password</label>
-               <input type="password" placeholder="Enter Password" />
-              </div>
-              <button class="btn" type="submit">Login</button>
-           </div>
-    </div>
+<div class="flex items-center justify-center min-h-screen w-full">
+   <div class="flex flex-col md:flex-row">
+     <!-- Form -->
+     <div class="flex flex-1 flex-col flex-shrink-0 p-6 p:md-8">
+       <h1 class="text-2xl font-bold">Login</h1>
+       <span
+         >Dont have an account?
+         <a routerLink="/register"
+           class="cursor-pointer underline text-black font-semibold"
+           >register</a
+         ></span
+       >
+ 
+       <div class="flex flex-col">
+         <label class="mt-4">Email</label>
+         <input
+           class="border rounded-lg h-10 focus:outline-none p-2"
+           type="email"
+           placeholder="enter email"
+         />
+         <label class="mt-4">Password</label>
+         <input
+           class="border rounded-lg h-10 focus:outline-none p-2"
+           type="password"
+           placeholder="enter email"
+         />
+         <button
+           class="flex align-center justify-center bg-deepBlue text-white rounded-lg mt-4 w-1/2 md:w-1/4 p-2 p:md-3"
+         >
+           Login
+         </button>
+       </div>
+     </div>
+ 
+     <!-- Banner -->
+     <div class="hidden md:block flex-1 p-6 p:md-8">
+       <img
+         class="w-full h-full object-cover"
+         src="/assets/images/sign-up.png"
+         alt="sign-up.png"
+       />
+     </div>
+   </div>
  </div>
- <div class="form-image">
-    <img src="/assets/images/sign-up.png" alt="sign-up.png" />
- </div>
-</div>
+ 
