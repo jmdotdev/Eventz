@@ -6,7 +6,8 @@ module.exports = {
   theme: {
     extend: {
       colors:{
-        deepBlue: '#381ddb'
+        deepBlue: '#381ddb',
+        navBarBackground: '#08012B'
       }
     },
   },
