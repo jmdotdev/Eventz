@@ -1,0 +1,18 @@
+<div class="flex flex-col">
+    <h2 class="text-deepBlue text-3xl font-extrabold  ps-6 md:ps-12">Explore<span class="text-black text-3xl font-extrabold ms-1">By Category</span></h2>
+
+  <div class="flex flex-col md:flex-row pe-9 ps-8  pt-8">
+   <div class="event-card flex flex-col items-start p-2 mt-2 mr-6 h-auto min-w-screen md:w-1/4 me-2 pt-8 ps-4 bg-eventCardBackground rounded-lg hover-blue-white cursor-pointer" *ngFor="let event of eventsList">
+     <div class="event-icon">
+       <img src="/assets/images/vector.svg"/>
+     </div>
+     <div class="event-title">
+    <h5 class="font-bold my-4">{{ event.title }}</h5>
+     </div>
+
+     <div class="event-description">
+        <p class="font-extralight"> {{ event.description }}</p>
+     </div>
+   </div>
+  </div>
+</div>
