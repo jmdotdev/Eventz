@@ -1,5 +1,3 @@
----
-
 # EventZ
 
 **EventZ** is an event management platform that allows users to browse and purchase tickets for various events. Users can print their tickets upon successful purchase. The platform also includes an admin interface to manage events and tickets, offering full CRUD (Create, Read, Update, Delete) functionalities. Additional features include user registration, login, and role-based access control.
@@ -109,5 +107,3 @@ We welcome contributions to **EventZ**. Please follow these steps:
 ## License
 
 This project is licensed under the MIT License.
-
----
