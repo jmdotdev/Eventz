@@ -9,7 +9,9 @@ module.exports = {
         deepBlue: '#381ddb',
         navBarBackground: '#08012B',
         paleOrange: '#FFA3A3',
-        eventCardBackground: '#F3FAFF'
+        eventCardBackground: '#F3FAFF',
+        eventsTitle: '#242565',
+        eventsFilters: '#F2F4FF'
       },
       boxShadow: {
         'customWhite': 'rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset',
