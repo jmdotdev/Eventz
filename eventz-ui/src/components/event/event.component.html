@@ -1,0 +1,31 @@
+<div class="grid grid-cols-1 md:grid-cols-4 w-11/12 h-auto mx-auto my-4 md:p-0">
+<!-- Event Card -->
+<div class="event-card bg-white flex flex-col mx-3 my-2 shadow-xl rounded-xl" *ngFor="let event of events">
+<div class="event-image">
+<img class="w-full" src="/assets/images/event.svg">
+</div>
+<div class="card-body my-2 p-0 md:p-4">
+<div class="flex flex-row justify-between items-center p-1">
+    <div class="w-1/3">
+        <div class="bg-deepBlue flex flex-col items-center justify-center rounded-full h-14 w-14">
+            <p class="text-white text-sm font-semibold">{{ event.date.day}}</p>
+            <p class="text-white text-sm font-semibold">{{ event.date.month}}</p>
+        </div>
+    </div>
+    <div class="flex flex-col w-2/3">
+     <h3 class="font-bold">{{ event.title }}</h3>
+     <p class="text-sm">{{ event.description }}</p>
+    </div>
+</div>
+<div class="flex flex-row justify-between p-2 my-2">
+    <div class="flex items-start">
+        <a href=""  class="text-deepBlue font-normal">Get Ticket</a>
+    </div>
+    <div class="flex items-start">
+      <p class="font-bold">${{ event.price }}</p>
+    </div>
+</div>
+</div>
+</div>
+<!-- End of Event Card -->
+</div>
