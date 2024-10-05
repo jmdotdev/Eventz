@@ -3,11 +3,12 @@ import { NavbarComponent } from "../../components/navbar/navbar.component";
 import { CategoriesComponent } from "../../components/categories/categories.component";
 import { AboutComponent } from "../../components/about/about.component";
 import { EventsComponent } from "../../components/events/events.component";
+import { EventComponent } from "../../components/event/event.component";
 
 @Component({
   selector: 'app-landing',
   standalone: true,
-  imports: [NavbarComponent, CategoriesComponent, AboutComponent, EventsComponent],
+  imports: [NavbarComponent, CategoriesComponent, AboutComponent, EventsComponent, EventComponent],
   templateUrl: './landing.component.html',
   styleUrl: './landing.component.scss'
 })
