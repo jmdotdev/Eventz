@@ -5,11 +5,12 @@ import { AboutComponent } from "../../components/about/about.component";
 import { EventsComponent } from "../../components/events/events.component";
 import { EventComponent } from "../../components/event/event.component";
 import { ButtonComponent } from "../../components/button/button.component";
+import { ContactformComponent } from "../../components/contactform/contactform.component";
 
 @Component({
   selector: 'app-landing',
   standalone: true,
-  imports: [NavbarComponent, CategoriesComponent, AboutComponent, EventsComponent, EventComponent, ButtonComponent],
+  imports: [NavbarComponent, CategoriesComponent, AboutComponent, EventsComponent, EventComponent, ButtonComponent, ContactformComponent],
   templateUrl: './landing.component.html',
   styleUrl: './landing.component.scss'
 })
