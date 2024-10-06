@@ -4,14 +4,16 @@ import { CategoriesComponent } from "../../components/categories/categories.comp
 import { AboutComponent } from "../../components/about/about.component";
 import { EventsComponent } from "../../components/events/events.component";
 import { EventComponent } from "../../components/event/event.component";
+import { ButtonComponent } from "../../components/button/button.component";
 
 @Component({
   selector: 'app-landing',
   standalone: true,
-  imports: [NavbarComponent, CategoriesComponent, AboutComponent, EventsComponent, EventComponent],
+  imports: [NavbarComponent, CategoriesComponent, AboutComponent, EventsComponent, EventComponent, ButtonComponent],
   templateUrl: './landing.component.html',
   styleUrl: './landing.component.scss'
 })
 export class LandingComponent {
-
+   whiteColor: string = '#fff'
+   deepBlue: string ='#fff'
 }
