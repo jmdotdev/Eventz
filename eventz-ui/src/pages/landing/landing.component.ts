@@ -7,11 +7,12 @@ import { EventComponent } from "../../components/event/event.component";
 import { ButtonComponent } from "../../components/button/button.component";
 import { ContactformComponent } from "../../components/contactform/contactform.component";
 import { FooterComponent } from "../../components/footer/footer.component";
+import { SearchFormComponent } from "../../components/search-form/search-form.component";
 
 @Component({
   selector: 'app-landing',
   standalone: true,
-  imports: [NavbarComponent, CategoriesComponent, AboutComponent, EventsComponent, EventComponent, ButtonComponent, ContactformComponent, FooterComponent],
+  imports: [NavbarComponent, CategoriesComponent, AboutComponent, EventsComponent, EventComponent, ButtonComponent, ContactformComponent, FooterComponent, SearchFormComponent],
   templateUrl: './landing.component.html',
   styleUrl: './landing.component.scss'
 })
