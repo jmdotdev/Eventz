@@ -22,3 +22,8 @@ export interface IDate {
     day:number;
     month: string;
 }
+
+export interface ILogin {
+    email: string,
+    password: string
+}
