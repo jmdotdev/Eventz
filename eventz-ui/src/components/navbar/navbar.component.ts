@@ -10,8 +10,7 @@ import { CommonModule } from '@angular/common';
   styleUrl: './navbar.component.scss'
 })
 export class NavbarComponent implements OnInit {
-  showNav: Boolean = true;
-  deviceWidth?: Boolean;
+  showNav: Boolean = false;
   routes: IRoutes[] = [
     {name:'Home', path: 'home'},
     {name:'About', path: 'about'},
@@ -19,12 +18,38 @@ export class NavbarComponent implements OnInit {
     {name:'Contact', path: 'contact'},
   ];
   ngOnInit(): void {
-     this.deviceWidth = window.innerWidth <768;
+    if (typeof window !== "undefined") {
+      this.handleResize();
+      window.addEventListener('resize', this.handleResize.bind(this));
+   }
+  }
+
+  isMobile(): boolean {
+    if (typeof window !== "undefined") {
+      return window.innerWidth < 768;
+    }
+    else {
+      return false;
+    }
+  }
+
+  handleResize() {
+    if (window.innerWidth >= 768) {
+      this.showNav = true;
+    } else {
+      this.showNav = false;
+    }
   }
 
   toggleNav() {
-     this.showNav = !this.showNav
-     console.log("showNav",this.showNav)
+    this.showNav = !this.showNav;
+  }
+
+  ngOnDestroy() {
+    if (typeof window !== "undefined") {
+      // Cleanup event listener
+      window.removeEventListener('resize', this.handleResize.bind(this)); 
+    }
   }
 
 }
