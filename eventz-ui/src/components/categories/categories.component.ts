@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { IEvents } from '../../interfaces/interface';
+import { IEventCategory } from '../../interfaces/interface';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -11,7 +11,7 @@ import { CommonModule } from '@angular/common';
 })
 export class CategoriesComponent implements OnInit {
 
-  eventsList: IEvents[] = [
+  eventsList: IEventCategory[] = [
     {
       title: "Tech Innovators Conference",
       description: "A gathering of leading technology professionals and innovators to discuss emerging trends in AI, cloud computing, and cybersecurity. Attendees will have the opportunity to network, attend workshops, and hear keynote speakers from top tech companies.",
