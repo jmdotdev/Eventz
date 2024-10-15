@@ -25,5 +25,7 @@ export interface IDate {
 
 export interface ILogin {
     email: string,
-    password: string
+    password: string,
+    errored?: boolean,
+    token?: string | undefined
 }
