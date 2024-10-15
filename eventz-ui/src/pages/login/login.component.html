@@ -12,23 +12,33 @@
        >
  
        <div class="flex flex-col">
-         <label class="mt-4">Email</label>
+         <form class="flex flex-col" [formGroup]="loginForm" (ngSubmit)="loginUser()">
+          <label class="mt-4">Email</label>
          <input
            class="border rounded-lg h-10 focus:outline-none p-2"
            type="email"
            placeholder="enter email"
+           formControlName="email"
          />
+         <div class="text-red-700" *ngIf="loginForm.get('email')?.invalid && loginForm.get('email')?.touched">
+          Please enter a valid email.
+        </div>
          <label class="mt-4">Password</label>
          <input
            class="border rounded-lg h-10 focus:outline-none p-2"
            type="password"
            placeholder="enter email"
+           formControlName="password"
          />
-         <button
+         <div class="text-red-700" *ngIf="loginForm.get('password')?.errors?.['required'] && loginForm.get('password')?.touched">
+          Password is required
+        </div>        
+         <button [disabled]="loginForm.invalid"
            class="flex align-center justify-center bg-deepBlue text-white rounded-lg mt-4 w-1/2 md:w-1/4 p-2 p:md-3"
          >
            Login
          </button>
+         </form>
        </div>
      </div>
  
