@@ -21,9 +21,11 @@ export class LandingComponent implements OnInit {
    
    constructor (private router: Router) {}
    ngOnInit(): void {
-      const token = localStorage.getItem('token')
+      if (typeof window !== "undefined") {
+         const token = localStorage.getItem('token')
       if(!token) {
          this.router.navigate(['/login'])
+      }
       }
    }
    whiteColor: string = '#fff'
