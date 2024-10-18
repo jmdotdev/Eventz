@@ -29,3 +29,9 @@ export interface ILogin {
     errored?: boolean,
     token?: string | undefined
 }
+
+export interface IRegister {
+    email: string,
+    password: string,
+    errored?: boolean
+}
