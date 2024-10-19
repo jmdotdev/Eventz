@@ -2,10 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { EventsService } from '../../services/events/events.service';
 import { IEvent } from '../../interfaces/interface';
+import { RouterModule } from '@angular/router';
 @Component({
   selector: 'app-event',
   standalone: true,
-  imports: [ CommonModule ],
+  imports: [ CommonModule, RouterModule],
   templateUrl: './event.component.html',
   styleUrl: './event.component.scss'
 })
