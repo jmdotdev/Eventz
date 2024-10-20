@@ -1,5 +1,5 @@
 <!-- Navbar Container -->
-<div class="flex flex-col md:flex-row items-center justify-between w-full min-h-20 px-4 py-0">
+<div class="flex flex-col md:flex-row items-center justify-between w-full min-h-20 px-4 py-0" [ngClass]="!isLandinPage ? 'not-landing': ''">
   <div class="flex justify-between items-center w-full md:w-auto">
     <h1 class="text-white font-bold text-3xl md:text-4xl">EventZ</h1>
       <img

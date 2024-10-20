@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { IRoutes } from '../../interfaces/interface';
 import { CommonModule } from '@angular/common';
 
@@ -11,6 +11,7 @@ import { CommonModule } from '@angular/common';
 })
 export class NavbarComponent implements OnInit {
   showNav: Boolean = false;
+  @Input () isLandinPage: boolean = true;
   routes: IRoutes[] = [
     {name:'Home', path: 'home'},
     {name:'About', path: 'about'},

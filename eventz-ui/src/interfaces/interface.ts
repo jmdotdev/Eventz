@@ -4,6 +4,7 @@ export interface IRoutes {
 }
 
 export interface IEvent {
+    id: string
     icon?: string;
     title: string;
     description: string;
