@@ -7,12 +7,18 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faMapMarkerAlt } from '@fortawesome/free-solid-svg-icons';
 import { faStopwatch } from '@fortawesome/free-solid-svg-icons';
 import { faClock } from '@fortawesome/free-solid-svg-icons';
+import { faUserCircle } from '@fortawesome/free-solid-svg-icons';
+import { faCalendarPlus } from '@fortawesome/free-solid-svg-icons';
+import { faPlusCircle } from '@fortawesome/free-solid-svg-icons';
+import { faMinusCircle } from '@fortawesome/free-solid-svg-icons';
+import { EventComponent } from "../../components/event/event.component";
+import { FooterComponent } from "../../components/footer/footer.component";
 
 
 @Component({
   selector: 'app-event-detail',
   standalone: true,
-  imports: [NavbarComponent,FontAwesomeModule],
+  imports: [NavbarComponent, FontAwesomeModule, EventComponent, FooterComponent],
   templateUrl: './event-detail.component.html',
   styleUrl: './event-detail.component.scss'
 })
@@ -22,6 +28,11 @@ export class EventDetailComponent implements OnInit {
   location = faMapMarkerAlt;
   watch = faStopwatch;
   clock = faClock;
+  userIcon = faUserCircle;
+  calendar = faCalendarPlus;
+  plus = faPlusCircle;
+  minus = faMinusCircle;
+  ticketsCount: number = 0;
   constructor ( private eventsService: EventsService, private activatedRoute: ActivatedRoute) {}
   ngOnInit(): void {
     this.eventsService.getEvents().subscribe(res => {
