@@ -2,7 +2,7 @@
     <div class="w-full d-flex">
         <app-navbar [isLandinPage]="false"></app-navbar>
     </div>
-    <div class="flex flex:col md:flex-row bg-eventsDetailBackground p-2">
+    <div class="flex flex-col md:flex-row bg-eventsDetailBackground p-2">
       <div class="flex flex-col w-full md:w-3/5 bg-white rounded-md m-2 p-4">
         <!-- Event Header -->
         <div class="flex flex-col md:flex-row h-auto mx-6">
@@ -49,6 +49,7 @@
 
       <div class="flex flex-col w-full md:w-2/5 bg-white rounded-md h-auto m-2 p-2">
         <!-- Time Counter -->
+         <!-- TODO: refactor this into a single component -->
          <div class="grid grid-cols-2 md:grid-cols-4">
           <!-- Time Card -->
           <div class="flex flex-col items-center justify-center border-2 border-deepBlue rounded-xl text-deepBlue font-semibold mx-4 py-2">
@@ -69,6 +70,71 @@
           </div>
 
          </div>
+        
+         <!-- TODO: refactor this cards into a component -->
+         <div class="flex flex-col items-start p-2 mt-10">
+           <div class="flex p-2 my-4">
+             <div class="flex items-center justify-center bg-paleBlue w-14 h-14 rounded-full">
+              <fa-icon [icon]="userIcon" [styles]="{'color': '#381ddb'}" class="text-2xl"></fa-icon>
+             </div>
+             <div class="flex flex-col items-start px-6 py-1">
+                <h3 class="opacity-75 font-semibold">Organized by:</h3>
+                <h4 class="font-semibold">Organizers Name</h4>
+             </div>
+           </div>
+           <div class="flex p-2 my-4">
+            <div class="flex items-center justify-center bg-paleBlue w-14 h-14 rounded-full">
+             <fa-icon [icon]="calendar" [styles]="{'color': '#381ddb'}" class="text-2xl"></fa-icon>
+            </div>
+            <div class="flex flex-col items-start px-6 py-1">
+               <h3 class="opacity-75 font-semibold">Date:</h3>
+               <h4 class="font-semibold">{{ event?.date?.day }} {{ event?.date?.month }}</h4>
+            </div>
+          </div>
+          <div class="flex p-2 my-4">
+            <div class="flex items-center justify-center bg-paleBlue w-14 h-14 rounded-full">
+             <fa-icon [icon]="location" [styles]="{'color': '#381ddb'}" class="text-2xl"></fa-icon>
+            </div>
+            <div class="flex flex-col items-start px-6 py-1">
+               <h3 class="opacity-75 font-semibold">Location:</h3>
+               <h4 class="font-semibold">New York</h4>
+            </div>
+          </div>
+         </div>
+
+         <div class="flex flex-col p-2 mt-6">
+            <div>
+              <h3 class="font-bold text-xl ps-4">Select Ticket</h3>
+            </div>
+            <div class="flex items-center justify-between px-4 my-4">
+              <h4>$75</h4>
+              <div class="flex items-center justify-evenly">
+                <fa-icon [icon]="minus" class="text-2xl cursor-pointer"></fa-icon>
+                <h5 class="text-2xl mx-2">{{ ticketsCount }}</h5>
+                <fa-icon [icon]="plus" class="text-2xl cursor-pointer"></fa-icon>
+              </div>
+            </div>
+            <div class="flex px-2 my-2">
+              <p>Nunc cursus ex a ligula consequat aliquet. Donec semper tellus ac ante vestibulum, vitae varius leo mattis. 
+                In vestibulum blandit tempus. Etiam elit turpis, volutpat hendrerit varius ut, posuere a sapien. </p>
+            </div>
+            <div class="flex flex-col items-start px-2 my-4">
+              <h4 class="font-semibold">{{ ticketsCount}} x Tickets</h4>
+              <h5 class="font-semibold"> $150 </h5>
+            </div>
+            <div class="px-4 my-4 w-full">
+              <button class="flex items-center justify-center bg-deepBlue rounded-xl text-white w-full py-3">Book Now</button>
+            </div>
+         </div> 
       </div>
+    </div>
+    <div class="flex flex-col bg-white rounded-xl">
+     <div class="my-4 px-4">
+      <h2 class="font-bold text-3xl mx-6"> Related Events</h2>
+     </div>
+     <app-event [isLandinPage]="false"></app-event>
+    </div>
+    <div> 
+      <app-footer></app-footer>
     </div>
 </div>
