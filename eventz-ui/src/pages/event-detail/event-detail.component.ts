@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { NavbarComponent } from "../../components/navbar/navbar.component";
 import { EventsService } from '../../services/events/events.service';
 import { IEvent } from '../../interfaces/interface';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faMapMarkerAlt } from '@fortawesome/free-solid-svg-icons';
 import { faStopwatch } from '@fortawesome/free-solid-svg-icons';
@@ -33,7 +33,7 @@ export class EventDetailComponent implements OnInit {
   plus = faPlusCircle;
   minus = faMinusCircle;
   ticketsCount: number = 0;
-  constructor ( private eventsService: EventsService, private activatedRoute: ActivatedRoute) {}
+  constructor ( private eventsService: EventsService, private activatedRoute: ActivatedRoute,private router: Router) {}
   ngOnInit(): void {
     this.eventsService.getEvents().subscribe(res => {
       if(res.events.length) {
@@ -45,6 +45,10 @@ export class EventDetailComponent implements OnInit {
         console.log("error loading events")
       }
     })
+  }
+
+  navigateToCheckout () {
+    this.router.navigate(['checkout'])
   }
 
 }
