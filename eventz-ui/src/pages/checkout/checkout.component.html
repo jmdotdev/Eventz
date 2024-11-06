@@ -1,9 +1,83 @@
-<div class="w-full h-full d-flex flex-col">
+<div class="w-full h-full d-flex flex-col bg-eventsDetailBackground">
     <div class="w-full d-flex">
         <app-navbar [isLandinPage]="false"></app-navbar>
     </div>
 
     <div class="flex px-6 py-2 my-4">
-       <h2 class="text-black font-semibold text-2xl">Order Confirmation</h2>
+       <h1 class="text-black font-semibold text-2xl">Order Confirmation</h1>
     </div>
+   <div class="flex flex-col md:flex-row w-full">
+    <div class="flex flex-col p-2 m-1 w-1/2">
+       <div class="flex flex-col bg-white rounded-md p-2">
+        <h3 class="font-semibold">Billing information</h3>
+        <hr />
+        <div class="flex flex-col">
+            <div class="flex mb-2 mt-4">
+                <div class="flex flex-col w-1/2 mx-1">
+                    <label>FirstName*</label>
+                    <input class="border border-paleGray rounded-md focus:outline-none px-1 py-2 mr-1" type="text" required/>
+                 </div>
+                 <div class="flex flex-col w-1/2">
+                     <label>LastName*</label>
+                     <input class="border border-paleGray rounded-md focus:outline-none px-1 py-2" type="text" required/>
+                  </div>
+            </div>
+            <div class="flex my-2">
+                <div class="flex flex-col w-1/2 mx-1">
+                    <label>Email*</label>
+                    <input class="border border-paleGray rounded-md focus:outline-none px-1 py-2 mr-1" type="email" required/>
+                 </div>
+                 <div class="flex flex-col w-1/2">
+                     <label>Address*</label>
+                     <input class="border border-paleGray rounded-md focus:outline-none px-1 py-2" type="text" required/>
+                  </div>
+            </div>
+            <div class="flex my-2">
+                <div class="flex flex-col w-1/2 mx-1">
+                    <label>Country*</label>
+                    <input class="border border-paleGray rounded-md focus:outline-none px-1 py-2 mr-1" type="text" required/>
+                 </div>
+                 <div class="flex flex-col w-1/2">
+                     <label>Address*</label>
+                     <input class="border border-paleGray rounded-md focus:outline-none px-1 py-2" type="text" required/>
+                  </div>
+            </div>
+            <div class="flex my-2">
+                <div class="flex flex-col w-1/2 mx-1">
+                    <label>City*</label>
+                    <input class="border border-paleGray rounded-md focus:outline-none px-1 py-2 mr-1" type="text" required/>
+                 </div>
+                 <div class="flex flex-col w-1/2">
+                     <label>ZIP Code*</label>
+                     <input class="border border-paleGray rounded-md focus:outline-none px-1 py-2" type="text" required/>
+                  </div>
+            </div>
+       </div>
+       </div>
+       <div class="flex flex-col bg-white rounded-md p-2 mt-4">
+        <h3 class="font-semibold">Card Information</h3>
+        <hr />
+        <div class="flex flex-col">
+            <div class="flex flex-col w-full mx-1">
+                <label class="mt-4">Card Number*</label>
+                <input class="border border-paleGray rounded-md focus:outline-none px-1 py-2 mr-1" type="text" required/>
+            </div>
+            <div class="flex my-2">
+                <div class="flex flex-col w-1/2 mx-1">
+                    <label>Expiry Date*</label>
+                    <input class="border border-paleGray rounded-md focus:outline-none px-1 py-2 mr-1" type="email" required/>
+                 </div>
+                 <div class="flex flex-col w-1/2">
+                     <label>CVV*</label>
+                     <input class="border border-paleGray rounded-md focus:outline-none px-1 py-2" type="text" required/>
+                  </div>
+            </div>
+       </div>
+       </div>
+    </div>
+    <div class="flex flex-col p-2 bg-white rounded-md m-1 w-1/2 mx-1">
+        <h3 class="font-semibold">Billing information</h3>
+        <hr />
+    </div>
+   </div>
 </div>
