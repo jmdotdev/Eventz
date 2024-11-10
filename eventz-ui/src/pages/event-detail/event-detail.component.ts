@@ -47,8 +47,8 @@ export class EventDetailComponent implements OnInit {
     })
   }
 
-  navigateToCheckout () {
-    this.router.navigate(['checkout'])
+  addToCart () {
+    this.router.navigate(['cart'])
   }
 
 }
