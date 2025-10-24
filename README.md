@@ -14,7 +14,7 @@
 
 ## Project Overview
 
-The primary goal of **EventZ** is to provide users with an intuitive platform for discovering and purchasing tickets for events. Once the ticket purchase is complete, users can print their tickets. Admins can manage event details and ticket inventory through a secure, role-based dashboard.
+**EventZ**provides users with an intuitive platform for discovering and purchasing tickets for events. Once the ticket purchase is complete, users can print their tickets. Admins can manage event details and ticket inventory through a secure, role-based dashboard.
 
 ## Features
 
