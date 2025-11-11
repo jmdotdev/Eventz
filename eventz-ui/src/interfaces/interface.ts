@@ -1,3 +1,5 @@
+import { Icon, IconProp } from "@fortawesome/fontawesome-svg-core";
+
 export interface IRoutes {
     name: string;
     path?: string;
@@ -35,4 +37,11 @@ export interface IRegister {
     email: string,
     password: string,
     errored?: boolean
+}
+
+export interface ISideNav {
+    name: string;
+    path: string;
+    isActive: boolean;
+    icon: IconProp
 }
