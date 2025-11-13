@@ -13,4 +13,11 @@ import { CommonModule } from '@angular/common';
 })
 export class SideNavComponent {
   links: ISideNav[] = sideNavLinks;
+
+  handleNavigation (link: ISideNav) {
+    this.links = this.links.map((l) => ({
+      ...l,
+      isActive: l.name === link.name ? true : false
+    }));
+  }
 }
