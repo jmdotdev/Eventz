@@ -16,8 +16,4 @@
     <ProjectReference Include="..\eventz.infrastructure\Eventz.Infrastructure.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Controllers\" />
-  </ItemGroup>
-
 </Project>
