@@ -12,7 +12,7 @@ namespace Eventz.Infrastructure.Repositories.Categories
     {
         private readonly AppDbContext _context;
 
-        private CategoryRepository (AppDbContext context)
+        public CategoryRepository (AppDbContext context)
         {
             _context = context;
         }
