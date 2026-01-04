@@ -1,4 +1,5 @@
-﻿using Eventz.Domain.Entitites;
+﻿using Eventz.Application.Dtos;
+using Eventz.Domain.Entitites;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,5 +11,7 @@ namespace Eventz.Application.Interfaces
     public interface ICategoryRepository
     {
         public Task CreateCategory(Category category);
+
+        public Task<List<CategoryDto>> GetCategories();
     }
 }

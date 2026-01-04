@@ -1,5 +1,7 @@
-﻿using Eventz.Application.Interfaces;
+﻿using Eventz.Application.Dtos;
+using Eventz.Application.Interfaces;
 using Eventz.Domain.Entitites;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,6 +23,17 @@ namespace Eventz.Infrastructure.Repositories.Categories
         {
             await _context.Categories.AddAsync(category);
             await _context.SaveChangesAsync();
+        }
+
+        public async Task<List<CategoryDto>> GetCategories ()
+        {
+           var result = await _context.Categories.Select(c => new CategoryDto
+           {
+               CategoryToken = c.CategoryToken,
+               Name = c.Name,
+               Description = c.Description
+           }).ToListAsync();
+           return result;
         }
     }
 }
