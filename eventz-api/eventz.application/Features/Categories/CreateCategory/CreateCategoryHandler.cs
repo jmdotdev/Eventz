@@ -27,6 +27,7 @@ namespace Eventz.Application.Features.Categories.CreateCategory
             await _repository.CreateCategory(category);
             var categoryDto = new CategoryDto
             {
+                CategoryToken = category.CategoryToken,
                 Name = category.Name,
                 Description = category.Description,
             };
