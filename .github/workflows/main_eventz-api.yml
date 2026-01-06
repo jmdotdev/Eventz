@@ -21,15 +21,15 @@ jobs:
           dotnet-version: '8.x'
 
       - name: Restore
-        working-directory: eventz-api
+        working-directory: Eventz/eventz-api
         run: dotnet restore
 
       - name: Build with dotnet
-        working-directory: eventz-api
+        working-directory: Eventz/eventz-api
         run: dotnet build --configuration Release --no-restore
 
       - name: dotnet publish
-        working-directory: eventz-api
+        working-directory: Eventz/eventz-api
         run: dotnet publish -c Release -o "${{ env.DOTNET_ROOT }}/myapp" --no-build
 
       - name: Upload artifact for deployment job
@@ -62,7 +62,7 @@ jobs:
         run: dotnet tool install --global dotnet-ef
 
       - name: Run database migrations
-        working-directory: eventz-api
+        working-directory: Eventz/eventz-api
         env:
           CONNECTION_STRING: ${{ secrets.AZURE_SQL_CONNECTION_STRING }}
         run: |
