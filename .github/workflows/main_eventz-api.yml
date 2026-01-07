@@ -59,7 +59,9 @@ jobs:
           subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_5816123D7C1C4A18B4343C212C51FC7A }}
 
       - name: Install EF Core CLI
-        run: dotnet tool install --global dotnet-ef
+        run: |
+          dotnet tool uninstall --global dotnet-ef || echo "No existing version"
+          dotnet tool install --global dotnet-ef --version 8.*
 
       - name: Run database migrations
         env:
