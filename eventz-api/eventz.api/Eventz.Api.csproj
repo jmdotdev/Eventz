@@ -18,8 +18,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\eventz.application\Eventz.Application.csproj" />
-    <ProjectReference Include="..\eventz.infrastructure\Eventz.Infrastructure.csproj" />
+    <ProjectReference Include="..\Eventz.Application\Eventz.Application.csproj" />
+    <ProjectReference Include="..\Eventz.Infrastructure\Eventz.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>
