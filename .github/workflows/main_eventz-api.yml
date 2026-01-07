@@ -46,10 +46,19 @@ jobs:
       contents: read
 
     steps:
+      # Checkout source code for EF migrations
+      - uses: actions/checkout@v4
+
+      - name: Set up .NET Core
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.x'
+
       - name: Download artifact from build job
         uses: actions/download-artifact@v4
         with:
           name: .net-app
+          path: ./publish
 
       - name: Login to Azure
         uses: azure/login@v2
@@ -67,11 +76,11 @@ jobs:
         env:
           CONNECTION_STRING: ${{ secrets.AZURE_SQL_CONNECTION_STRING }}
         run: |
-          dotnet ef database update --project eventz-api/Eventz.Infrastructure --startup-project eventz-api/Eventz.Api --connection $env:CONNECTION_STRING
+          dotnet ef database update --project eventz-api/Eventz.Infrastructure/Eventz.Infrastructure.csproj --startup-project eventz-api/Eventz.Api/Eventz.Api.csproj --connection "$env:CONNECTION_STRING"
 
       - name: Deploy to Azure Web App
         uses: azure/webapps-deploy@v3
         with:
           app-name: 'eventz-api'
           slot-name: 'Production'
-          package: .
+          package: ./publish
