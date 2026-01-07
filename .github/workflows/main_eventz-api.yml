@@ -64,11 +64,10 @@ jobs:
           dotnet tool install --global dotnet-ef --version 8.*
 
       - name: Run database migrations
-        working-directory: .
         env:
           CONNECTION_STRING: ${{ secrets.AZURE_SQL_CONNECTION_STRING }}
         run: |
-          dotnet ef database update --project Eventz.Infrastructure --startup-project Eventz.Api --connection $env:CONNECTION_STRING
+          dotnet ef database update --project ./eventz-api/Eventz.Infrastructure --startup-project ./eventz-api/Eventz.Api --connection $env:CONNECTION_STRING
 
       - name: Deploy to Azure Web App
         uses: azure/webapps-deploy@v3
