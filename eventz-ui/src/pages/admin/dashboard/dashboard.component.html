@@ -1,3 +1,5 @@
-<div>
-<p>Dashboard Works!!</p>
+<div class="grid grid-cols-1 md:grid md:grid-cols-2 gap-4 lg:grid lg:grid-cols-4 m-4">
+  <div class="w-full" *ngFor="let c of count; let i = index">
+        <app-dashboard-card [index]="i"></app-dashboard-card>
+  </div>
 </div>

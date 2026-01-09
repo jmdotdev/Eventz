@@ -1,0 +1,14 @@
+<div class="flex items-center bg-white rounded-lg h-24 px-2">
+   <div class="flex items-center justify-center h-14 w-14 mx-2 rounded-full" [style.background-color]="getBackgroundColor(index)" [ngSwitch]="index">
+      <fa-icon *ngSwitchCase="0" [icon]="faUser" class="text-xl cursor-pointer text-[#396AFF]"></fa-icon>
+      <fa-icon *ngSwitchCase="1" [icon]="faArchive" class="text-xl cursor-pointer text-[#FFBB38]"></fa-icon>
+      <fa-icon *ngSwitchCase="2" [icon]="faSignal" class="text-xl cursor-pointer text-[#FF82AC]"></fa-icon>
+      <fa-icon *ngSwitchCase="3" [icon]="faWrench" class="text-xl cursor-pointer text-[#16DBCC]"></fa-icon>
+   </div>
+   <div class="flex flex-col ml-2">
+      <div>
+      <h2>Total Events</h2>
+      <h2 class="font-semibold">2400</h2>
+      </div>
+   </div>
+</div>

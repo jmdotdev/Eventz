@@ -18,7 +18,8 @@ module.exports = {
         footerBackground:'#0A075F',
         eventsDetailBackground: '#F5F7F9',
         paleBlue: '#CDC6F6',
-        paleGray: '#CCCCC'
+        paleGray: '#CCCCC',
+        adminBackground: '#F5F7FA'
       },
       boxShadow: {
         'customWhite': 'rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset',
