@@ -1,5 +1,16 @@
-<div class="grid grid-cols-1 md:grid md:grid-cols-2 gap-4 lg:grid lg:grid-cols-4 m-4">
-  <div class="w-full" *ngFor="let c of count; let i = index">
-        <app-dashboard-card [index]="i"></app-dashboard-card>
+<div class="p-4">
+  <div
+    class="grid grid-cols-1 md:grid md:grid-cols-2 gap-4 lg:grid lg:grid-cols-4 w-full"
+  >
+    <div class="w-full" *ngFor="let c of count; let i = index">
+      <app-dashboard-card [index]="i"></app-dashboard-card>
+    </div>
+  </div>
+  <div class="flex flex-col bg-white rounded-md my-4 px-2">
+    <h2 class="font-semibold text-xl my-2">Upcoming Events</h2>
+    <div>
+      <app-upcoming-event-card></app-upcoming-event-card>
+      <app-upcoming-event-card></app-upcoming-event-card>
+    </div>
   </div>
 </div>
