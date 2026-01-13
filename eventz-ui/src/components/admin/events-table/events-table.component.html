@@ -1,0 +1,91 @@
+<div class="flex flex-col bg-white rounded-lg p-4 mx-4 my-6">
+<div class="w-full overflow-x-auto">
+  <table class="min-w-full text-sm text-left">
+    <thead class="uppercase text-xs border-b-[1px] border-b-gray-300 text-eventTableColor">
+      <tr>
+        <th class="px-4 py-3">Name</th>
+        <th class="px-4 py-3">Location</th>
+        <th class="px-4 py-3">Organized By</th>
+        <th class="px-4 py-3">Verified</th>
+        <th class="px-4 py-3">Date</th>
+        <th class="px-4 py-3 text-right">Actions</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr
+        *ngFor="let event of paginatedEvents; let i = index"
+        class="hover:bg-gray-50 hover:cursor-pointer text-eventTableColor"
+      >
+        <td class="px-4 py-3 font-medium">{{ event.name }}</td>
+        <td class="px-4 py-3">{{ event.location }}</td>
+        <td class="px-4 py-3">{{ event.organizedBy }}</td>
+
+        <!-- Verified -->
+        <td class="px-4 py-3">
+          <div
+            class="flex items-center justify-center w-6 h-6 rounded-full"
+            [ngClass]="event.verified ? 'bg-green-600' : 'bg-red-600'"
+          >
+            <fa-icon *ngIf="event.verified" [icon]="faCheck" class="text-md cursor-pointer text-white"></fa-icon>
+            <fa-icon *ngIf="!event.verified" [icon]="faTimes" class="text-md cursor-pointer text-white"></fa-icon>
+          </div>
+        </td>
+
+        <td class="px-4 py-3">{{ event.date }}</td>
+
+        <!-- Actions -->
+        <td class="px-4 py-3 text-right relative">
+          <button
+            class="p-2 rounded hover:bg-gray-200"
+            (click)="toggleMenu(i)"
+          >
+         <fa-icon [icon]="faElipsis" class="text-lg cursor-pointer"></fa-icon>
+
+          </button>
+
+          <div
+            *ngIf="openMenuIndex === i"
+            class="absolute right-4 mt-2 w-32 bg-white border rounded shadow z-10"
+          >
+            <button class="block w-full text-left px-4 py-2 hover:bg-gray-100">
+              View
+            </button>
+            <button class="block w-full text-left px-4 py-2 hover:bg-gray-100">
+              Edit
+            </button>
+            <button class="block w-full text-left px-4 py-2 text-red-600 hover:bg-gray-100">
+              Delete
+            </button>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- Pagination -->
+  <div class="flex items-center justify-between px-4 py-3 border-t">
+    <span class="text-sm text-eventTableColor">
+      Page {{ currentPage }} of {{ totalPages }}
+    </span>
+
+    <div class="flex gap-2">
+      <button
+        class="px-3 py-1 border rounded disabled:opacity-50"
+        (click)="changePage(currentPage - 1)"
+        [disabled]="currentPage === 1"
+      >
+        Prev
+      </button>
+
+      <button
+        class="px-3 py-1 border rounded disabled:opacity-50"
+        (click)="changePage(currentPage + 1)"
+        [disabled]="currentPage === totalPages"
+      >
+        Next
+      </button>
+    </div>
+  </div>
+</div>
+</div>

@@ -45,3 +45,10 @@ export interface ISideNav {
     isActive: boolean;
     icon: IconProp
 }
+export interface EventItem {
+  name: string;
+  location: string;
+  organizedBy: string;
+  verified: boolean;
+  date: string;
+}

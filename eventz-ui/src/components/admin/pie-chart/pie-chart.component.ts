@@ -17,7 +17,7 @@ export class PieChartComponent {
       position: 'bottom' // 'top' | 'left' | 'right' | 'bottom'
     }
   },
-  // maintainAspectRatio: false
+  maintainAspectRatio: false
 };
 
   pieChartData: ChartConfiguration<'pie'>['data'] = {
