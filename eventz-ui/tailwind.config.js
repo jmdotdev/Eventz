@@ -20,7 +20,8 @@ module.exports = {
         paleBlue: '#CDC6F6',
         paleGray: '#CCCCC',
         adminBackground: '#F5F7FA',
-        upcomingEventColor: '#718EBF'
+        upcomingEventColor: '#718EBF',
+        eventTableColor: '#2B3674'
       },
       boxShadow: {
         'customWhite': 'rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset',
