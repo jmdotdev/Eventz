@@ -1,0 +1,42 @@
+<div class="flex flex-col justify-between p-2">
+  <div class="flex flex-col md:flex-row items-start md:items-center justify-between">
+    <div class="flex items-center gap-2">
+      <div
+        class="bg-eventTogglerBackground rounded-md cursor-pointer py-2 px-4"
+      >
+        <p>Events</p>
+      </div>
+      <div class="w-[1px] h-[30px] bg-eventTogglerBackground"></div>
+      <div
+        class="bg-eventTogglerBackground rounded-md cursor-pointer py-2 px-4"
+      >
+        <p>Organizers</p>
+      </div>
+      <div class="w-[1px] h-[30px] bg-eventTogglerBackground"></div>
+    </div>
+
+    <div class="flex items-center my-2 md:my-0">
+      <div
+        class="flex items-center justify-center bg-paleBlue text-deepBlue h-8 w-8 rounded-full cursor-pointer"
+      >
+        <fa-icon [icon]="faPlus" />
+      </div>
+      <p class="text-lg text-deepBlue mx-2">Add Event</p>
+    </div>
+  </div>
+  <hr class="my-3">
+  <div class="flex flex-col md:flex-row items-start md:items-center justify-between mt-0">
+    <div>
+      <h2 class="font-semibold text-lg text-eventTableColor">Events List</h2>
+    </div>
+    <div class="flex items-center">
+     <div class="flex bg-searchBackground rounded-3xl px-4 py-2 w-4/5 md:w-full">
+       <fa-icon class="text-eventTableColor mx-2" [icon]="faSearch" />
+      <input class="border-0 bg-transparent text-sm hover: outline-none" placeholder="search" />
+     </div>
+      <div class="bg-searchBackground rounded-md p-2 ml-2 md:ml-4">
+         <fa-icon class="text-deepBlue" [icon]="faElipsisH" />
+      </div>
+    </div>
+  </div>
+</div>

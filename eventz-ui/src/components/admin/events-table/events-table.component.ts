@@ -3,12 +3,13 @@ import { EventItem } from '../../../interfaces/interface';
 import  { CommonModule } from '@angular/common'
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faEllipsisV, faCheck, faTimes } from '@fortawesome/free-solid-svg-icons';
+import { TableHeaderComponent } from "../table-header/table-header.component";
 
 
 @Component({
   selector: 'app-events-table',
   standalone: true,
-  imports: [CommonModule, FontAwesomeModule],
+  imports: [CommonModule, FontAwesomeModule, TableHeaderComponent],
   templateUrl: './events-table.component.html',
   styleUrl: './events-table.component.scss'
 })

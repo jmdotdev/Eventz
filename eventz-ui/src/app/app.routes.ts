@@ -7,8 +7,7 @@ import { CheckoutComponent } from '../pages/checkout/checkout.component';
 import { CartComponent } from '../pages/cart/cart.component';
 import { AdminLayoutComponent } from '../layouts/admin-layout/admin-layout.component';
 import { DashboardComponent } from '../pages/admin/dashboard/dashboard.component';
-import { EventsTableComponent } from '../components/admin/events-table/events-table.component';
-import { AdminEventsListComponent } from '../components/admin/admin-events-list/admin-events-list.component';
+import { AdminEventsListComponent } from '../pages/admin/admin-events-list/admin-events-list.component';
 export const routes: Routes = [
    {path:'',component: LandingComponent},
    {path:'login', component: LoginComponent},

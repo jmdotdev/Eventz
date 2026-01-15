@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { EventsTableComponent } from "../events-table/events-table.component";
+import { EventsTableComponent } from "../../../components/admin/events-table/events-table.component";
 
 @Component({
   selector: 'app-admin-events-list',
