@@ -52,3 +52,10 @@ export interface EventItem {
   verified: boolean;
   date: string;
 }
+
+export interface Organizer {
+  name: string;
+  email: string;
+  verified: boolean;
+  date: string;
+}
