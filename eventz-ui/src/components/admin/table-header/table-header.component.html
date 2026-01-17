@@ -2,13 +2,17 @@
   <div class="flex flex-col md:flex-row items-start md:items-center justify-between">
     <div class="flex items-center gap-2">
       <div
-        class="bg-eventTogglerBackground rounded-md cursor-pointer py-2 px-4"
+        (click) = "toggleShowEvents(true)"
+        class="rounded-md cursor-pointer py-2 px-4"
+        [ngClass]="{'bg-eventTogglerBackground': showEventsTable }"
       >
         <p>Events</p>
       </div>
       <div class="w-[1px] h-[30px] bg-eventTogglerBackground"></div>
       <div
-        class="bg-eventTogglerBackground rounded-md cursor-pointer py-2 px-4"
+        (click) = "toggleShowEvents(false)"
+        class="rounded-md cursor-pointer py-2 px-4"
+        [ngClass]="{'bg-eventTogglerBackground': !showEventsTable }"
       >
         <p>Organizers</p>
       </div>
@@ -21,13 +25,13 @@
       >
         <fa-icon [icon]="faPlus" />
       </div>
-      <p class="text-lg text-deepBlue mx-2">Add Event</p>
+      <p class="text-lg text-deepBlue mx-2">{{ showEventsTable ?  'Add Event' : 'Add Organizer'}}</p>
     </div>
   </div>
   <hr class="my-3">
   <div class="flex flex-col md:flex-row items-start md:items-center justify-between mt-0">
     <div>
-      <h2 class="font-semibold text-lg text-eventTableColor">Events List</h2>
+      <h2 class="font-semibold text-lg text-eventTableColor">{{ showEventsTable ?  'Events List' : 'Organizers List'}}</h2>
     </div>
     <div class="flex items-center">
      <div class="flex bg-searchBackground rounded-3xl px-4 py-2 w-4/5 md:w-full">

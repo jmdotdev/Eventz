@@ -1,39 +1,34 @@
-<!-- <div class="flex flex-col bg-white rounded-lg p-4 mx-4 my-6">
-  <app-table-header></app-table-header> -->
 <div class="w-full overflow-x-auto">
   <table class="min-w-full text-sm text-left">
     <thead class="uppercase text-xs border-b-[1px] border-b-gray-300 text-eventTableColor">
       <tr>
         <th class="px-4 py-3">Name</th>
-        <th class="px-4 py-3">Location</th>
-        <th class="px-4 py-3">Organized By</th>
+        <th class="px-4 py-3">Email</th>
         <th class="px-4 py-3">Verified</th>
-        <th class="px-4 py-3">Date</th>
+        <th class="px-4 py-3">Date Joined</th>
         <th class="px-4 py-3 text-right">Actions</th>
       </tr>
     </thead>
 
     <tbody>
       <tr
-        *ngFor="let event of paginatedEvents; let i = index"
+        *ngFor="let organizer of paginatedOrganizers; let i = index"
         class="hover:bg-gray-50 hover:cursor-pointer text-eventTableColor"
       >
-        <td class="px-4 py-3 font-medium">{{ event.name }}</td>
-        <td class="px-4 py-3">{{ event.location }}</td>
-        <td class="px-4 py-3">{{ event.organizedBy }}</td>
-
+        <td class="px-4 py-3 font-medium">{{ organizer.name }}</td>
+        <td class="px-4 py-3">{{ organizer.email }}</td>
         <!-- Verified -->
         <td class="px-4 py-3">
           <div
             class="flex items-center justify-center w-6 h-6 rounded-full"
-            [ngClass]="event.verified ? 'bg-green-600' : 'bg-red-600'"
+            [ngClass]="organizer.verified ? 'bg-green-600' : 'bg-red-600'"
           >
-            <fa-icon *ngIf="event.verified" [icon]="faCheck" class="text-md cursor-pointer text-white"></fa-icon>
-            <fa-icon *ngIf="!event.verified" [icon]="faTimes" class="text-md cursor-pointer text-white"></fa-icon>
+            <fa-icon *ngIf="organizer.verified" [icon]="faCheck" class="text-md cursor-pointer text-white"></fa-icon>
+            <fa-icon *ngIf="!organizer.verified" [icon]="faTimes" class="text-md cursor-pointer text-white"></fa-icon>
           </div>
         </td>
 
-        <td class="px-4 py-3">{{ event.date }}</td>
+        <td class="px-4 py-3">{{ organizer.date }}</td>
 
         <!-- Actions -->
         <td class="px-4 py-3 text-right relative">
@@ -89,4 +84,3 @@
     </div>
   </div>
 </div>
-<!-- </div> -->

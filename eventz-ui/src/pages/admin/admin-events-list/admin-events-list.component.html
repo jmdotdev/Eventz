@@ -1,1 +1,10 @@
-<app-events-table></app-events-table>
+<div class="flex flex-col bg-white rounded-lg p-4 mx-4 my-6">
+  <app-table-header (showEvents)="toggleEvents($event)"></app-table-header>
+  @if(showEvents) {
+    <app-events-table></app-events-table>
+  }
+  @else { 
+    <app-organizers-table></app-organizers-table>
+  }
+
+</div>
