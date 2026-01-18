@@ -35,7 +35,7 @@ export class TicketListTableComponent {
     return Math.ceil(this.tickets.length / this.pageSize);
   }
 
-  get paginatedTickets(): Ticket[] {
+  get paginatedTickets(): Ticket[] | [] {
     const start = (this.currentPage - 1) * this.pageSize;
     return this.tickets.slice(start, start + this.pageSize);
   }

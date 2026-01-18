@@ -15,7 +15,7 @@
     </div>
     <div
             *ngIf="showHeaderDropDown"
-            class="absolute right-4 mt-28 w-28 bg-white border rounded shadow z-10 cursor-pointer"
+            class="absolute right-4 mt-28 w-auto bg-white border rounded shadow z-10 cursor-pointer"
           >
             <button class="block w-full text-left px-4 py-2 hover:bg-gray-100">
               Add Ticket
@@ -37,8 +37,8 @@
     </thead>
 
     <tbody>
+      @for (ticket of paginatedTickets; let i = $index; track $index) {
       <tr
-        *ngFor="let ticket of paginatedTickets; let i = index"
         class="hover:bg-gray-50 hover:cursor-pointer text-eventTableColor"
       >
         <td class="px-4 py-3 font-medium">{{ ticket.ticketNo }}</td>
@@ -72,11 +72,18 @@
             class="absolute right-4 mt-2 w-32 bg-white border rounded shadow z-10"
           >
             <button class="block w-full text-left px-4 py-2 text-red-600 hover:bg-gray-100">
-              Deactivate
+              Revoke
             </button>
           </div>
         </td>
       </tr>
+      } @empty {
+        <tr>
+            <td colspan="6" class="px-4 py-3 text-center text-eventTableColor">
+            No tickets found.
+            </td>
+        </tr>
+      }
     </tbody>
   </table>
 
