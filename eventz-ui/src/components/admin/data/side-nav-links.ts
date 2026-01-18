@@ -21,8 +21,8 @@ export const sideNavLinks: ISideNav[] = [
         icon: faPaperPlane
     },
         {
-        name: 'Profile',
-        path: 'profile',
+        name: 'Users',
+        path: 'users',
         isActive: false,
         icon: faUser
     }

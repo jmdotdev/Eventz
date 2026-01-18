@@ -59,3 +59,18 @@ export interface Organizer {
   verified: boolean;
   date: string;
 }
+
+export interface User {
+    name: string;
+    email: string;
+    active: boolean;
+    date: string;
+}
+
+export interface Ticket {
+    ticketNo: string;
+    event: string;
+    persons: number;
+    active: boolean;
+    dateBooked: string;
+}
