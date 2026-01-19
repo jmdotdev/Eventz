@@ -12,7 +12,9 @@ export const routes: Routes = [
          {path: '', loadComponent: () => import('../pages/admin/dashboard/dashboard.component').then(m => m.DashboardComponent)},
          {path: 'events', loadComponent: () => import('../pages/admin/admin-events-list/admin-events-list.component').then(m => m.AdminEventsListComponent)},
          {path: 'tickets', loadComponent: () => import('../pages/admin/ticket-list-table/ticket-list-table.component').then(m => m.TicketListTableComponent)},
-         {path: 'users', loadComponent: () => import('../pages/admin/user-list-table/user-list-table.component').then(m => m.UserListTableComponent)}
+         {path: 'users', loadComponent: () => import('../pages/admin/user-list-table/user-list-table.component').then(m => m.UserListTableComponent)},
+         {path: 'create-ticket', loadComponent: () => import('../pages/admin/create-ticket/create-ticket.component').then(m => m.CreateTicketComponent)},
+         {path: 'create-event', loadComponent: () => import('../pages/admin/create-event/create-event.component').then(m => m.CreateEventComponent)}
       ]
    }
 ];

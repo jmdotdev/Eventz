@@ -2,7 +2,8 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faCheck, faEllipsisV, faTimes, faPlus, faSearch, faEllipsisH } from '@fortawesome/free-solid-svg-icons';
-import { Ticket, User } from '../../../interfaces/interface';
+import { Ticket } from '../../../interfaces/interface';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-ticket-list-table',
@@ -23,6 +24,8 @@ export class TicketListTableComponent {
   faEllipsisH = faEllipsisH;
   showHeaderDropDown: boolean = false;
 
+  constructor (private router: Router) {}
+
   tickets: Ticket[] = Array.from({ length: 37 }).map((_, i) => ({
     ticketNo: `#Ticket ${i + 1}`,
     event: ['NY Exhibition', 'LA Event', 'MIAMI Event'][i % 3],
@@ -37,7 +40,7 @@ export class TicketListTableComponent {
 
   get paginatedTickets(): Ticket[] | [] {
     const start = (this.currentPage - 1) * this.pageSize;
-    return this.tickets.slice(start, start + this.pageSize);
+    return this.tickets.slice(start, start + this.pageSize) || [];
   }
 
   changePage(page: number) {
@@ -53,5 +56,9 @@ export class TicketListTableComponent {
 
   openHeaderDropDown () {
     this.showHeaderDropDown = !this.showHeaderDropDown;
+  }
+
+  navigateToCreateTicket () {
+    this.router.navigate(['admin/create-ticket']);
   }
 }

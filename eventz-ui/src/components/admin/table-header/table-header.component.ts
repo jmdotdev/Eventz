@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common'
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faEllipsisH, faPlus, faSearch } from '@fortawesome/free-solid-svg-icons';
 import { NgClass } from "../../../../node_modules/@angular/common/index";
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-table-header',
@@ -18,8 +19,13 @@ export class TableHeaderComponent {
     showEventsTable: boolean = true;
     @Output() showEvents = new EventEmitter<boolean>(true);
 
+    constructor ( private router: Router) {}
+
     toggleShowEvents (value: boolean) {
        this.showEvents.emit(value)
        this.showEventsTable = value;
+    }
+    navigateToAddEvent () {
+      this.router.navigate(['/admin/create-event']);
     }
 }
