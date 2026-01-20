@@ -1,24 +1,55 @@
-<!-- Navbar Container -->
-<div class="flex flex-col md:flex-row items-center justify-between w-full min-h-20 px-4 py-0" [ngClass]="!isLandinPage ? 'not-landing': ''">
-  <div class="flex justify-between items-center w-full md:w-auto">
-    <h1 class="text-white font-bold text-3xl md:text-4xl">EventZ</h1>
-      <img
-         class="w-auto h-auto object-cover md:hidden"
-         src="/assets/images/sort.svg"
-         alt="sign-up.png"
-         (click)="toggleNav()"
-       />
-  </div>
-  <ul 
-    class="flex flex-col md:flex-row items-center w-full md:w-auto mt-4 md:mt-0"
-    [ngClass]="{'hidden': !showNav, 'flex': showNav}"
-  >
-    <li class="text-white cursor-pointer md:px-8" *ngFor="let route of routes">
+<div
+  class="flex items-center justify-between w-full min-h-20 px-4"
+  [ngClass]="!isLandinPage ? 'not-landing' : ''"
+>
+  <h1 class="text-white font-bold text-3xl md:text-4xl">EventZ</h1>
+
+  <img
+    class="md:hidden cursor-pointer"
+    src="/assets/images/sort.svg"
+    alt="menu"
+    (click)="toggleNav()"
+  />
+
+  <ul class="hidden md:flex items-center">
+    <li
+      class="text-white cursor-pointer px-8"
+      *ngFor="let route of routes"
+    >
       {{ route.name }}
     </li>
   </ul>
 
-  <button class="border-2 border-white text-white rounded-lg px-4 py-1 md:block" *ngIf="showNav || !isMobile()">
+  <button class="hidden md:block border-2 border-white text-white rounded-lg px-4 py-1">
     Sign In
   </button>
+</div>
+
+<div
+  *ngIf="showNav"
+  class="fixed inset-0 bg-black/50 z-40 md:hidden"
+  (click)="toggleNav()"
+></div>
+
+<div
+  class="fixed top-0 left-0 h-full w-64 bg-[#0f0152] z-50 transform transition-transform duration-300 md:hidden"
+  [ngClass]="showNav ? 'translate-x-0' : '-translate-x-full'"
+>
+  <div class="p-6">
+    <h2 class="text-white text-2xl font-bold mb-6">EventZ</h2>
+
+    <ul class="flex flex-col space-y-4">
+      <li
+        class="text-white cursor-pointer"
+        *ngFor="let route of routes"
+        (click)="toggleNav()"
+      >
+        {{ route.name }}
+      </li>
+    </ul>
+
+    <button class="mt-8 w-full border-2 border-white text-white rounded-lg py-2">
+      Sign In
+    </button>
+  </div>
 </div>
