@@ -1,4 +1,7 @@
-<div class="flex items-center justify-between mt-2">
+<div class="flex items-center mx-auto w-[100vw] lg:w-[85vw] justify-between mt-2">
+    <button class="lg:hidden ml-4" (click)="menuClick.emit()">
+  <fa-icon [icon]="faBars"></fa-icon>
+</button>
     <div class="text-lg font-semibold">
         Dashboard
     </div>
