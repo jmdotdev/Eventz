@@ -37,7 +37,7 @@
     </thead>
 
     <tbody>
-      @for (ticket of paginatedTickets; let i = $index; track $index) {
+      @for (ticket of paginatedTickets; let i = $index; track i) {
       <tr
         class="hover:bg-gray-50 hover:cursor-pointer text-eventTableColor"
       >
