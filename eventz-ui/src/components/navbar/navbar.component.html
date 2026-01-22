@@ -8,13 +8,14 @@
     class="md:hidden cursor-pointer"
     src="/assets/images/sort.svg"
     alt="menu"
-    (click)="toggleNav()"
+    (click)="this.showNav = !this.showNav"
   />
 
   <ul class="hidden md:flex items-center">
     <li
       class="text-white cursor-pointer px-8"
       *ngFor="let route of routes"
+      (click)="toggleNav(route)"
     >
       {{ route.name }}
     </li>
@@ -28,7 +29,7 @@
 <div
   *ngIf="showNav"
   class="fixed inset-0 bg-black/50 z-40 md:hidden"
-  (click)="toggleNav()"
+  (click)="this.showNav = !this.showNav"
 ></div>
 
 <div
@@ -42,7 +43,7 @@
       <li
         class="text-white cursor-pointer"
         *ngFor="let route of routes"
-        (click)="toggleNav()"
+        (click)="toggleNav(route)"
       >
         {{ route.name }}
       </li>
