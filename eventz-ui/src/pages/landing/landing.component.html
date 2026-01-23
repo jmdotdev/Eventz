@@ -1,6 +1,6 @@
 <div>
   <div class="main w-full h-[80vh] md:h-screen flex flex-col justify-between mb-12">
-    <app-navbar> </app-navbar>
+    <app-navbar (clickedNavItem)="handleClickedNavItem($event)"> </app-navbar>
     <div class="mx-auto w-3/4">
       <h2 class="text-white text-center text-4xl md:text-6xl font-bold mx-auto">
         Your Ultimate Destination For Unforgettable
@@ -9,13 +9,13 @@
     </div>
     <app-search-form></app-search-form>
   </div>
-  <div class="py-12">
+  <div class="py-12" id="about">
     <app-categories></app-categories>
   </div>
   <div class="mx-auto">
     <app-about></app-about>
   </div>
-  <div class="mx-auto">
+  <div class="mx-auto"  id="events">
     <app-events></app-events>
   </div>
   <div class="mx-auto">
@@ -38,7 +38,7 @@
        <app-button [backgroundColor]="whiteColor" [color]="deepBlue"></app-button>
     </div>
   </div>
-  <div class="mt-4">
+  <div class="mt-4" id="contact">
     <app-contactform></app-contactform>
   </div>
   <div> 
