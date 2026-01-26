@@ -8,7 +8,6 @@
 - [Features](#features)
 - [Technologies](#technologies)
 - [Setup Instructions](#setup-instructions)
-- [Mock Server Usage](#mock-server-usage)
 - [Contributing](#contributing)
 - [License](#license)
 
@@ -31,7 +30,7 @@
 
 ## Technologies
 
-- **Frontend:** Angular (Version X)
+- **Frontend:** Angular (Version 17)
 - **Backend:** .NET Core (API under development)
 - **Database:** PostgreSQL
 - **Mock Server:** Postman Mock Servers (For initial API development)
@@ -82,17 +81,6 @@ Open your browser and navigate to `http://localhost:4200`.
 cd backend
 dotnet run
 ```
-
-### Mock Server Usage
-
-Since the API is under development, we will be using **Postman Mock Servers** to simulate API responses. The mock server provides endpoints for user login, event listing, ticket purchase, and admin CRUD operations. 
-
-#### How to Use Postman Mock Servers
-
-1. Download and install Postman if you haven't already.
-2. Import the Postman collection provided in this repo (`postman_collection.json`).
-3. Start the mock server by selecting the collection and choosing "Mock Server."
-4. Replace the base URLs in your Angular services with the mock server's URL until the API is ready.
 
 ## Contributing
 
