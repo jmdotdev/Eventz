@@ -2,8 +2,8 @@
     <button class="lg:hidden ml-4" (click)="menuClick.emit()">
   <fa-icon [icon]="faBars"></fa-icon>
 </button>
-    <div class="text-lg font-semibold">
-        Dashboard
+    <div class="text-lg font-semibold my-3">
+        {{activeLink}}
     </div>
     <div class="flex items-center justify-end w-1/6 pe-6">
         <div class="flex items-center justify-center w-10 h-10 rounded-full bg-adminBackground">

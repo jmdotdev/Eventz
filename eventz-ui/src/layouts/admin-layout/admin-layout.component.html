@@ -2,7 +2,7 @@
 
   <!-- Desktop sidenav -->
   <div class="hidden lg:block w-[15%]">
-    <app-side-nav></app-side-nav>
+    <app-side-nav (selectedLinkEmitter)="handleEmittedLink($event)"></app-side-nav>
   </div>
 
   <!-- Mobile backdrop -->
@@ -17,13 +17,13 @@
     class="fixed top-0 left-0 h-full w-64 bg-white z-50 transform transition-transform duration-300 lg:hidden"
     [ngClass]="showSideNav ? 'translate-x-0' : '-translate-x-full'"
   >
-    <app-side-nav></app-side-nav>
+    <app-side-nav (selectedLinkEmitter)="handleEmittedLink($event)"></app-side-nav>
   </div>
 
   <!-- Main content -->
   <div class="flex flex-col w-full lg:w-[85%] max-h-screen overflow-y-auto">
     <div class="h-14 bg-white flex items-center">
-      <app-top-bar (menuClick)="toggleSideNav()"></app-top-bar>
+      <app-top-bar (menuClick)="toggleSideNav()" [activeLink]="activeLink"></app-top-bar>
     </div>
 
     <div>

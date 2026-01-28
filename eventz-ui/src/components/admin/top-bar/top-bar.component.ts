@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { faBell, faDotCircle, faBars } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { CommonModule } from '@angular/common';
@@ -14,4 +14,5 @@ export class TopBarComponent {
     faDotCircle = faDotCircle;
     faBars = faBars;
     @Output() menuClick = new EventEmitter<void>();
+    @Input() activeLink: string = '';
 }
