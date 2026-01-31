@@ -12,5 +12,7 @@ namespace Eventz.Infrastructure
         public DbSet<Event> Events => Set<Event>();
 
         public DbSet<Category> Categories => Set<Category>();
+
+        public DbSet<User> Users => Set<User>();
     }
 }
