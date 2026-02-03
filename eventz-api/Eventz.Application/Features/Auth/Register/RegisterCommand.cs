@@ -9,8 +9,5 @@ using System.Threading.Tasks;
 
 namespace Eventz.Application.Features.Auth.Register
 {
-    internal class RegisterCommand
-    {
         public record RegistrationCommand (string UserName, string Email, string Password) : IRequest<ApiResponse<RegisterDto>>;
-    }
 }

@@ -23,7 +23,7 @@ namespace Eventz.Infrastructure.Repositories.Auth
             var user = new User{
                 UserName = registerDto.UserName,
                 Email = registerDto.Email,
-                Password = registerDto.Password, //TODO: Hash password
+                Password = registerDto.Password,
                 CreatedAt = DateTime.Now
             };
             await _context.Users.AddAsync(user);

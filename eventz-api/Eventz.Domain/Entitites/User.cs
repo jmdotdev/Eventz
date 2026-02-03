@@ -8,7 +8,7 @@ namespace Eventz.Domain.Entitites
 {
     public class User
     {
-        public string Id { get; set; }
+        public int Id { get; set; }
         public Guid UserToken { get; set; } = new Guid();
         public string UserName { get; set; }
         public string Email { get; set; }

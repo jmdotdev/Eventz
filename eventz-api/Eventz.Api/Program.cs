@@ -1,11 +1,11 @@
-using Microsoft.EntityFrameworkCore;
-using MediatR;
-
-using System;
 using Eventz.Application.AssemblyMarker;
-using Eventz.Infrastructure;
 using Eventz.Application.Interfaces;
+using Eventz.Infrastructure;
+using Eventz.Infrastructure.Repositories.Auth;
 using Eventz.Infrastructure.Repositories.Categories;
+using MediatR;
+using Microsoft.EntityFrameworkCore;
+using System;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -21,6 +21,7 @@ builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
+builder.Services.AddScoped<IAuth, AuthRepository>();
 
 //MediatR
 builder.Services.AddMediatR(cfg =>
