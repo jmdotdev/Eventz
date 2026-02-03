@@ -14,5 +14,7 @@ namespace Eventz.Infrastructure
         public DbSet<Category> Categories => Set<Category>();
 
         public DbSet<User> Users => Set<User>();
+
+        //Add Configs
     }
 }
