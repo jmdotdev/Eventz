@@ -1,5 +1,6 @@
 ﻿
 using Eventz.Domain.Entitites;
+using Eventz.Infrastructure.Configurations;
 using Microsoft.EntityFrameworkCore;
 
 namespace Eventz.Infrastructure
@@ -15,6 +16,12 @@ namespace Eventz.Infrastructure
 
         public DbSet<User> Users => Set<User>();
 
-        //Add Configs
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.ApplyConfigurationsFromAssembly(typeof(AppDbContext).Assembly);
+
+            base.OnModelCreating(modelBuilder);
+        }
+
     }
 }
