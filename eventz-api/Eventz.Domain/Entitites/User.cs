@@ -9,12 +9,11 @@ namespace Eventz.Domain.Entitites
     public class User
     {
         public int Id { get; set; }
-        public Guid UserToken { get; set; } = new Guid();
+        public Guid UserToken { get; set; } = Guid.NewGuid();
         public string UserName { get; set; }
         public string Email { get; set; }
         public string Password { get; set; }
         public DateTime CreatedAt { get; set; }
-        public List<Ticket> Tickets { get; set; }
-        public List<Event> Events { get; set; }
+        public List<EventRegistration> EventRegistrations { get; set; } = new List<EventRegistration>();
     }
 }

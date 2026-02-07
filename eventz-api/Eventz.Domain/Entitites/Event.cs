@@ -16,11 +16,13 @@ namespace Eventz.Domain.Entitites
         public DateTime EndDate { get; set; }
         public int Capacity { get; set; }
         public bool IsPublic { get; set; }
-        public string OrganizerId { get; set; }
+        //public string OrganizerId { get; set; }
         public int VenueId { get; set; }
         public int CategoryId { get; set; }
-        public Venue venue { get; set; }
-        public Category category { get; set; }
+        public Venue Venue { get; set; }
+        public Category Category { get; set; }
+
+        //public User Organizer { get; set; }
 
         public ICollection<EventRegistration> Registrations { get; set; }
         public ICollection<Ticket> Tickets { get; set; }
