@@ -8,7 +8,10 @@ namespace Eventz.Infrastructure.Configurations
     {
             public void Configure(EntityTypeBuilder<Category> builder)
             {
+
                 builder.ToTable("Categories");
+                builder.Property("Name").IsRequired().HasColumnType("VARCHAR(100)");
+                builder.Property("Description").IsRequired().HasColumnType("TEXT");
                 builder.HasKey(x => x.Id);
             }
 
