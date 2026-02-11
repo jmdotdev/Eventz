@@ -17,6 +17,9 @@ namespace Eventz.Infrastructure.Configurations
             builder.HasIndex(er => new { er.UserId, er.EventId }).IsUnique();
             builder.Property(er => er.RegisteredAt)
            .HasDefaultValueSql("GETUTCDATE()");
+            builder.Property(er => er.UserId).IsRequired();
+            builder.Property(er => er.EventId).IsRequired();
+            builder.Property(er => er.CheckedIn).IsRequired().HasDefaultValue(false);
 
             builder.HasOne(er => er.Event)
                 .WithMany(e => e.Registrations)

@@ -15,10 +15,10 @@ namespace Eventz.Infrastructure.Configurations
         {
             builder.ToTable("Venues");
             builder.HasIndex(v => v.Id);
-            builder.HasMany(v => v.Events)
-                .WithOne(e => e.Venue)
-                .HasForeignKey(e => e.VenueId)
-                .OnDelete(DeleteBehavior.Restrict);
+            builder.Property(v => v.Name).IsRequired();
+            builder.Property(v => v.Address).IsRequired();
+            builder.Property(v => v.City).IsRequired();
+            builder.Property(v => v.Capacity).IsRequired();
         }
     }
 }

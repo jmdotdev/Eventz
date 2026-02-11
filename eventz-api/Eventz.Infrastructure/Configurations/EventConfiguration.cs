@@ -24,6 +24,9 @@ namespace Eventz.Infrastructure.Configurations
             builder.Property(e => e.StartDate).IsRequired();
             builder.Property(e => e.EndDate)
                 .IsRequired();
+            builder.Property(e => e.IsPublic).IsRequired().HasDefaultValue(false);
+            builder.Property(e => e.CategoryId).IsRequired();
+            builder.Property(e => e.CategoryId).IsRequired();
 
             //relations
             builder.HasOne(e => e.Venue)
