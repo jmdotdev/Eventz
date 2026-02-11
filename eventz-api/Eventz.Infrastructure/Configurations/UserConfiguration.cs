@@ -12,6 +12,9 @@ namespace Eventz.Infrastructure.Configurations
 
             builder.HasKey(u => u.Id);
             builder.HasIndex(u => u.Email).IsUnique();
+            builder.Property(u => u.UserName).IsRequired().HasMaxLength(255);
+            builder.Property(u => u.Password).IsRequired().HasMaxLength(255);
+            builder.Property(u => u.Email).IsRequired().HasMaxLength(255);
             builder.Property(u => u.CreatedAt).HasDefaultValueSql("GETUTCDATE()");
 
         }

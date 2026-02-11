@@ -15,6 +15,10 @@ namespace Eventz.Infrastructure.Configurations
         {
             builder.ToTable("Tickets");
             builder.HasKey(t => t.Id);
+            builder.Property(t => t.EventId).IsRequired();
+            builder.Property(t => t.Type).IsRequired();
+            builder.Property(t => t.Price).HasPrecision(18, 2);
+            builder.Property(t => t.Quantity).IsRequired();
             builder.HasOne(t => t.Event)
                 .WithMany(e => e.Tickets)
                 .HasForeignKey(t => t.EventId)

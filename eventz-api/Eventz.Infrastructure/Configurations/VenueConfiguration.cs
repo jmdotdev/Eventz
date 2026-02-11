@@ -15,6 +15,10 @@ namespace Eventz.Infrastructure.Configurations
         {
             builder.ToTable("Venues");
             builder.HasIndex(v => v.Id);
+            builder.Property(v => v.Name).IsRequired();
+            builder.Property(v => v.Address).IsRequired();
+            builder.Property(v => v.City).IsRequired();
+            builder.Property(v => v.Capacity).IsRequired();
         }
     }
 }

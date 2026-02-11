@@ -10,8 +10,8 @@ namespace Eventz.Infrastructure.Configurations
             {
 
                 builder.ToTable("Categories");
-                builder.Property("Name").IsRequired().HasColumnType("VARCHAR(100)");
-                builder.Property("Description").IsRequired().HasColumnType("TEXT");
+                builder.Property("Name").IsRequired().HasMaxLength(100);
+                builder.Property("Description").IsRequired().HasMaxLength(10000);
                 builder.HasKey(x => x.Id);
             }
 
