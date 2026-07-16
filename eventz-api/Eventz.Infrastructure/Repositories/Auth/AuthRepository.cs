@@ -36,5 +36,11 @@ namespace Eventz.Infrastructure.Repositories.Auth
             };
  
         }
+
+
+        public async Task<LoginDto> LoginUser ()
+        {
+            return;
+        }
     }
 }

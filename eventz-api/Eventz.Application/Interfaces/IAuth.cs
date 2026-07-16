@@ -11,6 +11,8 @@ namespace Eventz.Application.Interfaces
     public interface IAuth
     {
         public Task<RegisterDto> RegisterUser(RegisterDto registerDto);
+
+        public Task<LoginDto> LoginUser(LoginDto loginDto);
     }
 
 }

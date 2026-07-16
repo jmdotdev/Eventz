@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Eventz.Application.Dtos
 {
-    internal class LoginDto
+    public class LoginDto
     {
         public string Email { get; set; }
         public string Password { get; set; }
