@@ -1,0 +1,17 @@
+<div
+  class="rounded-[18px] border bg-white p-6 text-center"
+  [class]="dashed ? 'border-dashed border-brand-border' : 'border-border-light'"
+>
+  <span class="mb-3.5 inline-flex h-11 w-11 items-center justify-center rounded-[13px] bg-brand-tint">
+    <ng-icon [name]="iconName" size="19" color="#381DDB" />
+  </span>
+  <p class="mb-1.5 text-[15.5px] font-bold text-text-primary">{{ title }}</p>
+  <p class="mb-4 text-[13.5px] leading-normal text-text-secondary">{{ message }}</p>
+  @if (ctaLabel) {
+    <button
+      type="button"
+      (click)="cta.emit()"
+      class="rounded-[10px] bg-brand px-4 py-2.5 text-[13.5px] font-bold text-white hover:bg-brand-hover"
+    >{{ ctaLabel }}</button>
+  }
+</div>

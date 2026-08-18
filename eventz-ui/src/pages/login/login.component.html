@@ -1,55 +1,46 @@
-<div class="flex items-center justify-center min-h-screen w-full">
-   <div class="flex flex-col md:flex-row">
-     <!-- Form -->
-     <div class="flex flex-1 flex-col flex-shrink-0 p-6 p:md-8">
-       <h1 class="text-2xl font-bold">Login</h1>
-       <span
-         >Dont have an account?
-         <a routerLink=""
-           class="cursor-pointer underline text-black font-semibold"
-           >register</a
-         ></span
-       >
- 
-       <div class="flex flex-col">
-         <form class="flex flex-col" [formGroup]="loginForm" (ngSubmit)="loginUser()">
-          <label class="mt-4">Email</label>
-         <input
-           class="border rounded-lg h-10 focus:outline-none p-2"
-           type="email"
-           placeholder="enter email"
-           formControlName="email"
-         />
-         <div class="text-red-700" *ngIf="loginForm.get('email')?.invalid && loginForm.get('email')?.touched">
-          Please enter a valid email.
-        </div>
-         <label class="mt-4">Password</label>
-         <input
-           class="border rounded-lg h-10 focus:outline-none p-2"
-           type="password"
-           placeholder="enter email"
-           formControlName="password"
-         />
-         <div class="text-red-700" *ngIf="loginForm.get('password')?.errors?.['required'] && loginForm.get('password')?.touched">
-          Password is required
-        </div>        
-         <button [disabled]="loginForm.invalid"
-           class="flex align-center justify-center bg-deepBlue text-white rounded-lg mt-4 w-1/2 md:w-1/4 p-2 p:md-3"
-         >
-           Login
-         </button>
-         </form>
-       </div>
-     </div>
- 
-     <!-- Banner -->
-     <div class="hidden md:block flex-1 p-6 p:md-8">
-       <img
-         class="w-full h-full object-cover"
-         src="/assets/images/sign-up.png"
-         alt="sign-up.png"
-       />
-     </div>
-   </div>
- </div>
- 
+<div class="flex min-h-screen w-full items-center justify-center bg-surface-muted px-6">
+  <div class="w-full max-w-sm rounded-[20px] border border-border-light bg-white p-8">
+    <a routerLink="/" class="mb-6 flex items-center gap-2">
+      <span class="flex h-[30px] w-[30px] items-center justify-center rounded-lg bg-brand text-sm font-extrabold text-white">E</span>
+      <span class="text-[19px] font-extrabold text-text-primary">Eventz</span>
+    </a>
+    <h1 class="mb-1 text-[22px] font-extrabold tracking-[-.02em] text-text-primary">Welcome back</h1>
+    <p class="mb-6 text-[13.5px] text-text-secondary">
+      Don't have an account? <a routerLink="/register" class="font-semibold text-brand">Register</a>
+    </p>
+
+    <form class="flex flex-col gap-4" [formGroup]="loginForm" (ngSubmit)="loginUser()">
+      <label class="block">
+        <span class="mb-1.5 block text-[13.5px] font-bold text-text-primary">Email</span>
+        <input
+          type="email"
+          placeholder="you@example.com"
+          formControlName="email"
+          class="w-full rounded-xl border border-border bg-surface-muted px-3.5 py-3 text-[14.5px] outline-none focus:border-brand focus:bg-white"
+        />
+        @if (loginForm.get('email')?.invalid && loginForm.get('email')?.touched) {
+          <span class="mt-1.5 block text-[12.5px] font-semibold text-error">Please enter a valid email.</span>
+        }
+      </label>
+
+      <label class="block">
+        <span class="mb-1.5 block text-[13.5px] font-bold text-text-primary">Password</span>
+        <input
+          type="password"
+          placeholder="••••••••"
+          formControlName="password"
+          class="w-full rounded-xl border border-border bg-surface-muted px-3.5 py-3 text-[14.5px] outline-none focus:border-brand focus:bg-white"
+        />
+        @if (loginForm.get('password')?.errors?.['required'] && loginForm.get('password')?.touched) {
+          <span class="mt-1.5 block text-[12.5px] font-semibold text-error">Password is required.</span>
+        }
+      </label>
+
+      <button
+        type="submit"
+        [disabled]="loginForm.invalid"
+        class="mt-2 w-full rounded-xl bg-brand py-3 text-[14.5px] font-bold text-white disabled:cursor-not-allowed disabled:opacity-50"
+      >Login</button>
+    </form>
+  </div>
+</div>

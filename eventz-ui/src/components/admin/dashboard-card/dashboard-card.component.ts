@@ -3,11 +3,10 @@ import { CommonModule } from '@angular/common';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faUser, faArchive, faSignal, faWrench } from '@fortawesome/free-solid-svg-icons';
 @Component({
-  selector: 'app-dashboard-card',
-  standalone: true,
-  imports: [FontAwesomeModule, CommonModule],
-  templateUrl: './dashboard-card.component.html',
-  styleUrl: './dashboard-card.component.scss'
+    selector: 'app-dashboard-card',
+    imports: [FontAwesomeModule, CommonModule],
+    templateUrl: './dashboard-card.component.html',
+    styleUrl: './dashboard-card.component.scss'
 })
 export class DashboardCardComponent {
   @Input() index!: number;

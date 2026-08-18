@@ -1,0 +1,120 @@
+<div>
+  <app-navbar variant="account" />
+
+  <div class="mx-auto max-w-[1280px] px-6 py-10 md:px-8">
+    <div class="mb-10 flex flex-wrap items-center justify-between gap-4">
+      <div>
+        <h1 class="text-[28px] font-extrabold tracking-[-.03em] text-text-primary sm:text-[34px]">Good morning, John 👋</h1>
+        <p class="mt-1 text-[15px] text-text-secondary">You have {{ upcomingTickets().length }} events coming up this week.</p>
+      </div>
+      <a z-button routerLink="/" zSize="lg">Discover events</a>
+    </div>
+
+    <div class="flex flex-wrap gap-8">
+      <!-- Main column -->
+      <div class="min-w-[280px] flex-1 sm:min-w-[460px]">
+        <!-- Upcoming events -->
+        <section class="mb-10">
+          <div class="mb-4 flex items-center justify-between">
+            <h2 class="text-[20px] font-extrabold tracking-[-.02em] text-text-primary">Upcoming events</h2>
+            <a routerLink="/tickets" class="text-[13.5px] font-semibold text-brand">View all tickets</a>
+          </div>
+          <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
+            @for (ticket of upcomingTickets(); track ticket.id) {
+              <a [routerLink]="['/events', ticket.event.id]" class="flex gap-3.5 rounded-2xl border border-border-light p-3.5 hover:border-border-hover">
+                <div class="h-[88px] w-[88px] shrink-0 rounded-xl" [style.background]="'linear-gradient(150deg,' + ticket.event.coverGradient[0] + ',' + ticket.event.coverGradient[1] + ')'"></div>
+                <div class="flex min-w-0 flex-col justify-between">
+                  <div>
+                    <p class="text-[11.5px] font-bold uppercase tracking-[.04em] text-brand">{{ formatDate(ticket.event.dateTime) }}</p>
+                    <p class="truncate text-[14.5px] font-bold text-text-primary">{{ ticket.event.title }}</p>
+                    <p class="truncate text-[12.5px] text-text-tertiary">{{ ticket.event.venue.name }} · {{ ticket.tierName }}</p>
+                  </div>
+                  <span class="w-fit rounded-lg border border-border px-2.5 py-1 text-[12px] font-bold text-text-primary">View ticket</span>
+                </div>
+              </a>
+            }
+          </div>
+        </section>
+
+        <!-- Recommended -->
+        <section class="mb-10">
+          <h2 class="mb-4 text-[20px] font-extrabold tracking-[-.02em] text-text-primary">Recommended for you</h2>
+          <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            @for (event of recommended(); track event.id) {
+              <app-event-card [event]="event" variant="grid" />
+            }
+          </div>
+        </section>
+
+        <!-- Recently viewed -->
+        <section>
+          <h2 class="mb-4 text-[20px] font-extrabold tracking-[-.02em] text-text-primary">Recently viewed</h2>
+          <div class="flex flex-wrap gap-3">
+            @for (item of recentlyViewed(); track item.event.id) {
+              <a [routerLink]="['/events', item.event.id]" class="flex items-center gap-2.5 rounded-full border border-border-light py-1.5 pl-1.5 pr-4 hover:border-border-hover">
+                <div class="h-[38px] w-[38px] shrink-0 rounded-full" [style.background]="'linear-gradient(150deg,' + item.event.coverGradient[0] + ',' + item.event.coverGradient[1] + ')'"></div>
+                <div>
+                  <p class="text-[13px] font-bold text-text-primary">{{ item.event.title }}</p>
+                  <p class="text-[11.5px]" [class]="item.statusNote ? 'font-semibold text-error' : 'text-text-tertiary'">{{ item.statusNote ?? formatDate(item.event.dateTime) }}</p>
+                </div>
+              </a>
+            }
+          </div>
+        </section>
+      </div>
+
+      <!-- Sidebar -->
+      <aside class="w-full min-w-[280px] flex-1 sm:max-w-[340px]">
+        <div class="mb-6 rounded-2xl bg-brand-tint p-5">
+          <div class="mb-4 flex items-center gap-3">
+            <span class="flex h-[46px] w-[46px] items-center justify-center rounded-full bg-brand text-[15px] font-bold text-white">JM</span>
+            <div>
+              <p class="text-[15px] font-bold text-text-primary">John Mwangi</p>
+              <p class="text-[12.5px] text-text-secondary">Member since 2024</p>
+            </div>
+          </div>
+          <div class="grid grid-cols-3 gap-2">
+            <div class="rounded-xl bg-white p-3 text-center">
+              <p class="text-[18px] font-extrabold text-text-primary">{{ stats().attended }}</p>
+              <p class="text-[11px] text-text-tertiary">Attended</p>
+            </div>
+            <div class="rounded-xl bg-white p-3 text-center">
+              <p class="text-[18px] font-extrabold text-text-primary">{{ stats().upcoming }}</p>
+              <p class="text-[11px] text-text-tertiary">Upcoming</p>
+            </div>
+            <div class="rounded-xl bg-white p-3 text-center">
+              <p class="text-[18px] font-extrabold text-text-primary">{{ stats().saved }}</p>
+              <p class="text-[11px] text-text-tertiary">Saved</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="mb-6">
+          <h3 class="mb-3 text-[14.5px] font-bold text-text-primary">Saved events</h3>
+          <div class="flex flex-col gap-3">
+            @for (event of saved(); track event.id) {
+              <a [routerLink]="['/events', event.id]" class="flex items-center gap-3 rounded-xl border border-border-light p-2.5 hover:border-border-hover">
+                <div class="h-11 w-11 shrink-0 rounded-lg" [style.background]="'linear-gradient(150deg,' + event.coverGradient[0] + ',' + event.coverGradient[1] + ')'"></div>
+                <div class="min-w-0 flex-1">
+                  <p class="truncate text-[13px] font-bold text-text-primary">{{ event.title }}</p>
+                  <p class="text-[11.5px] text-text-tertiary">{{ formatDate(event.dateTime) }} · {{ formatPrice(event.priceFrom) }}</p>
+                </div>
+                <ng-icon name="lucideHeart" size="16" color="#381DDB" [attr.fill]="'#381DDB'" />
+              </a>
+            }
+          </div>
+        </div>
+
+        <app-empty-state
+          icon="calendar"
+          title="No past events yet"
+          message="Events you've attended will show up here after the big day."
+          ctaLabel="Find an event"
+          [dashed]="true"
+        />
+      </aside>
+    </div>
+  </div>
+
+  <app-footer />
+</div>

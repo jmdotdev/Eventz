@@ -1,0 +1,20 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npx zard-cli@latest --version)",
+      "Bash(npm view *)",
+      "Bash(npx zard-cli@latest init -y -t angular)",
+      "Bash(npx zard-cli@latest add --help)",
+      "Bash(npx zard-cli@latest add button card badge input table tabs dialog sheet avatar separator skeleton progress alert dropdown checkbox radio select textarea -y)",
+      "Bash(node -e \"console.log\\(require\\('./node_modules/tailwindcss/package.json'\\).version\\)\")",
+      "Bash(node -e \"console.log\\(require\\('./node_modules/@tailwindcss/postcss/package.json'\\).version\\)\")",
+      "Bash(xargs grep -l \"class NgIcon\")",
+      "Bash(rm -f src/components/footer/footer.component.scss)",
+      "Bash(rm -f src/components/button/button.component.ts src/components/button/button.component.html src/components/button/button.component.scss src/components/button/button.component.spec.ts)",
+      "Bash(rmdir src/components/button)",
+      "Bash(npx ng *)",
+      "Bash(echo \"EXIT:$?\")",
+      "Read(//c/Users/JohnMwaniki/AppData/Local/Temp/**)"
+    ]
+  }
+}

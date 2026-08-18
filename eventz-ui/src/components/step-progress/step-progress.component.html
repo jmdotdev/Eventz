@@ -1,0 +1,17 @@
+<div class="flex items-center">
+  @for (label of steps; track label; let i = $index) {
+    <button type="button" (click)="stepClick.emit(i + 1)" class="flex shrink-0 items-center gap-2.5">
+      <span
+        class="flex h-8 w-8 items-center justify-center rounded-full text-[13px] font-bold"
+        [class]="i + 1 <= current ? 'bg-brand text-white' : 'border border-brand-border bg-brand-tint text-brand'"
+      >{{ i + 1 }}</span>
+      <span
+        class="hidden text-[13.5px] font-semibold sm:inline"
+        [class]="i + 1 <= current ? 'text-text-primary' : 'text-text-tertiary'"
+      >{{ label }}</span>
+    </button>
+    @if (i < steps.length - 1) {
+      <span class="mx-3 h-0.5 w-8 shrink-0 sm:mx-4 sm:w-14" [class]="i + 1 < current ? 'bg-brand' : 'bg-brand-border-light'"></span>
+    }
+  }
+</div>

@@ -5,11 +5,10 @@ import { TopBarComponent } from "../../components/admin/top-bar/top-bar.componen
 import { CommonModule } from '@angular/common';
 
 @Component({
-  selector: 'app-admin-layout',
-  standalone: true,
-  imports: [CommonModule, SideNavComponent, RouterOutlet, TopBarComponent],
-  templateUrl: './admin-layout.component.html',
-  styleUrl: './admin-layout.component.scss'
+    selector: 'app-admin-layout',
+    imports: [CommonModule, SideNavComponent, RouterOutlet, TopBarComponent],
+    templateUrl: './admin-layout.component.html',
+    styleUrl: './admin-layout.component.scss'
 })
 export class AdminLayoutComponent {
   showSideNav = false;

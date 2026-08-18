@@ -1,56 +1,42 @@
-<div
-  class="flex items-center justify-between w-full min-h-20 px-4"
-  [ngClass]="!isLandinPage ? 'not-landing' : ''"
->
-  <h1 class="text-white font-bold text-3xl md:text-4xl">EventZ</h1>
+<header class="sticky top-0 z-40 border-b border-border-light bg-white/[.92] backdrop-blur-md">
+  <div class="mx-auto flex h-20 max-w-[1280px] items-center gap-7 px-6 md:px-8">
+    <a routerLink="/" class="flex shrink-0 items-center gap-2">
+      <span class="flex h-[30px] w-[30px] items-center justify-center rounded-lg bg-brand text-sm font-extrabold text-white">E</span>
+      <span class="text-[19px] font-extrabold tracking-[-.01em] text-text-primary">Eventz</span>
+    </a>
 
-  <img
-    class="md:hidden cursor-pointer"
-    src="/assets/images/sort.svg"
-    alt="menu"
-    (click)="this.showNav = !this.showNav"
-  />
-
-  <ul class="hidden md:flex items-center">
-    <li
-      class="text-white cursor-pointer px-8"
-      *ngFor="let route of routes"
-      (click)="toggleNav(route)"
-    >
-      {{ route.name }}
-    </li>
-  </ul>
-
-  <button class="hidden md:block border-2 border-white text-white rounded-lg px-4 py-1">
-    Sign In
-  </button>
-</div>
-
-<div
-  *ngIf="showNav"
-  class="fixed inset-0 bg-black/50 z-40 md:hidden"
-  (click)="this.showNav = !this.showNav"
-></div>
-
-<div
-  class="fixed top-0 left-0 h-full w-64 bg-[#0f0152] z-50 transform transition-transform duration-300 md:hidden"
-  [ngClass]="showNav ? 'translate-x-0' : '-translate-x-full'"
->
-  <div class="p-6">
-    <h2 class="text-white text-2xl font-bold mb-6">EventZ</h2>
-
-    <ul class="flex flex-col space-y-4">
-      <li
-        class="text-white cursor-pointer"
-        *ngFor="let route of routes"
-        (click)="toggleNav(route)"
-      >
-        {{ route.name }}
-      </li>
-    </ul>
-
-    <button class="mt-8 w-full border-2 border-white text-white rounded-lg py-2">
-      Sign In
-    </button>
+    @if (variant === 'landing') {
+      <nav class="hidden items-center gap-7 text-[14.5px] font-semibold md:flex">
+        <a routerLink="/" class="text-brand">Discover Events</a>
+        <a href="#categories" class="text-text-nav">Categories</a>
+        <a href="#how-it-works" class="text-text-nav">How It Works</a>
+      </nav>
+      <div class="flex-1"></div>
+      <button type="button" class="hidden items-center gap-2 rounded-[10px] border border-border px-3.5 py-2 text-sm text-text-tertiary transition-colors hover:border-border-hover md:flex">
+        <ng-icon name="lucideSearch" size="15" color="#8A8A9E" />
+        Search events
+      </button>
+      <a routerLink="/login" class="hidden text-[14.5px] font-semibold text-text-nav md:block">Sign In</a>
+      <a z-button routerLink="/login" class="shadow-brand-cta">Host an Event</a>
+    } @else if (variant === 'account') {
+      <nav class="hidden items-center gap-7 text-[14.5px] font-semibold md:flex">
+        <a routerLink="/" class="text-text-nav">Discover Events</a>
+        <a routerLink="/tickets" class="text-text-nav">My tickets</a>
+        <a routerLink="/account" class="text-brand">Saved</a>
+      </nav>
+      <div class="flex-1"></div>
+      <button type="button" class="relative flex h-9 w-9 items-center justify-center rounded-full hover:bg-brand-tint" aria-label="Notifications">
+        <ng-icon name="lucideBell" size="18" color="#4A4A5C" />
+        <span class="absolute right-2 top-2 h-1.5 w-1.5 rounded-full bg-brand"></span>
+      </button>
+      <div class="flex h-[34px] w-[34px] items-center justify-center rounded-full border border-brand-border bg-brand-tint text-[13px] font-bold text-brand">JM</div>
+    } @else {
+      <div class="flex-1"></div>
+      <a z-button zType="outline" routerLink="/tickets">My tickets</a>
+      <a routerLink="/account" class="flex items-center gap-1.5">
+        <span class="flex h-[34px] w-[34px] items-center justify-center rounded-full border border-brand-border bg-brand-tint text-[13px] font-bold text-brand">JM</span>
+        <ng-icon name="lucideChevronDown" size="14" color="#8A8A9E" />
+      </a>
+    }
   </div>
-</div>
+</header>

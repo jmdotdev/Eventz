@@ -6,11 +6,10 @@ import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-side-nav',
-  standalone: true,
-  imports: [CommonModule, FaIconComponent],
-  templateUrl: './side-nav.component.html',
-  styleUrl: './side-nav.component.scss'
+    selector: 'app-side-nav',
+    imports: [CommonModule, FaIconComponent],
+    templateUrl: './side-nav.component.html',
+    styleUrl: './side-nav.component.scss'
 })
 export class SideNavComponent implements OnInit {
   links: ISideNav[] = sideNavLinks;

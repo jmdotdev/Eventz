@@ -5,11 +5,10 @@ import { EventsTableComponent } from "../../../components/admin/events-table/eve
 import { OrganizersTableComponent } from "../../../components/admin/organizers-table/organizers-table.component";
 
 @Component({
-  selector: 'app-admin-events-list',
-  standalone: true,
-  imports: [CommonModule, TableHeaderComponent, EventsTableComponent, OrganizersTableComponent],
-  templateUrl: './admin-events-list.component.html',
-  styleUrl: './admin-events-list.component.scss'
+    selector: 'app-admin-events-list',
+    imports: [CommonModule, TableHeaderComponent, EventsTableComponent, OrganizersTableComponent],
+    templateUrl: './admin-events-list.component.html',
+    styleUrl: './admin-events-list.component.scss'
 })
 export class AdminEventsListComponent {
     showEvents: boolean = true;

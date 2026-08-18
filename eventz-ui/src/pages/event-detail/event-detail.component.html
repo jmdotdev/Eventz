@@ -1,140 +1,219 @@
-<div class="w-full h-full d-flex flex-col">
-    <div class="w-full d-flex">
-        <app-navbar [isLandinPage]="false"></app-navbar>
-    </div>
-    <div class="flex flex-col md:flex-row bg-eventsDetailBackground p-2">
-      <div class="flex flex-col w-full md:w-3/5 bg-white rounded-md m-2 p-4">
-        <!-- Event Header -->
-        <div class="flex flex-col md:flex-row h-auto mx-6">
-          <!-- Calendar Card -->
-           <div class="calendar-card flex flex-col rounded-md bg-white w-16 shadow-lg">
-             <div class="p-2 bg-deepBlue flex items-center justify-center rounded-t-md rounded-b-none">
-              <h2 class="font-bold text-white">{{event?.date?.month}}</h2>
-             </div>
-             <div class="flex items-center justify-center p-2">
-              <h2 class="font-bold">{{ event?.date?.day}}</h2>
-             </div>
-           </div>
-           <!-- Event MetaData -->
-            <div class="flex flex-col w-full px-2 h-16 justify-between">
-                <div class="header"> 
-                  <h2 class="text-2xl font-bold">{{event?.title}}</h2>
-                </div>
-                <div class="flex flex-col md:flex-row">
-                  <!-- location -->
-                   <div class="flex w-1/3 items-start">
-                    <fa-icon class="mr-2" [icon]="location" aria-hidden="true" [styles]="{'color': '#381ddb'}"></fa-icon>
-                    <h3 class=" font-semibold">London</h3>
-                   </div>
-                   <div class="flex w-1/3 items-start">
-                    <fa-icon class="mr-2" [icon]="watch" aria-hidden="true" [styles]="{'color': '#381ddb'}"></fa-icon>
-                    <h3 class=" font-semibold">Starts at 11:30 a.m</h3>
-                   </div> 
-                   <div class="flex w-1/3 items-start">
-                    <fa-icon class="mr-2" [icon]="clock" aria-hidden="true" [styles]="{'color': '#381ddb'}"></fa-icon>
-                    <h3 class=" font-semibold">2HRS</h3>
-                   </div>
-                </div>
-            </div>
+@if (event(); as ev) {
+  <div>
+    <app-navbar variant="simplified" />
+
+    <div class="mx-auto max-w-[1280px] px-6 pb-32 pt-6 md:px-8 lg:pb-16">
+      <!-- Breadcrumb -->
+      <p class="mb-4 text-[13px] text-text-tertiary">
+        Events · {{ ev.category }} · <span class="font-semibold text-text-primary">{{ ev.title }}</span>
+      </p>
+
+      <!-- Hero -->
+      <div
+        class="relative mb-10 h-[280px] overflow-hidden rounded-[24px] sm:h-[340px] md:h-[400px]"
+        [style.background]="'linear-gradient(150deg,' + ev.coverGradient[0] + ',' + ev.coverGradient[1] + ')'"
+      >
+        <div class="absolute inset-0 bg-gradient-to-t from-black/75 via-black/10 to-transparent"></div>
+        <div class="absolute left-4 top-4 flex gap-2 sm:left-6 sm:top-6">
+          <span class="rounded-lg bg-white px-2.5 py-1 text-[11px] font-bold text-brand">{{ ev.category.toUpperCase() }}</span>
         </div>
-        <!-- Event Image -->
-     <div class="mx-6">
-      <img class="w-full mt-10 rounded-3xl" src="/assets/images/event.jpg">
-    </div>
-    <div class="flex flex-col my-8 mx-6">
-      <h2 class="text-xl font-semibold">About {{ event?.title}}</h2>
-      <p>{{ event?.description }}</p>
-    </div>
+        <div class="absolute right-4 top-4 flex gap-2 sm:right-6 sm:top-6">
+          <button type="button" class="flex items-center gap-1.5 rounded-[10px] border border-white/30 bg-white/20 px-3 py-2 text-[13px] font-semibold text-white backdrop-blur-sm">
+            <ng-icon name="lucideShare2" size="14" />
+            Share
+          </button>
+          <button type="button" (click)="saved.set(!saved())" class="flex items-center gap-1.5 rounded-[10px] border border-white/30 bg-white/20 px-3 py-2 text-[13px] font-semibold text-white backdrop-blur-sm">
+            <ng-icon name="lucideHeart" size="14" [attr.fill]="saved() ? '#fff' : 'none'" />
+            Saved
+          </button>
+        </div>
+        <div class="absolute inset-x-0 bottom-0 p-4 text-white sm:p-6 md:p-8">
+          <h1 class="mb-3 text-[28px] font-extrabold tracking-[-.03em] sm:text-[36px] md:text-[46px]">{{ ev.title }}</h1>
+          <div class="flex flex-wrap items-center gap-x-5 gap-y-1.5 text-[13.5px] font-semibold">
+            <span class="flex items-center gap-1.5"><ng-icon name="lucideCalendar" size="15" />{{ formatDate(ev.dateTime) }}</span>
+            <span class="flex items-center gap-1.5"><ng-icon name="lucideClock" size="15" />{{ formatTimeOf(ev.dateTime) }}</span>
+            <span class="flex items-center gap-1.5"><ng-icon name="lucideMapPin" size="15" />{{ ev.venue.name }}, Nairobi</span>
+          </div>
+        </div>
       </div>
 
-      <div class="flex flex-col w-full md:w-2/5 bg-white rounded-md h-auto m-2 p-2">
-        <!-- Time Counter -->
-         <!-- TODO: refactor this into a single component -->
-         <div class="grid grid-cols-2 md:grid-cols-4">
-          <!-- Time Card -->
-          <div class="flex flex-col items-center justify-center border-2 border-deepBlue rounded-xl text-deepBlue font-semibold mx-4 py-2">
-            <h2>19</h2>
-            <h3>DAYS</h3>
-          </div>
-          <div class="flex flex-col items-center justify-center border-2 border-deepBlue rounded-xl text-deepBlue font-semibold mx-4 py-2">
-            <h2>19</h2>
-            <h3>DAYS</h3>
-          </div>
-          <div class="flex flex-col items-center justify-center border-2 border-deepBlue rounded-xl text-deepBlue font-semibold mx-4 py-2">
-            <h2>19</h2>
-            <h3>DAYS</h3>
-          </div>
-          <div class="flex flex-col items-center justify-center border-2 border-deepBlue rounded-xl text-deepBlue font-semibold mx-4 py-2">
-            <h2>19</h2>
-            <h3>DAYS</h3>
-          </div>
+      <div class="flex flex-wrap gap-12">
+        <!-- Main content -->
+        <div class="min-w-[280px] flex-1 sm:min-w-[460px]">
+          <!-- About -->
+          <section class="mb-10">
+            <h2 class="mb-4 text-[22px] font-extrabold tracking-[-.02em] text-text-primary">About this event</h2>
+            @for (paragraph of ev.about; track paragraph) {
+              <p class="mb-3 text-[16px] leading-[1.68] text-text-body">{{ paragraph }}</p>
+            }
+            @if (ev.tags.length) {
+              <div class="mt-4 flex flex-wrap gap-2">
+                @for (tag of ev.tags; track tag) {
+                  <span class="rounded-full bg-brand-tint px-3.5 py-1.5 text-[13px] font-semibold text-brand">{{ tag }}</span>
+                }
+              </div>
+            }
+          </section>
 
-         </div>
-        
-         <!-- TODO: refactor this cards into a component -->
-         <div class="flex flex-col items-start p-2 mt-10">
-           <div class="flex p-2 my-4">
-             <div class="flex items-center justify-center bg-paleBlue w-14 h-14 rounded-full">
-              <fa-icon [icon]="userIcon" [styles]="{'color': '#381ddb'}" class="text-2xl"></fa-icon>
-             </div>
-             <div class="flex flex-col items-start px-6 py-1">
-                <h3 class="opacity-75 font-semibold">Organized by:</h3>
-                <h4 class="font-semibold">Organizers Name</h4>
-             </div>
-           </div>
-           <div class="flex p-2 my-4">
-            <div class="flex items-center justify-center bg-paleBlue w-14 h-14 rounded-full">
-             <fa-icon [icon]="calendar" [styles]="{'color': '#381ddb'}" class="text-2xl"></fa-icon>
-            </div>
-            <div class="flex flex-col items-start px-6 py-1">
-               <h3 class="opacity-75 font-semibold">Date:</h3>
-               <h4 class="font-semibold">{{ event?.date?.day }} {{ event?.date?.month }}</h4>
-            </div>
-          </div>
-          <div class="flex p-2 my-4">
-            <div class="flex items-center justify-center bg-paleBlue w-14 h-14 rounded-full">
-             <fa-icon [icon]="location" [styles]="{'color': '#381ddb'}" class="text-2xl"></fa-icon>
-            </div>
-            <div class="flex flex-col items-start px-6 py-1">
-               <h3 class="opacity-75 font-semibold">Location:</h3>
-               <h4 class="font-semibold">New York</h4>
-            </div>
-          </div>
-         </div>
+          <!-- Schedule -->
+          @if (ev.schedule.length) {
+            <section class="mb-10">
+              <h2 class="mb-4 text-[22px] font-extrabold tracking-[-.02em] text-text-primary">Schedule</h2>
+              <div class="flex flex-col">
+                @for (item of ev.schedule; track item.title; let i = $index) {
+                  <div class="flex gap-5 rounded-xl p-3" [class.bg-surface-muted]="i % 2 === 0">
+                    <span class="w-[88px] shrink-0 text-[14px] font-bold text-brand sm:w-[104px]">{{ item.time }}</span>
+                    <div>
+                      <p class="text-[14.5px] font-semibold text-text-primary">{{ item.title }}</p>
+                      @if (item.detail) {
+                        <p class="text-[13px] text-text-tertiary">{{ item.detail }}</p>
+                      }
+                    </div>
+                  </div>
+                }
+              </div>
+            </section>
+          }
 
-         <div class="flex flex-col p-2 mt-6">
-            <div>
-              <h3 class="font-bold text-xl ps-4">Select Ticket</h3>
-            </div>
-            <div class="flex items-center justify-between px-4 my-4">
-              <h4>$75</h4>
-              <div class="flex items-center justify-evenly">
-                <fa-icon [icon]="minus" class="text-2xl cursor-pointer"></fa-icon>
-                <h5 class="text-2xl mx-2">{{ ticketsCount }}</h5>
-                <fa-icon [icon]="plus" class="text-2xl cursor-pointer"></fa-icon>
+          <!-- Line-up -->
+          @if (ev.lineup.length) {
+            <section class="mb-10">
+              <h2 class="mb-4 text-[22px] font-extrabold tracking-[-.02em] text-text-primary">Line-up</h2>
+              <div class="grid grid-cols-2 gap-4 sm:grid-cols-3">
+                @for (artist of ev.lineup; track artist.name) {
+                  <div>
+                    <div class="mb-2 aspect-square rounded-xl" [style.background]="'linear-gradient(150deg,' + ev.coverGradient[0] + ',' + ev.coverGradient[1] + ')'"></div>
+                    <p class="text-[15px] font-bold text-text-primary">{{ artist.name }}</p>
+                    <p class="text-[13px] text-text-tertiary">{{ artist.role }}</p>
+                  </div>
+                }
+              </div>
+            </section>
+          }
+
+          <!-- Venue -->
+          <section class="mb-10">
+            <h2 class="mb-4 text-[22px] font-extrabold tracking-[-.02em] text-text-primary">Venue & location</h2>
+            <div class="overflow-hidden rounded-2xl border border-border-light">
+              <div class="relative h-[230px] bg-[repeating-linear-gradient(0deg,#E2E6F2_0_1px,transparent_1px_28px),repeating-linear-gradient(90deg,#E2E6F2_0_1px,transparent_1px_28px)] bg-surface-muted">
+                <div class="absolute left-1/2 top-1/2 flex -translate-x-1/2 -translate-y-1/2 flex-col items-center">
+                  <span class="relative flex h-4 w-4 items-center justify-center rounded-full bg-brand shadow-[0_0_0_6px_rgba(56,29,219,.18),0_0_0_12px_rgba(56,29,219,.1)]"></span>
+                  <span class="mt-2 rounded-lg bg-white px-2.5 py-1 text-[12px] font-bold text-text-primary shadow-sm">{{ ev.venue.name }}</span>
+                </div>
+              </div>
+              <div class="flex flex-col justify-between gap-3 bg-white p-5 sm:flex-row sm:items-center">
+                <div>
+                  <p class="text-[14.5px] font-bold text-text-primary">{{ ev.venue.name }}</p>
+                  <p class="text-[13px] text-text-secondary">{{ ev.venue.address }}</p>
+                </div>
+                <button type="button" class="whitespace-nowrap rounded-[10px] border border-border px-4 py-2 text-[13px] font-bold text-text-primary hover:border-border-hover">Get directions</button>
               </div>
             </div>
-            <div class="flex px-2 my-2">
-              <p>Nunc cursus ex a ligula consequat aliquet. Donec semper tellus ac ante vestibulum, vitae varius leo mattis. 
-                In vestibulum blandit tempus. Etiam elit turpis, volutpat hendrerit varius ut, posuere a sapien. </p>
+          </section>
+
+          <!-- Organizer -->
+          <section>
+            <h2 class="mb-4 text-[22px] font-extrabold tracking-[-.02em] text-text-primary">Organizer</h2>
+            <div class="flex flex-wrap items-center justify-between gap-4 rounded-2xl border border-border-light p-5">
+              <div class="flex items-center gap-4">
+                <span class="flex h-14 w-14 items-center justify-center rounded-2xl bg-brand text-[20px] font-extrabold text-white">{{ ev.organizer.initial }}</span>
+                <div>
+                  <div class="flex items-center gap-2">
+                    <p class="text-[15px] font-bold text-text-primary">{{ ev.organizer.name }}</p>
+                    @if (ev.organizer.verified) {
+                      <span class="rounded-md bg-success-bg px-1.5 py-0.5 text-[10.5px] font-bold text-success-text">VERIFIED</span>
+                    }
+                  </div>
+                  <p class="text-[13px] text-text-tertiary">{{ ev.organizer.eventsHosted }} events hosted · {{ ev.organizer.rating }} average rating · Responds within {{ ev.organizer.respondsWithin }}</p>
+                </div>
+              </div>
+              <button type="button" class="rounded-[10px] border border-border px-4 py-2 text-[13px] font-bold text-text-primary hover:border-border-hover">Follow</button>
             </div>
-            <div class="flex flex-col items-start px-2 my-4">
-              <h4 class="font-semibold">{{ ticketsCount}} x Tickets</h4>
-              <h5 class="font-semibold"> $150 </h5>
+          </section>
+        </div>
+
+        <!-- Ticket sidebar (desktop) -->
+        <aside class="hidden w-full min-w-[320px] max-w-[396px] flex-1 lg:sticky lg:top-[104px] lg:block lg:self-start">
+          <div class="rounded-[22px] border border-border-light bg-white p-5 shadow-sidebar">
+            <div class="mb-4 flex items-center justify-between">
+              <div>
+                <p class="text-[12px] text-text-tertiary">Tickets from</p>
+                <p class="text-[24px] font-extrabold text-text-primary">{{ formatPrice(ev.priceFrom) }}</p>
+              </div>
+              @if (ev.status === 'lowstock') {
+                <span class="rounded-md bg-warning-bg px-2 py-1 text-[11px] font-bold text-warning-text">{{ ev.ticketTiers[0].remaining }} LEFT</span>
+              }
             </div>
-            <div class="px-4 my-4 w-full">
-              <button class="flex items-center justify-center bg-deepBlue rounded-xl text-white w-full py-3" (click)="addToCart()">Book Now</button>
+
+            <div class="mb-4 flex flex-col gap-2.5">
+              @for (tier of ev.ticketTiers; track tier.id) {
+                @if (tier.soldOut) {
+                  <div class="rounded-2xl border border-border-light bg-bg-muted p-3.5 opacity-70">
+                    <div class="flex items-center justify-between">
+                      <p class="text-[14px] font-bold text-text-tertiary">{{ tier.name }}</p>
+                      <span class="rounded-md bg-dark-surface px-2 py-0.5 text-[10.5px] font-bold text-white">SOLD OUT</span>
+                    </div>
+                    <p class="text-[12.5px] text-text-tertiary">{{ tier.description }}</p>
+                  </div>
+                } @else {
+                  <div class="rounded-2xl border p-3.5" [class]="quantityFor(tier.id) > 0 ? 'border-[1.5px] border-brand bg-brand-tint-warm' : 'border-border-light'">
+                    <div class="mb-1 flex items-center justify-between gap-2">
+                      <div class="flex items-center gap-1.5">
+                        <p class="text-[14px] font-bold text-text-primary">{{ tier.name }}</p>
+                        @if (tier.popular) {
+                          <span class="rounded-md bg-brand px-1.5 py-0.5 text-[10.5px] font-bold text-white">POPULAR</span>
+                        }
+                      </div>
+                      <p class="text-[14px] font-bold text-text-primary">{{ formatPrice(tier.price) }}</p>
+                    </div>
+                    <div class="flex items-center justify-between gap-2">
+                      <p class="text-[12.5px] text-text-secondary">{{ tier.description }}</p>
+                      <app-quantity-stepper [value]="quantityFor(tier.id)" [max]="tier.remaining" (valueChange)="setQuantity(tier.id, $event)" />
+                    </div>
+                  </div>
+                }
+              }
             </div>
-         </div> 
+
+            @if (ticketCount() > 0) {
+              <div class="mb-4 flex flex-col gap-1.5 border-t border-divider pt-4 text-[13.5px]">
+                <div class="flex items-center justify-between text-text-secondary"><span>{{ ticketCount() }} ticket(s)</span><span>{{ formatPrice(subtotal()) }}</span></div>
+                <div class="flex items-center justify-between text-text-secondary"><span>Service fee (6%)</span><span>{{ formatPrice(fees()) }}</span></div>
+                <div class="flex items-center justify-between text-[15px] font-bold text-text-primary"><span>Total</span><span>{{ formatPrice(total()) }}</span></div>
+              </div>
+            }
+
+            <button
+              type="button"
+              (click)="getTickets()"
+              [disabled]="ticketCount() === 0"
+              class="mb-3 w-full rounded-xl bg-brand py-3.5 text-[15px] font-bold text-white shadow-cta-glow disabled:cursor-not-allowed disabled:opacity-50"
+            >Get Tickets</button>
+            <p class="flex items-center justify-center gap-1.5 text-center text-[12px] text-text-tertiary">
+              <ng-icon name="lucideLock" size="12" />
+              Secure checkout · M-Pesa & card · Free cancellation for 24h
+            </p>
+          </div>
+        </aside>
       </div>
     </div>
-    <div class="flex flex-col bg-white rounded-xl">
-     <div class="my-4 px-4">
-      <h2 class="font-bold text-3xl mx-6"> Related Events</h2>
-     </div>
-     <app-event [isLandinPage]="false"></app-event>
+
+    <!-- Sticky bottom purchase bar (mobile) -->
+    <div class="fixed inset-x-0 bottom-0 z-40 flex items-center justify-between border-t border-border-light bg-white px-5 py-3.5 lg:hidden">
+      <div>
+        <p class="text-[11px] text-text-tertiary">Total</p>
+        <p class="text-[17px] font-extrabold text-text-primary">{{ formatPrice(total()) }}</p>
+      </div>
+      <button
+        type="button"
+        (click)="getTickets()"
+        [disabled]="ticketCount() === 0"
+        class="rounded-xl bg-brand px-6 py-3 text-[14px] font-bold text-white disabled:cursor-not-allowed disabled:opacity-50"
+      >Get Tickets</button>
     </div>
-    <div> 
-      <app-footer></app-footer>
+
+    <div class="pb-20 lg:pb-0">
+      <app-footer />
     </div>
-</div>
+  </div>
+}

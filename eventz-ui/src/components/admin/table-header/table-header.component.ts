@@ -6,11 +6,10 @@ import { NgClass } from "../../../../node_modules/@angular/common/index";
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-table-header',
-  standalone: true,
-  imports: [FontAwesomeModule, CommonModule],
-  templateUrl: './table-header.component.html',
-  styleUrl: './table-header.component.scss'
+    selector: 'app-table-header',
+    imports: [FontAwesomeModule, CommonModule],
+    templateUrl: './table-header.component.html',
+    styleUrl: './table-header.component.scss'
 })
 export class TableHeaderComponent {
     faElipsisH = faEllipsisH;

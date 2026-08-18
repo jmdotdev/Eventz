@@ -6,11 +6,10 @@ import { faEllipsisV, faCheck, faTimes } from '@fortawesome/free-solid-svg-icons
 
 
 @Component({
-  selector: 'app-events-table',
-  standalone: true,
-  imports: [CommonModule, FontAwesomeModule],
-  templateUrl: './events-table.component.html',
-  styleUrl: './events-table.component.scss'
+    selector: 'app-events-table',
+    imports: [CommonModule, FontAwesomeModule],
+    templateUrl: './events-table.component.html',
+    styleUrl: './events-table.component.scss'
 })
 export class EventsTableComponent {
   pageSize = 10;

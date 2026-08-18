@@ -3,11 +3,10 @@ import { NgChartsModule } from 'ng2-charts';
 import { ChartConfiguration } from 'chart.js';
 
 @Component({
-  selector: 'app-bar-chart',
-  standalone: true,
-  imports: [NgChartsModule],
-  templateUrl: './bar-chart.component.html',
-  styleUrl: './bar-chart.component.scss'
+    selector: 'app-bar-chart',
+    imports: [NgChartsModule],
+    templateUrl: './bar-chart.component.html',
+    styleUrl: './bar-chart.component.scss'
 })
 export class BarChartComponent {
   barChartData: ChartConfiguration<'bar'>['data'] = {

@@ -1,0 +1,77 @@
+@if (variant === 'grid') {
+  <article
+    [routerLink]="['/events', event.id]"
+    class="group relative cursor-pointer overflow-hidden rounded-[18px] border border-border-light bg-white transition-all duration-200 hover:-translate-y-1 hover:shadow-card-hover"
+  >
+    <div
+      class="relative h-[172px]"
+      [style.background]="'linear-gradient(150deg,' + event.coverGradient[0] + ',' + event.coverGradient[1] + ')'"
+    >
+      <div
+        class="absolute inset-0"
+        style="background-image: repeating-linear-gradient(48deg, rgba(255,255,255,.08) 0 9px, transparent 9px 18px)"
+      ></div>
+      <span class="absolute left-3 top-3 rounded-lg bg-white/[.94] px-2.5 py-1 text-[11px] font-bold text-brand">
+        {{ event.category.toUpperCase() }}
+      </span>
+      <button
+        type="button"
+        (click)="onToggleSave($event)"
+        class="absolute right-2.5 top-2.5 flex h-8 w-8 items-center justify-center rounded-full bg-white/90 hover:bg-white"
+        aria-label="Save event"
+      >
+        <ng-icon name="lucideHeart" size="15" [color]="saved ? '#381DDB' : '#8A8A9E'" [attr.fill]="saved ? '#381DDB' : 'none'" />
+      </button>
+      @if (event.status === 'soldout') {
+        <span class="absolute right-12 top-[13px] rounded-lg bg-dark-surface px-2.5 py-1 text-[10.5px] font-bold text-white">SOLD OUT</span>
+      } @else if (event.status === 'lowstock') {
+        <span class="absolute right-12 top-[13px] rounded-lg bg-warning-bg px-2.5 py-1 text-[11px] font-bold text-warning-text">{{ lowStockLabel() }}</span>
+      }
+    </div>
+    <div class="p-4 pt-[15px]">
+      <p class="mb-1 text-xs font-bold tracking-[.03em] text-brand">{{ dateLabel() }}</p>
+      <h3 class="mb-1.5 text-[16.5px] font-bold tracking-[-.015em] text-text-primary">{{ event.title }}</h3>
+      <p class="mb-3.5 flex items-center gap-1.5 text-[13.5px] text-text-secondary">
+        <ng-icon name="lucideMapPin" size="14" color="#8A8A9E" />
+        {{ event.venue.name }}
+      </p>
+      <div class="flex items-center justify-between border-t border-divider pt-[13px]">
+        @if (event.status === 'soldout') {
+          <span class="text-[14.5px] font-bold text-text-tertiary">Join waitlist</span>
+        } @else {
+          <span class="text-[14.5px] font-bold text-text-primary">from {{ priceLabel() }}</span>
+        }
+        <span class="text-[12.5px] text-text-tertiary">{{ event.organizer.name }}</span>
+      </div>
+    </div>
+  </article>
+} @else {
+  <article
+    [routerLink]="['/events', event.id]"
+    class="grid cursor-pointer grid-cols-[76px_120px_1fr_auto] items-center gap-4 rounded-[14px] border-b border-divider px-2 py-3 transition-colors hover:bg-surface-muted"
+    [class.opacity-70]="event.status === 'soldout'"
+  >
+    <div class="flex h-[70px] flex-col items-center justify-center rounded-xl" [class]="event.status === 'soldout' ? 'bg-bg-muted text-text-tertiary' : 'bg-brand-tint text-brand'">
+      <span class="text-[10.5px] font-bold uppercase">{{ dateLabel().split(',')[0] }}</span>
+      <span class="text-lg font-extrabold">{{ event.dateTime | date: 'd' }}</span>
+      <span class="text-[10.5px] font-bold uppercase">{{ event.dateTime | date: 'MMM' }}</span>
+    </div>
+    <div class="h-[72px] w-[120px] overflow-hidden rounded-xl" [style.background]="'linear-gradient(150deg,' + event.coverGradient[0] + ',' + event.coverGradient[1] + ')'"></div>
+    <div class="min-w-0">
+      <h3 class="truncate text-[15.5px] font-bold text-text-primary">{{ event.title }}</h3>
+      <p class="flex items-center gap-1.5 text-[13px] text-text-secondary">
+        <ng-icon name="lucideMapPin" size="13" color="#8A8A9E" />
+        {{ event.venue.name }}
+      </p>
+    </div>
+    <div class="text-right">
+      @if (event.status === 'soldout') {
+        <span class="text-[13.5px] font-bold text-text-tertiary">Join waitlist</span>
+      } @else if (event.status === 'free') {
+        <span class="text-[14.5px] font-bold text-text-primary">Free</span>
+      } @else {
+        <span class="text-[14.5px] font-bold text-text-primary">{{ priceLabel() }}</span>
+      }
+    </div>
+  </article>
+}

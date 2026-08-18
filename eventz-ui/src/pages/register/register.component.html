@@ -1,79 +1,73 @@
-<div class="flex items-center justify-center min-h-screen w-full">
-  <div class="flex flex-col md:flex-row">
-    <!-- Form -->
-    <div class="flex flex-1 flex-col flex-shrink-0 p-6 p:md-8">
-      <h1 class="text-2xl font-bold">Create an Account</h1>
-      <span
-        >Already have an account?
-        <a routerLink="/login"
-          class="cursor-pointer underline text-black font-semibold"
-          >login</a
-        ></span
-      >
-      <div *ngIf="redirectingToLogin" class="bg-green-400 rounded-md p-2 flex items-start">
-        <h3 class="text-white">Registration succefull.Redirecting to login ....</h3>
-      </div>
+<div class="flex min-h-screen w-full items-center justify-center bg-surface-muted px-6 py-10">
+  <div class="w-full max-w-sm rounded-[20px] border border-border-light bg-white p-8">
+    <a routerLink="/" class="mb-6 flex items-center gap-2">
+      <span class="flex h-[30px] w-[30px] items-center justify-center rounded-lg bg-brand text-sm font-extrabold text-white">E</span>
+      <span class="text-[19px] font-extrabold text-text-primary">Eventz</span>
+    </a>
+    <h1 class="mb-1 text-[22px] font-extrabold tracking-[-.02em] text-text-primary">Create an account</h1>
+    <p class="mb-6 text-[13.5px] text-text-secondary">
+      Already have an account? <a routerLink="/login" class="font-semibold text-brand">Login</a>
+    </p>
 
-      <div>
-      <form [formGroup]="registrationForm" class="flex flex-col" (ngSubmit)="registerUser()">
-        <label class="mt-4">Email</label>
+    @if (redirectingToLogin) {
+      <div class="mb-4 rounded-xl bg-success-bg p-3 text-[13px] font-semibold text-success-text">Registration successful. Redirecting to login…</div>
+    }
+
+    <form [formGroup]="registrationForm" class="flex flex-col gap-4" (ngSubmit)="registerUser()">
+      <label class="block">
+        <span class="mb-1.5 block text-[13.5px] font-bold text-text-primary">Email</span>
         <input
-          class="border rounded-lg h-10 focus:outline-none p-2"
           type="email"
-          placeholder="enter email"
+          placeholder="you@example.com"
           formControlName="email"
+          class="w-full rounded-xl border border-border bg-surface-muted px-3.5 py-3 text-[14.5px] outline-none focus:border-brand focus:bg-white"
         />
-      <div *ngIf="email?.invalid && email?.touched" class="text-red-700">
-        <small *ngIf="email?.errors?.['required']">Email is required</small>
-        <small *ngIf="email?.errors?.['email']">Email is invalid</small>
-      </div>
-        <label class="mt-4">Password</label>
-        <input
-          class="border rounded-lg h-10 focus:outline-none p-2"
-          type="password"
-          placeholder="enter password"
-          formControlName="password"
-        />
-        <div *ngIf="password?.invalid && password?.touched" class="text-red-700">
-          <small *ngIf="password?.errors?.['required']">Password is required.</small>
-          <small *ngIf="password?.errors?.['minlength']">Password must be at least 6 characters.</small>
-        </div>
-        <label class="mt-4">Confirm Password</label>
-        <input
-          class="border rounded-lg h-10 focus:outline-none p-2"
-          type="password"
-          placeholder="confirm password"
-          formControlName="confirmPassword"
-        />
-        <div *ngIf="confirmPassword?.invalid && confirmPassword?.touched" class="text-red-700">
-          <small *ngIf="confirmPassword?.errors?.['required']">Confirm password is required.</small>
-          <small *ngIf="confirmPassword?.errors?.['passwordMismatch']">Passwords do not match.</small>
-        </div>
-        <p>
-          By creating an account you agree to our <br />
-          <strong class="underline cursor-pointer font-semibold"
-            >Terms of use</strong
-          >
-          and
-          <strong class="underline cursor-pointer font-semibold">Policy</strong>
-        </p>
-        <button
-          [disabled]="registrationForm.invalid"
-          class="flex align-center justify-center bg-deepBlue text-white rounded-lg mt-4 w-1/2 md:w-1/4 p-2 p:md-3"
-        >
-          Register
-        </button>
-      </form>
-      </div>
-    </div>
+        @if (email?.invalid && email?.touched) {
+          <span class="mt-1.5 block text-[12.5px] font-semibold text-error">
+            @if (email?.errors?.['required']) { Email is required } @else if (email?.errors?.['email']) { Email is invalid }
+          </span>
+        }
+      </label>
 
-    <!-- Banner -->
-    <div class="hidden md:block flex-1 p-6 p:md-8">
-      <img
-        class="w-full h-full object-cover"
-        src="/assets/images/sign-up.png"
-        alt="sign-up.png"
-      />
-    </div>
+      <label class="block">
+        <span class="mb-1.5 block text-[13.5px] font-bold text-text-primary">Password</span>
+        <input
+          type="password"
+          placeholder="At least 6 characters"
+          formControlName="password"
+          class="w-full rounded-xl border border-border bg-surface-muted px-3.5 py-3 text-[14.5px] outline-none focus:border-brand focus:bg-white"
+        />
+        @if (password?.invalid && password?.touched) {
+          <span class="mt-1.5 block text-[12.5px] font-semibold text-error">
+            @if (password?.errors?.['required']) { Password is required } @else if (password?.errors?.['minlength']) { Password must be at least 6 characters }
+          </span>
+        }
+      </label>
+
+      <label class="block">
+        <span class="mb-1.5 block text-[13.5px] font-bold text-text-primary">Confirm password</span>
+        <input
+          type="password"
+          placeholder="Repeat password"
+          formControlName="confirmPassword"
+          class="w-full rounded-xl border border-border bg-surface-muted px-3.5 py-3 text-[14.5px] outline-none focus:border-brand focus:bg-white"
+        />
+        @if (confirmPassword?.invalid && confirmPassword?.touched) {
+          <span class="mt-1.5 block text-[12.5px] font-semibold text-error">
+            @if (confirmPassword?.errors?.['required']) { Confirm password is required } @else if (confirmPassword?.errors?.['passwordMismatch']) { Passwords do not match }
+          </span>
+        }
+      </label>
+
+      <p class="text-[12px] text-text-tertiary">
+        By creating an account you agree to our <strong class="cursor-pointer font-semibold text-text-body underline">Terms of use</strong> and <strong class="cursor-pointer font-semibold text-text-body underline">Policy</strong>.
+      </p>
+
+      <button
+        type="submit"
+        [disabled]="registrationForm.invalid"
+        class="mt-1 w-full rounded-xl bg-brand py-3 text-[14.5px] font-bold text-white disabled:cursor-not-allowed disabled:opacity-50"
+      >Register</button>
+    </form>
   </div>
 </div>

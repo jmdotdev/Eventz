@@ -1,22 +1,21 @@
 import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { ReactiveFormsModule, FormsModule, FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { ReactiveFormsModule, FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { RouterLink, Router } from '@angular/router';
 import { passwordMatchValidator } from '../../custom-validators/password-match.validator';
 import { IRegister } from '../../interfaces/interface';
 import { RegisterService } from '../../services/register/register.service';
-import { Router } from '@angular/router';
+
 @Component({
-  selector: 'app-register',
-  standalone: true,
-  imports: [CommonModule,ReactiveFormsModule,FormsModule],
-  templateUrl: './register.component.html',
-  styleUrl: './register.component.scss'
+    selector: 'app-register',
+    standalone: true,
+    imports: [ReactiveFormsModule, RouterLink],
+    templateUrl: './register.component.html',
 })
 export class RegisterComponent implements OnInit  {
 
   registrationForm!: FormGroup;
   redirectingToLogin: boolean = false;
- 
+
   constructor ( private fb: FormBuilder,private registerService: RegisterService,private router: Router) {}
 
   ngOnInit(): void {
@@ -27,7 +26,7 @@ export class RegisterComponent implements OnInit  {
     },
     {
       // Password match validator
-      validator: passwordMatchValidator('password', 'confirmPassword')  
+      validator: passwordMatchValidator('password', 'confirmPassword')
     }
   )
   }
@@ -42,7 +41,7 @@ export class RegisterComponent implements OnInit  {
   get confirmPassword () {
     return this.registrationForm.get('confirmPassword')
   }
-  
+
   registerUser () {
     if(this.registrationForm.valid) {
        let registrationData: IRegister = {
@@ -56,7 +55,7 @@ export class RegisterComponent implements OnInit  {
             this.router.navigate(['/login']);
             this.redirectingToLogin = false
           },5000)
-          
+
         }
       })
     }

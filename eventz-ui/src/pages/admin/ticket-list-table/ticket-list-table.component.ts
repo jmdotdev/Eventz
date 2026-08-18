@@ -6,11 +6,10 @@ import { Ticket } from '../../../interfaces/interface';
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-ticket-list-table',
-  standalone: true,
-  imports: [CommonModule, FontAwesomeModule],
-  templateUrl: './ticket-list-table.component.html',
-  styleUrl: './ticket-list-table.component.scss'
+    selector: 'app-ticket-list-table',
+    imports: [CommonModule, FontAwesomeModule],
+    templateUrl: './ticket-list-table.component.html',
+    styleUrl: './ticket-list-table.component.scss'
 })
 export class TicketListTableComponent {
   pageSize = 10;

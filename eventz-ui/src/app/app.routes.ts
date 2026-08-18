@@ -3,11 +3,12 @@ export const routes: Routes = [
    {path:'',loadComponent: () => import('../pages/landing/landing.component').then(m => m.LandingComponent)},
    {path:'login', loadComponent: () => import('../pages/login/login.component').then(m => m.LoginComponent)},
    {path:'register', loadComponent: () => import('../pages/register/register.component').then(m => m.RegisterComponent)},
-   {path:'event-detail/:id',loadComponent: () => import('../pages/event-detail/event-detail.component').then(m => m.EventDetailComponent)},
-   {path: 'cart', loadComponent: () => import('../pages/cart/cart.component').then(m => m.CartComponent)},
+   {path:'events/:id',loadComponent: () => import('../pages/event-detail/event-detail.component').then(m => m.EventDetailComponent)},
    {path:'checkout',loadComponent: () => import('../pages/checkout/checkout.component').then(m => m.CheckoutComponent)},
+   {path:'account',loadComponent: () => import('../pages/account/account.component').then(m => m.AccountComponent)},
+   {path:'tickets',loadComponent: () => import('../pages/tickets/tickets.component').then(m => m.TicketsComponent)},
    {
-      path:'admin',loadComponent: () => import('../layouts/admin-layout/admin-layout.component').then(m => m.AdminLayoutComponent), 
+      path:'admin',loadComponent: () => import('../layouts/admin-layout/admin-layout.component').then(m => m.AdminLayoutComponent),
       children: [
          {path: '', loadComponent: () => import('../pages/admin/dashboard/dashboard.component').then(m => m.DashboardComponent)},
          {path: 'events', loadComponent: () => import('../pages/admin/admin-events-list/admin-events-list.component').then(m => m.AdminEventsListComponent)},

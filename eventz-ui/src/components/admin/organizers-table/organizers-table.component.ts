@@ -5,11 +5,10 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faEllipsisV, faCheck, faTimes } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
-  selector: 'app-organizers-table',
-  standalone: true,
-  imports: [CommonModule, FontAwesomeModule],
-  templateUrl: './organizers-table.component.html',
-  styleUrl: './organizers-table.component.scss'
+    selector: 'app-organizers-table',
+    imports: [CommonModule, FontAwesomeModule],
+    templateUrl: './organizers-table.component.html',
+    styleUrl: './organizers-table.component.scss'
 })
 export class OrganizersTableComponent {
  pageSize = 10;

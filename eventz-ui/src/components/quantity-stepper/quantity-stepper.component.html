@@ -1,0 +1,20 @@
+<div
+  class="flex items-center border border-border rounded-[10px] p-1"
+  [class]="size === 'lg' ? 'gap-3' : 'gap-2.5'"
+>
+  <button
+    type="button"
+    (click)="dec()"
+    [disabled]="value <= min"
+    class="flex items-center justify-center rounded-lg bg-brand-tint font-bold leading-none text-brand disabled:opacity-40"
+    [class]="size === 'lg' ? 'h-[30px] w-[30px] text-base' : 'h-7 w-7 text-base'"
+  >&minus;</button>
+  <span class="min-w-[14px] text-center text-[14.5px] font-bold text-text-primary">{{ value }}</span>
+  <button
+    type="button"
+    (click)="inc()"
+    [disabled]="value >= max"
+    class="flex items-center justify-center rounded-lg bg-brand font-bold leading-none text-white disabled:opacity-40"
+    [class]="size === 'lg' ? 'h-[30px] w-[30px] text-base' : 'h-7 w-7 text-base'"
+  >+</button>
+</div>

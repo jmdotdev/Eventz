@@ -5,11 +5,10 @@ import { faCheck, faEllipsisV, faTimes, faPlus, faSearch, faEllipsisH } from '@f
 import { User } from '../../../interfaces/interface';
 
 @Component({
-  selector: 'app-user-list-table',
-  standalone: true,
-  imports: [CommonModule, FontAwesomeModule],
-  templateUrl: './user-list-table.component.html',
-  styleUrl: './user-list-table.component.scss'
+    selector: 'app-user-list-table',
+    imports: [CommonModule, FontAwesomeModule],
+    templateUrl: './user-list-table.component.html',
+    styleUrl: './user-list-table.component.scss'
 })
 export class UserListTableComponent {
   pageSize = 10;

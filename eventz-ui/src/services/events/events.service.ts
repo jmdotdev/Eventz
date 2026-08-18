@@ -1,16 +1,22 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { IEvent } from '../../interfaces/interface';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
+import { EventListing } from '../../interfaces/event.interface';
+import { EVENT_CATEGORIES, MOCK_EVENTS } from './events.mock';
 
 @Injectable({
   providedIn: 'root'
 })
 export class EventsService {
 
-  constructor(private http: HttpClient ) {}
+  getEvents(): Observable<{ events: EventListing[] }> {
+    return of({ events: MOCK_EVENTS });
+  }
 
-  getEvents (): Observable<{ events: IEvent[]}> {
-    return this.http.get<{ events: IEvent[]}>('https://dc8a87b2-5653-4889-971a-ca76c441ba95.mock.pstmn.io/events')
+  getEventById(id: string): Observable<EventListing | undefined> {
+    return of(MOCK_EVENTS.find(e => e.id === id));
+  }
+
+  getCategories(): Observable<{ name: string; count: number }[]> {
+    return of(EVENT_CATEGORIES);
   }
 }

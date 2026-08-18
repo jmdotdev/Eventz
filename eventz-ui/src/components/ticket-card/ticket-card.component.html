@@ -1,0 +1,81 @@
+@if (ticket.status === 'valid') {
+  <div
+    class="flex flex-col overflow-hidden rounded-[20px] border border-border-light bg-white md:flex-row"
+    [class.shadow-sidebar]="ticket.featured"
+  >
+    <div
+      class="h-32 shrink-0 md:h-auto md:w-[180px]"
+      [style.background]="'linear-gradient(150deg,' + ticket.event.coverGradient[0] + ',' + ticket.event.coverGradient[1] + ')'"
+    ></div>
+
+    <div class="flex-1 p-5 md:p-6">
+      <div class="mb-2 flex items-center gap-2.5">
+        <span class="rounded-md bg-success-bg px-2 py-0.5 text-[10.5px] font-bold text-success-text">VALID</span>
+        <span class="text-[12px] font-bold tracking-[.03em] text-brand">{{ dateLabel() }}</span>
+      </div>
+      <h3 class="mb-4 text-[21px] font-extrabold tracking-[-.02em] text-text-primary">{{ ticket.event.title }}</h3>
+
+      <div class="mb-5 grid grid-cols-2 gap-x-4 gap-y-3 sm:grid-cols-4">
+        <div>
+          <p class="text-[10.5px] font-bold uppercase tracking-[.07em] text-text-tertiary">Venue</p>
+          <p class="text-[13.5px] font-semibold text-text-primary">{{ ticket.event.venue.name }}</p>
+        </div>
+        <div>
+          <p class="text-[10.5px] font-bold uppercase tracking-[.07em] text-text-tertiary">Ticket type</p>
+          <p class="text-[13.5px] font-semibold text-text-primary">{{ ticket.tierName }}</p>
+        </div>
+        <div>
+          <p class="text-[10.5px] font-bold uppercase tracking-[.07em] text-text-tertiary">Ticket no.</p>
+          <p class="font-mono text-[13.5px] font-semibold text-text-primary">{{ ticket.ticketNo }}</p>
+        </div>
+        <div>
+          <p class="text-[10.5px] font-bold uppercase tracking-[.07em] text-text-tertiary">Entry</p>
+          <p class="text-[13.5px] font-semibold text-text-primary">{{ ticket.entry }}</p>
+        </div>
+      </div>
+
+      <div class="flex flex-wrap gap-2.5">
+        <button type="button" class="rounded-[10px] bg-brand px-4 py-2.5 text-[13px] font-bold text-white hover:bg-brand-hover">View ticket</button>
+        <button type="button" class="flex items-center gap-1.5 rounded-[10px] border border-border px-4 py-2.5 text-[13px] font-bold text-text-primary hover:border-border-hover">
+          <ng-icon name="lucideDownload" size="14" />
+          Download
+        </button>
+        @if (ticket.featured) {
+          <button type="button" class="flex items-center gap-1.5 rounded-[10px] border border-border px-4 py-2.5 text-[13px] font-bold text-text-primary hover:border-border-hover">
+            <ng-icon name="lucideSendHorizontal" size="14" />
+            Transfer
+          </button>
+        }
+      </div>
+    </div>
+
+    <div
+      class="flex shrink-0 flex-col items-center justify-center gap-2 border-t border-dashed border-border bg-surface-muted py-6 md:w-[196px] md:border-l md:border-t-0"
+    >
+      <app-qr-code [seed]="ticket.ticketNo" [size]="qrSize()" />
+      <p class="text-[10.5px] font-bold uppercase tracking-[.1em] text-text-tertiary">Scan at gate</p>
+    </div>
+  </div>
+} @else {
+  <div class="flex flex-col overflow-hidden rounded-[20px] border border-error-border bg-white md:flex-row">
+    <div class="h-32 shrink-0 bg-gradient-to-br from-[#3B3B44] to-[#8A8A9E] grayscale md:h-auto md:w-[180px]"></div>
+
+    <div class="flex-1 p-5 md:p-6">
+      <div class="mb-2 flex items-center gap-2.5">
+        <span class="rounded-md bg-error-bg px-2 py-0.5 text-[10.5px] font-bold text-error-text">EVENT CANCELLED</span>
+        <span class="text-[12px] font-bold tracking-[.03em] text-text-tertiary">{{ wasDateLabel() }}</span>
+      </div>
+      <h3 class="mb-3 text-[21px] font-extrabold tracking-[-.02em] text-text-tertiary">{{ ticket.event.title }}</h3>
+      <p class="mb-5 text-[13.5px] leading-relaxed text-text-body">{{ ticket.refundNote }}</p>
+
+      <div class="flex flex-wrap gap-2.5">
+        <button type="button" class="rounded-[10px] bg-brand-tint px-4 py-2.5 text-[13px] font-bold text-brand hover:bg-brand-border-light">View refund receipt</button>
+        <button type="button" class="rounded-[10px] border border-error-border px-4 py-2.5 text-[13px] font-bold text-error-text hover:bg-error-bg-soft">Contact organizer</button>
+      </div>
+    </div>
+
+    <div class="flex shrink-0 items-center justify-center py-6 opacity-35 grayscale md:w-[196px] md:border-l md:border-border-light">
+      <app-qr-code [seed]="ticket.ticketNo" [size]="64" />
+    </div>
+  </div>
+}

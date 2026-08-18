@@ -1,0 +1,84 @@
+<div>
+  <app-navbar variant="simplified" />
+
+  <div class="mx-auto max-w-[1120px] px-6 py-8 md:px-8">
+    <h1 class="text-[28px] font-extrabold tracking-[-.03em] text-text-primary sm:text-[32px]">My tickets</h1>
+    <p class="mt-1 text-[14px] text-text-secondary">Show the QR code at the gate. Tickets work offline once opened.</p>
+
+    <div class="my-6 flex w-fit gap-1 rounded-full bg-brand-tint p-1">
+      <button type="button" (click)="setTab('upcoming')" class="rounded-full px-4 py-2 text-[13px] font-bold transition-colors" [class]="activeTab() === 'upcoming' ? 'bg-white text-brand shadow-sm' : 'text-text-secondary'">
+        Upcoming ({{ counts().upcoming }})
+      </button>
+      <button type="button" (click)="setTab('past')" class="rounded-full px-4 py-2 text-[13px] font-bold transition-colors" [class]="activeTab() === 'past' ? 'bg-white text-brand shadow-sm' : 'text-text-secondary'">
+        Past ({{ counts().past }})
+      </button>
+      <button type="button" (click)="setTab('transferred')" class="rounded-full px-4 py-2 text-[13px] font-bold transition-colors" [class]="activeTab() === 'transferred' ? 'bg-white text-brand shadow-sm' : 'text-text-secondary'">
+        Transferred ({{ counts().transferred }})
+      </button>
+    </div>
+
+    @if (filteredTickets().length === 0) {
+      <app-empty-state icon="ticket" title="No tickets here yet" message="When you buy a ticket it lands here with a QR code, ready for the gate." ctaLabel="Browse events" [dashed]="true" />
+    } @else if (showWallet()) {
+      <!-- Mobile dark wallet view -->
+      @if (walletTicket(); as ticket) {
+        <div class="rounded-[24px] bg-dark-surface p-4">
+          <div class="mb-4 flex items-center justify-between text-white">
+            <p class="text-[15px] font-bold">Your ticket</p>
+            <p class="text-[12.5px] text-text-inverted-muted">{{ walletIndex() + 1 }} of {{ filteredTickets().length }}</p>
+          </div>
+
+          <div class="overflow-hidden rounded-[22px] bg-white">
+            <div class="h-[104px]" [style.background]="'linear-gradient(150deg,' + ticket.event.coverGradient[0] + ',' + ticket.event.coverGradient[1] + ')'"></div>
+            <div class="p-4">
+              @if (ticket.status === 'valid') {
+                <span class="mb-2 inline-block rounded-md bg-success-bg px-2 py-0.5 text-[10.5px] font-bold text-success-text">VALID · {{ ticket.entry || 'GATE' }}</span>
+                <h3 class="mb-3 text-[17px] font-extrabold text-text-primary">{{ ticket.event.title }}</h3>
+                <div class="mb-4 grid grid-cols-2 gap-2 text-[12.5px]">
+                  <div><p class="text-[10px] font-bold uppercase text-text-tertiary">Date</p><p class="font-semibold text-text-primary">{{ ticket.event.dateTime | date: 'EEE, d MMM' }}</p></div>
+                  <div><p class="text-[10px] font-bold uppercase text-text-tertiary">Type</p><p class="font-semibold text-text-primary">{{ ticket.tierName }}</p></div>
+                  <div><p class="text-[10px] font-bold uppercase text-text-tertiary">Venue</p><p class="font-semibold text-text-primary">{{ ticket.event.venue.name }}</p></div>
+                  <div><p class="text-[10px] font-bold uppercase text-text-tertiary">Ticket no.</p><p class="font-mono font-semibold text-text-primary">{{ ticket.ticketNo }}</p></div>
+                </div>
+                <div class="flex flex-col items-center gap-2 border-t border-dashed border-border pt-4">
+                  <app-qr-code [seed]="ticket.ticketNo" [size]="150" />
+                  <p class="text-[10.5px] font-bold uppercase tracking-[.1em] text-text-tertiary">Scan at gate · works offline</p>
+                </div>
+              } @else {
+                <span class="mb-2 inline-block rounded-md bg-error-bg px-2 py-0.5 text-[10.5px] font-bold text-error-text">EVENT CANCELLED</span>
+                <h3 class="mb-2 text-[17px] font-extrabold text-text-tertiary">{{ ticket.event.title }}</h3>
+                <p class="text-[12.5px] leading-relaxed text-text-body">{{ ticket.refundNote }}</p>
+              }
+            </div>
+          </div>
+
+          <div class="mt-4 flex gap-2.5">
+            <button type="button" class="flex flex-1 items-center justify-center gap-1.5 rounded-xl bg-white py-2.5 text-[13px] font-bold text-dark-surface">
+              <ng-icon name="lucideDownload" size="14" />
+              Download
+            </button>
+            <button type="button" class="flex flex-1 items-center justify-center gap-1.5 rounded-xl border border-white/30 py-2.5 text-[13px] font-bold text-white">
+              <ng-icon name="lucideSendHorizontal" size="14" />
+              Transfer
+            </button>
+          </div>
+
+          @if (filteredTickets().length > 1) {
+            <div class="mt-4 flex justify-center gap-4">
+              <button type="button" (click)="prevWalletTicket()" [disabled]="walletIndex() === 0" class="text-white disabled:opacity-30"><ng-icon name="lucideChevronLeft" size="20" /></button>
+              <button type="button" (click)="nextWalletTicket()" [disabled]="walletIndex() === filteredTickets().length - 1" class="text-white disabled:opacity-30"><ng-icon name="lucideChevronRight" size="20" /></button>
+            </div>
+          }
+        </div>
+      }
+    } @else {
+      <div class="flex flex-col gap-5">
+        @for (ticket of filteredTickets(); track ticket.id) {
+          <app-ticket-card [ticket]="ticket" />
+        }
+      </div>
+    }
+  </div>
+
+  <app-footer />
+</div>

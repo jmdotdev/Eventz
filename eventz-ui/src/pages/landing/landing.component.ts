@@ -1,48 +1,110 @@
-import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { NavbarComponent } from "../../components/navbar/navbar.component";
-import { CategoriesComponent } from "../../components/categories/categories.component";
-import { AboutComponent } from "../../components/about/about.component";
-import { EventsComponent } from "../../components/events/events.component";
-import { EventComponent } from "../../components/event/event.component";
-import { ButtonComponent } from "../../components/button/button.component";
-import { ContactformComponent } from "../../components/contactform/contactform.component";
-import { FooterComponent } from "../../components/footer/footer.component";
-import { SearchFormComponent } from "../../components/search-form/search-form.component";
-import { Router } from '@angular/router';
-import { IRoutes } from '../../interfaces/interface';
+import { DatePipe } from '@angular/common';
+import { Component, OnInit, signal } from '@angular/core';
+import { RouterLink } from '@angular/router';
+import { NgIcon, provideIcons } from '@ng-icons/core';
+import {
+  lucideBriefcase,
+  lucideChevronLeft,
+  lucideChevronRight,
+  lucideDumbbell,
+  lucideMapPin,
+  lucideMic,
+  lucideMonitor,
+  lucideMusic,
+  lucidePalette,
+  lucidePartyPopper,
+  lucideSearch,
+  lucideSmile,
+  lucideUsers,
+  lucideUsersRound,
+  lucideUtensils,
+  lucideZap,
+} from '@ng-icons/lucide';
+import { NavbarComponent } from '../../components/navbar/navbar.component';
+import { FooterComponent } from '../../components/footer/footer.component';
+import { EventCardComponent } from '../../components/event-card/event-card.component';
+import { FilterChipComponent } from '../../components/filter-chip/filter-chip.component';
+import { ZardButtonComponent } from '../../app/shared/components/button';
+import { EventsService } from '../../services/events/events.service';
+import { EventListing } from '../../interfaces/event.interface';
+import { formatKes } from '../../utils/format';
+
+const CATEGORY_ICONS: Record<string, string> = {
+  Music: 'lucideMusic',
+  Parties: 'lucidePartyPopper',
+  Conferences: 'lucideMic',
+  Sports: 'lucideDumbbell',
+  Comedy: 'lucideSmile',
+  'Food & Drink': 'lucideUtensils',
+  'Arts & Culture': 'lucidePalette',
+  Business: 'lucideBriefcase',
+  Technology: 'lucideMonitor',
+  Workshops: 'lucideZap',
+  Family: 'lucideUsers',
+  Networking: 'lucideUsersRound',
+};
 
 @Component({
   selector: 'app-landing',
   standalone: true,
-  imports: [CommonModule,NavbarComponent, CategoriesComponent, AboutComponent, EventsComponent, EventComponent, ButtonComponent, ContactformComponent, FooterComponent, SearchFormComponent],
+  imports: [NavbarComponent, FooterComponent, EventCardComponent, FilterChipComponent, ZardButtonComponent, NgIcon, RouterLink, DatePipe],
+  viewProviders: [
+    provideIcons({
+      lucideSearch,
+      lucideMapPin,
+      lucideChevronLeft,
+      lucideChevronRight,
+      lucideMusic,
+      lucidePartyPopper,
+      lucideMic,
+      lucideDumbbell,
+      lucideSmile,
+      lucideUtensils,
+      lucidePalette,
+      lucideBriefcase,
+      lucideMonitor,
+      lucideZap,
+      lucideUsers,
+      lucideUsersRound,
+    }),
+  ],
   templateUrl: './landing.component.html',
-  styleUrl: './landing.component.scss'
 })
 export class LandingComponent implements OnInit {
-   whiteColor: string = '#fff'
-   deepBlue: string ='#fff'
-   constructor (private router: Router) {}
-   ngOnInit(): void {
-      if (typeof window !== "undefined") {
-         const token = localStorage.getItem('token')
-      if(!token) {
-         this.router.navigate(['/login'])
-      }
-      }
-   }
+  readonly events = signal<EventListing[]>([]);
+  readonly categories = signal<{ name: string; count: number }[]>([]);
+  readonly savedIds = signal<Set<string>>(new Set());
+  readonly upcomingFilter = signal<'Today' | 'This Weekend' | 'This Month'>('This Weekend');
+  readonly upcomingFilters: ReadonlyArray<'Today' | 'This Weekend' | 'This Month'> = ['Today', 'This Weekend', 'This Month'];
 
-   handleClickedNavItem(event: IRoutes) {
-      console.log('Navigating to:', event);
-      const element = document.getElementById(event.name.toLocaleLowerCase());
-      if (!element) {
-         console.warn('Section not found:', event.name);
-         return;
-      }
+  constructor(private eventsService: EventsService) {}
 
-      element.scrollIntoView({
-         behavior: 'smooth',
-         block: 'start'
-      });
-         }
+  ngOnInit(): void {
+    this.eventsService.getEvents().subscribe(res => this.events.set(res.events));
+    this.eventsService.getCategories().subscribe(categories => this.categories.set(categories));
+  }
+
+  get featured(): EventListing[] {
+    return this.events().filter(e => e.featured);
+  }
+
+  findEvent(id: string): EventListing | undefined {
+    return this.events().find(e => e.id === id);
+  }
+
+  categoryIcon(name: string): string {
+    return CATEGORY_ICONS[name] ?? 'lucideMusic';
+  }
+
+  toggleSave(id: string): void {
+    this.savedIds.update(current => {
+      const next = new Set(current);
+      next.has(id) ? next.delete(id) : next.add(id);
+      return next;
+    });
+  }
+
+  formatPrice(amount: number): string {
+    return formatKes(amount);
+  }
 }

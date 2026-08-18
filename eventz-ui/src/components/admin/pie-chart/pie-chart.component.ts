@@ -3,11 +3,10 @@ import { ChartConfiguration } from 'chart.js';
 import { NgChartsModule } from 'ng2-charts';
 
 @Component({
-  selector: 'app-pie-chart',
-  standalone: true,
-  imports: [NgChartsModule],
-  templateUrl: './pie-chart.component.html',
-  styleUrl: './pie-chart.component.scss'
+    selector: 'app-pie-chart',
+    imports: [NgChartsModule],
+    templateUrl: './pie-chart.component.html',
+    styleUrl: './pie-chart.component.scss'
 })
 export class PieChartComponent {
   pieChartOptions: ChartConfiguration<'pie'>['options'] = {

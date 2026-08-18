@@ -1,0 +1,199 @@
+@layer ng-icon, theme, base, components, utilities;
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+@import 'tailwindcss';
+@import './app/shared/core/css/tailwind';
+@plugin "tailwindcss-animate";
+
+@custom-variant dark (&:is(.dark *));
+
+/*
+ * Eventz design tokens — sourced from the customer-facing design spec.
+ * Overriding shadcn/ZardUI's default slot variables re-skins every z-*
+ * primitive (button, card, badge, input, ...) to the brand palette for free.
+ */
+:root {
+  --radius: 0.625rem;
+
+  --background: #fff;
+  --foreground: #12121A;
+  --card: #fff;
+  --card-foreground: #12121A;
+  --popover: #fff;
+  --popover-foreground: #12121A;
+  --primary: #381DDB;
+  --primary-foreground: #fff;
+  --secondary: #F2F4FF;
+  --secondary-foreground: #381DDB;
+  --muted: #F5F6FA;
+  --muted-foreground: #8A8A9E;
+  --accent: #F2F4FF;
+  --accent-foreground: #381DDB;
+  --destructive: #E11D48;
+  --destructive-foreground: #fff;
+  --border: #E6E8F0;
+  --input: #E6E8F0;
+  --ring: #381DDB;
+
+  /* Brand */
+  --color-brand: #381DDB;
+  --color-brand-hover: #2A15AB;
+  --color-brand-tint: #F2F4FF;
+  --color-brand-tint-warm: #FAFAFF;
+  --color-brand-border-light: #E1E5FF;
+  --color-brand-border: #D8DCFF;
+  --color-selection: #D8D6FF;
+
+  /* Surfaces */
+  --color-surface-muted: #FAFBFF;
+  --color-bg-muted: #F5F6FA;
+
+  /* Text */
+  --color-text-primary: #12121A;
+  --color-text-body: #3F3F4E;
+  --color-text-nav: #4A4A5C;
+  --color-text-secondary: #5B5B6B;
+  --color-text-tertiary: #8A8A9E;
+  --color-text-inverted-muted: #B9B9CB;
+
+  /* Borders / dividers */
+  --color-border-light: #EDEFF7;
+  --color-divider: #F2F3F9;
+  --color-border-hover: #C9CCE6;
+
+  /* Status */
+  --color-success-bg: #E8F7EE;
+  --color-success-text: #137A45;
+  --color-error-bg: #FFE4EA;
+  --color-error-text: #9F1239;
+  --color-error-bg-soft: #FFF5F7;
+  --color-error-border: #FBD5DE;
+  --color-error: #E11D48;
+  --color-warning-bg: #FEF3C7;
+  --color-warning-text: #92400E;
+  --color-dark-surface: #12121A;
+}
+
+@theme inline {
+  --font-sans: 'Plus Jakarta Sans', ui-sans-serif, system-ui, Helvetica, Arial, sans-serif;
+
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+
+  --color-brand: var(--color-brand);
+  --color-brand-hover: var(--color-brand-hover);
+  --color-brand-tint: var(--color-brand-tint);
+  --color-brand-tint-warm: var(--color-brand-tint-warm);
+  --color-brand-border-light: var(--color-brand-border-light);
+  --color-brand-border: var(--color-brand-border);
+  --color-surface-muted: var(--color-surface-muted);
+  --color-bg-muted: var(--color-bg-muted);
+  --color-text-primary: var(--color-text-primary);
+  --color-text-body: var(--color-text-body);
+  --color-text-nav: var(--color-text-nav);
+  --color-text-secondary: var(--color-text-secondary);
+  --color-text-tertiary: var(--color-text-tertiary);
+  --color-text-inverted-muted: var(--color-text-inverted-muted);
+  --color-border-light: var(--color-border-light);
+  --color-divider: var(--color-divider);
+  --color-border-hover: var(--color-border-hover);
+  --color-success-bg: var(--color-success-bg);
+  --color-success-text: var(--color-success-text);
+  --color-error-bg: var(--color-error-bg);
+  --color-error-text: var(--color-error-text);
+  --color-error-bg-soft: var(--color-error-bg-soft);
+  --color-error-border: var(--color-error-border);
+  --color-error: var(--color-error);
+  --color-warning-bg: var(--color-warning-bg);
+  --color-warning-text: var(--color-warning-text);
+  --color-dark-surface: var(--color-dark-surface);
+
+  --shadow-brand-cta: 0 6px 18px rgba(56, 29, 219, .24);
+  --shadow-cta-glow: 0 10px 24px -8px rgba(56, 29, 219, .5);
+  --shadow-card-hover: 0 22px 44px -24px rgba(18, 18, 26, .3);
+  --shadow-float: 0 26px 60px -24px rgba(18, 18, 26, .35);
+  --shadow-sidebar: 0 24px 54px -30px rgba(18, 18, 26, .32);
+  --shadow-toast: 0 16px 34px -18px rgba(18, 18, 26, .6);
+  --shadow-phone: 0 30px 60px -30px rgba(18, 18, 26, .4);
+  --shadow-hero-search: 0 18px 44px -18px rgba(18, 18, 26, .18);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+
+  body {
+    @apply bg-background text-foreground font-sans antialiased;
+  }
+
+  a {
+    @apply text-brand;
+  }
+  a:hover {
+    @apply text-brand-hover;
+  }
+
+  input,
+  select,
+  button,
+  textarea {
+    font: inherit;
+    color: inherit;
+  }
+
+  ::selection {
+    background: var(--color-selection);
+  }
+
+  input[type="number"]::-webkit-inner-spin-button,
+  input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
+  input[type="number"] {
+    -moz-appearance: textfield;
+    appearance: textfield; /* Added for general compatibility */
+  }
+}
+
+@keyframes shimmer {
+  0% { background-position: -500px 0; }
+  100% { background-position: 500px 0; }
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--muted-foreground);
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-track {
+  border-radius: 5px;
+  background: var(--muted);
+}

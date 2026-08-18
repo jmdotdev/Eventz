@@ -6,11 +6,10 @@ import { PieChartComponent } from "../../../components/admin/pie-chart/pie-chart
 import { BarChartComponent } from "../../../components/bar-chart/bar-chart.component";
 
 @Component({
-  selector: 'app-dashboard',
-  standalone: true,
-  imports: [DashboardCardComponent, CommonModule, UpcomingEventCardComponent, PieChartComponent, BarChartComponent],
-  templateUrl: './dashboard.component.html',
-  styleUrl: './dashboard.component.scss'
+    selector: 'app-dashboard',
+    imports: [DashboardCardComponent, CommonModule, UpcomingEventCardComponent, PieChartComponent, BarChartComponent],
+    templateUrl: './dashboard.component.html',
+    styleUrl: './dashboard.component.scss'
 })
 export class DashboardComponent {
    count: number[] = [1,2,3,4];
