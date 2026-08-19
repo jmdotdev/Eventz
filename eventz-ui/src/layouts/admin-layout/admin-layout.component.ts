@@ -1,25 +1,24 @@
-import { Component, EventEmitter, Output } from '@angular/core';
-import { SideNavComponent } from "../../components/admin/side-nav/side-nav.component";
+import { Component, signal } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { TopBarComponent } from "../../components/admin/top-bar/top-bar.component";
-import { CommonModule } from '@angular/common';
+import { NgIcon, provideIcons } from '@ng-icons/core';
+import { lucideMenu } from '@ng-icons/lucide';
+import { SideNavComponent } from "../../components/admin/side-nav/side-nav.component";
 
 @Component({
     selector: 'app-admin-layout',
-    imports: [CommonModule, SideNavComponent, RouterOutlet, TopBarComponent],
+    standalone: true,
+    imports: [SideNavComponent, RouterOutlet, NgIcon],
+    viewProviders: [provideIcons({ lucideMenu })],
     templateUrl: './admin-layout.component.html',
-    styleUrl: './admin-layout.component.scss'
 })
 export class AdminLayoutComponent {
-  showSideNav = false;
-  activeLink: string = '';
+  readonly showSideNav = signal(false);
 
-
-  toggleSideNav() {
-    this.showSideNav = !this.showSideNav;
+  toggleSideNav(): void {
+    this.showSideNav.update(v => !v);
   }
-  handleEmittedLink(linkName: string) {
-    this.activeLink = linkName;
-    console.log('Active Link in Layout:', this.activeLink);
+
+  closeSideNav(): void {
+    this.showSideNav.set(false);
   }
 }

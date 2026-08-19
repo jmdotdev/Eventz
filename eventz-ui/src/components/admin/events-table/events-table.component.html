@@ -1,92 +1,59 @@
-<!-- <div class="flex flex-col bg-white rounded-lg p-4 mx-4 my-6">
-  <app-table-header></app-table-header> -->
-<div class="w-full overflow-x-auto">
-  <table class="min-w-full text-sm text-left">
-    <thead class="uppercase text-xs border-b-[1px] border-b-gray-300 text-eventTableColor">
+<app-admin-search-filter-bar
+  placeholder="Search events"
+  [searchValue]="search"
+  (searchValueChange)="search = $event; currentPage = 1"
+  [filters]="statusFilters"
+  [activeFilter]="activeFilter()"
+  (activeFilterChange)="setFilter($event)"
+/>
+
+<div class="w-full overflow-x-auto rounded-[18px] border border-border-light bg-white">
+  <table class="min-w-[860px] w-full text-left text-sm">
+    <thead class="bg-surface-muted">
       <tr>
-        <th class="px-4 py-3">Name</th>
-        <th class="px-4 py-3">Location</th>
-        <th class="px-4 py-3">Organized By</th>
-        <th class="px-4 py-3">Verified</th>
-        <th class="px-4 py-3">Date</th>
-        <th class="px-4 py-3 text-right">Actions</th>
+        <th class="px-6 py-3 text-[11.5px] font-bold uppercase tracking-[.07em] text-text-tertiary">Name</th>
+        <th class="px-4 py-3 text-[11.5px] font-bold uppercase tracking-[.07em] text-text-tertiary">Location</th>
+        <th class="px-4 py-3 text-[11.5px] font-bold uppercase tracking-[.07em] text-text-tertiary">Organized by</th>
+        <th class="px-4 py-3 text-[11.5px] font-bold uppercase tracking-[.07em] text-text-tertiary">Status</th>
+        <th class="px-4 py-3 text-[11.5px] font-bold uppercase tracking-[.07em] text-text-tertiary">Date</th>
+        <th class="px-6 py-3 text-right text-[11.5px] font-bold uppercase tracking-[.07em] text-text-tertiary">Actions</th>
       </tr>
     </thead>
 
     <tbody>
-      <tr
-        *ngFor="let event of paginatedEvents; let i = index"
-        class="hover:bg-gray-50 hover:cursor-pointer text-eventTableColor"
-      >
-        <td class="px-4 py-3 font-medium">{{ event.name }}</td>
-        <td class="px-4 py-3">{{ event.location }}</td>
-        <td class="px-4 py-3">{{ event.organizedBy }}</td>
+      @for (event of paginatedEvents; track event.name; let i = $index) {
+        <tr class="border-t border-divider hover:bg-surface-muted">
+          <td class="px-6 py-3.5">
+            <div class="flex items-center gap-3">
+              <span class="h-[44px] w-[44px] shrink-0 rounded-[11px]" [style.background]="'linear-gradient(150deg,' + gradientFor(event.name)[0] + ',' + gradientFor(event.name)[1] + ')'"></span>
+              <p class="font-bold text-text-primary">{{ event.name }}</p>
+            </div>
+          </td>
+          <td class="px-4 py-3.5 text-text-body">{{ event.location }}</td>
+          <td class="px-4 py-3.5 text-text-body">{{ event.organizedBy }}</td>
+          <td class="px-4 py-3.5"><app-status-badge [status]="event.verified ? 'Published' : 'Draft'" /></td>
+          <td class="px-4 py-3.5 text-text-body">{{ event.date }}</td>
 
-        <!-- Verified -->
-        <td class="px-4 py-3">
-          <div
-            class="flex items-center justify-center w-6 h-6 rounded-full"
-            [ngClass]="event.verified ? 'bg-green-600' : 'bg-red-600'"
-          >
-            <fa-icon *ngIf="event.verified" [icon]="faCheck" class="text-md cursor-pointer text-white"></fa-icon>
-            <fa-icon *ngIf="!event.verified" [icon]="faTimes" class="text-md cursor-pointer text-white"></fa-icon>
-          </div>
-        </td>
+          <td class="px-6 py-3.5 text-right">
+            <div class="relative inline-flex items-center gap-1.5">
+              <button type="button" class="rounded-[9px] border border-border bg-white px-3 py-1.5 text-[12.5px] font-bold text-text-primary hover:border-border-hover">Edit</button>
+              <button type="button" (click)="toggleMenu(i)" class="flex h-8 w-8 items-center justify-center rounded-[9px] border border-border bg-white text-text-tertiary hover:border-border-hover">
+                <ng-icon name="lucideEllipsisVertical" size="15" />
+              </button>
 
-        <td class="px-4 py-3">{{ event.date }}</td>
-
-        <!-- Actions -->
-        <td class="px-4 py-3 text-right relative">
-          <button
-            class="p-2 rounded hover:bg-gray-200"
-            (click)="toggleMenu(i)"
-          >
-         <fa-icon [icon]="faElipsis" class="text-lg cursor-pointer"></fa-icon>
-
-          </button>
-
-          <div
-            *ngIf="openMenuIndex === i"
-            class="absolute right-4 mt-2 w-32 bg-white border rounded shadow z-10"
-          >
-            <button class="block w-full text-left px-4 py-2 hover:bg-gray-100">
-              View
-            </button>
-            <button class="block w-full text-left px-4 py-2 hover:bg-gray-100">
-              Edit
-            </button>
-            <button class="block w-full text-left px-4 py-2 text-red-600 hover:bg-gray-100">
-              Delete
-            </button>
-          </div>
-        </td>
-      </tr>
+              @if (openMenuIndex === i) {
+                <div class="absolute right-0 top-9 z-10 w-32 rounded-lg border border-border-light bg-white py-1 shadow-lg">
+                  <button class="block w-full px-4 py-2 text-left text-[13px] hover:bg-surface-muted">View</button>
+                  <button class="block w-full px-4 py-2 text-left text-[13px] hover:bg-surface-muted">Duplicate</button>
+                  <button class="block w-full px-4 py-2 text-left text-[13px] text-error hover:bg-error-bg-soft">Delete</button>
+                </div>
+              }
+            </div>
+          </td>
+        </tr>
+      }
     </tbody>
   </table>
 
-  <!-- Pagination -->
-  <div class="flex items-center justify-between px-4 py-3 border-t">
-    <span class="text-sm text-eventTableColor">
-      Page {{ currentPage }} of {{ totalPages }}
-    </span>
-
-    <div class="flex gap-2">
-      <button
-        class="px-3 py-1 border rounded disabled:opacity-50"
-        (click)="changePage(currentPage - 1)"
-        [disabled]="currentPage === 1"
-      >
-        Prev
-      </button>
-
-      <button
-        class="px-3 py-1 border rounded disabled:opacity-50"
-        (click)="changePage(currentPage + 1)"
-        [disabled]="currentPage === totalPages"
-      >
-        Next
-      </button>
-    </div>
-  </div>
+  <app-admin-pagination [currentPage]="currentPage" [totalPages]="totalPages" [pageSize]="pageSize" [totalItems]="filteredEvents.length" (pageChange)="changePage($event)" />
 </div>
-<!-- </div> -->

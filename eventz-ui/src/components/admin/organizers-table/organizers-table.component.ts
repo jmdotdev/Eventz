@@ -1,22 +1,23 @@
 import { Component } from '@angular/core';
-import { EventItem, Organizer } from '../../../interfaces/interface';
-import  { CommonModule } from '@angular/common'
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { faEllipsisV, faCheck, faTimes } from '@fortawesome/free-solid-svg-icons';
+import { Organizer } from '../../../interfaces/interface';
+import { NgIcon, provideIcons } from '@ng-icons/core';
+import { lucideEllipsisVertical } from '@ng-icons/lucide';
+import { StatusBadgeComponent } from '../status-badge/status-badge.component';
+import { SearchFilterBarComponent } from '../search-filter-bar/search-filter-bar.component';
+import { PaginationComponent } from '../pagination/pagination.component';
 
 @Component({
     selector: 'app-organizers-table',
-    imports: [CommonModule, FontAwesomeModule],
+    standalone: true,
+    imports: [NgIcon, StatusBadgeComponent, SearchFilterBarComponent, PaginationComponent],
+    viewProviders: [provideIcons({ lucideEllipsisVertical })],
     templateUrl: './organizers-table.component.html',
-    styleUrl: './organizers-table.component.scss'
 })
 export class OrganizersTableComponent {
- pageSize = 10;
+  pageSize = 10;
   currentPage = 1;
   openMenuIndex: number | null = null;
-  faElipsis = faEllipsisV;
-  faCheck = faCheck;
-  faTimes = faTimes;
+  search = '';
 
   organizers: Organizer[] = Array.from({ length: 37 }).map((_, i) => ({
     name: `Organizer ${i + 1}`,
@@ -25,13 +26,17 @@ export class OrganizersTableComponent {
     date: new Date(2025, 0, i + 1).toDateString()
   }));
 
+  get filteredOrganizers(): Organizer[] {
+    return this.organizers.filter(o => !this.search || o.name.toLowerCase().includes(this.search.toLowerCase()));
+  }
+
   get totalPages(): number {
-    return Math.ceil(this.organizers.length / this.pageSize);
+    return Math.max(1, Math.ceil(this.filteredOrganizers.length / this.pageSize));
   }
 
   get paginatedOrganizers(): Organizer[] {
     const start = (this.currentPage - 1) * this.pageSize;
-    return this.organizers.slice(start, start + this.pageSize);
+    return this.filteredOrganizers.slice(start, start + this.pageSize);
   }
 
   changePage(page: number) {

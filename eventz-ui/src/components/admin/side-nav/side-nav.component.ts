@@ -1,39 +1,65 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, inject, Output } from '@angular/core';
+import { Router, RouterLink, NavigationEnd } from '@angular/router';
+import { toSignal } from '@angular/core/rxjs-interop';
+import { filter, map, startWith } from 'rxjs';
+import { NgIcon, provideIcons } from '@ng-icons/core';
+import {
+  lucideCalendarDays,
+  lucideChartColumn,
+  lucideCirclePlus,
+  lucideCreditCard,
+  lucideLayoutDashboard,
+  lucideReceiptText,
+  lucideSettings,
+  lucideTicket,
+  lucideUser,
+  lucideUsers,
+} from '@ng-icons/lucide';
 import { ISideNav } from '../../../interfaces/interface';
 import { sideNavLinks } from '../data/side-nav-links';
-import { FaIconComponent } from "@fortawesome/angular-fontawesome";
-import { CommonModule } from '@angular/common';
-import { Router } from '@angular/router';
 
 @Component({
-    selector: 'app-side-nav',
-    imports: [CommonModule, FaIconComponent],
-    templateUrl: './side-nav.component.html',
-    styleUrl: './side-nav.component.scss'
+  selector: 'app-side-nav',
+  standalone: true,
+  imports: [RouterLink, NgIcon],
+  viewProviders: [
+    provideIcons({
+      lucideLayoutDashboard,
+      lucideCalendarDays,
+      lucideCirclePlus,
+      lucideTicket,
+      lucideReceiptText,
+      lucideUsers,
+      lucideChartColumn,
+      lucideCreditCard,
+      lucideUser,
+      lucideSettings,
+    }),
+  ],
+  templateUrl: './side-nav.component.html',
 })
-export class SideNavComponent implements OnInit {
+export class SideNavComponent {
   links: ISideNav[] = sideNavLinks;
-  activeLink: ISideNav | undefined;
-  @Output() selectedLinkEmitter = new EventEmitter<string>();
+  @Output() linkClicked = new EventEmitter<void>();
 
-  constructor ( private router:Router) {}
-  ngOnInit(): void {
-    this.activeLink = this.links.find(link => link.name.toLowerCase() === (this.router.url.split('/')[2] || 'dashboard'));
-    if (this.activeLink) {
-      this.links = this.links.map((l) => ({
-        ...l,
-        isActive: l.name === this.activeLink?.name ? true : false
-      }));
-      this.selectedLinkEmitter.emit(this.activeLink.name);
-    }
+  private readonly router = inject(Router);
+
+  readonly currentUrl = toSignal(
+    this.router.events.pipe(
+      filter((e): e is NavigationEnd => e instanceof NavigationEnd),
+      map(e => e.urlAfterRedirects),
+      startWith(this.router.url),
+    ),
+    { initialValue: this.router.url },
+  );
+
+  isActive(link: ISideNav): boolean {
+    const url = this.currentUrl().split('?')[0];
+    const target = link.path ? `/admin/${link.path}` : '/admin';
+    return link.path ? url === target || url.startsWith(target + '/') : url === target;
   }
 
-  handleNavigation (link: ISideNav) {
-    this.links = this.links.map((l) => ({
-      ...l,
-      isActive: l.name === link.name ? true : false
-    }));
-    link.name.toLowerCase() === 'dashboard' ? this.router.navigate(['admin']) : this.router.navigate([`admin/${link.name.toLowerCase()}`]);
-    this.selectedLinkEmitter.emit(link.name);
+  onLinkClick(): void {
+    this.linkClicked.emit();
   }
 }

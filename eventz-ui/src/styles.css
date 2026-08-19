@@ -70,7 +70,15 @@
   --color-error: #E11D48;
   --color-warning-bg: #FEF3C7;
   --color-warning-text: #92400E;
+  --color-warning-border: #FDE9C8;
+  --color-warning-bg-soft: #FFFBF2;
   --color-dark-surface: #12121A;
+
+  /* Admin analytics — sequential purple chart series (darkest to lightest) */
+  --color-chart-purple-1: #381DDB;
+  --color-chart-purple-2: #5B45E6;
+  --color-chart-purple-3: #8A78F0;
+  --color-chart-purple-4: #C6C9F5;
 }
 
 @theme inline {
@@ -126,7 +134,13 @@
   --color-error: var(--color-error);
   --color-warning-bg: var(--color-warning-bg);
   --color-warning-text: var(--color-warning-text);
+  --color-warning-border: var(--color-warning-border);
+  --color-warning-bg-soft: var(--color-warning-bg-soft);
   --color-dark-surface: var(--color-dark-surface);
+  --color-chart-purple-1: var(--color-chart-purple-1);
+  --color-chart-purple-2: var(--color-chart-purple-2);
+  --color-chart-purple-3: var(--color-chart-purple-3);
+  --color-chart-purple-4: var(--color-chart-purple-4);
 
   --shadow-brand-cta: 0 6px 18px rgba(56, 29, 219, .24);
   --shadow-cta-glow: 0 10px 24px -8px rgba(56, 29, 219, .5);

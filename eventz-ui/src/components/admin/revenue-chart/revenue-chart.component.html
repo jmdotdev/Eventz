@@ -1,0 +1,25 @@
+<svg viewBox="0 0 640 220" class="h-[220px] w-full">
+  <defs>
+    <linearGradient id="revenueFill" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#381DDB" stop-opacity="0.22" />
+      <stop offset="100%" stop-color="#381DDB" stop-opacity="0" />
+    </linearGradient>
+  </defs>
+  <line x1="0" y1="40" x2="640" y2="40" stroke="#F0F2F8" stroke-width="1" />
+  <line x1="0" y1="90" x2="640" y2="90" stroke="#F0F2F8" stroke-width="1" />
+  <line x1="0" y1="140" x2="640" y2="140" stroke="#F0F2F8" stroke-width="1" />
+  <line x1="0" y1="190" x2="640" y2="190" stroke="#E6E8F0" stroke-width="1" />
+
+  <path [attr.d]="areaPath()" fill="url(#revenueFill)" />
+  <path [attr.d]="linePath()" fill="none" stroke="#381DDB" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" />
+  @if (endpoint(); as pt) {
+    <circle [attr.cx]="pt.x" [attr.cy]="pt.y" r="5" fill="#fff" stroke="#381DDB" stroke-width="3" />
+  }
+</svg>
+@if (labels().length) {
+  <div class="mt-1 flex justify-between text-[12px] font-semibold text-text-tertiary">
+    @for (label of labels(); track label) {
+      <span>{{ label }}</span>
+    }
+  </div>
+}

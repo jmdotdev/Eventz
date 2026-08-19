@@ -1,0 +1,77 @@
+<div class="px-5 pb-14 pt-6 sm:px-8">
+  <app-admin-page-header title="Settings" subtitle="Organization, team, and payout preferences." />
+
+  <div class="flex flex-col gap-[18px]">
+    <!-- Organization profile -->
+    <section class="rounded-[18px] border border-border-light bg-white p-6">
+      <p class="mb-1 text-[18px] font-extrabold text-text-primary">Organization profile</p>
+      <p class="mb-5 text-[14px] text-text-secondary">This is how you appear to attendees across Eventz.</p>
+      <div class="mb-5 flex items-center gap-4">
+        <span class="flex h-16 w-16 items-center justify-center rounded-2xl bg-brand text-[22px] font-extrabold text-white">S</span>
+        <button type="button" class="rounded-[10px] border border-border bg-white px-4 py-2.5 text-[13.5px] font-bold text-text-primary hover:border-border-hover">Change logo</button>
+      </div>
+      <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
+        <label class="block">
+          <span class="mb-1.5 block text-[13.5px] font-bold text-text-primary">Organization name</span>
+          <input value="Sondeka Ltd" class="w-full rounded-xl border border-border bg-surface-muted px-3.5 py-3 text-[14.5px] outline-none focus:border-brand focus:bg-white" />
+        </label>
+        <label class="block">
+          <span class="mb-1.5 block text-[13.5px] font-bold text-text-primary">Support email</span>
+          <input value="hello@sondeka.co.ke" class="w-full rounded-xl border border-border bg-surface-muted px-3.5 py-3 text-[14.5px] outline-none focus:border-brand focus:bg-white" />
+        </label>
+      </div>
+      <button type="button" class="mt-5 rounded-[10px] bg-brand px-4 py-2.5 text-[13.5px] font-bold text-white hover:bg-brand-hover">Save changes</button>
+    </section>
+
+    <!-- Team -->
+    <section class="rounded-[18px] border border-border-light bg-white p-6">
+      <div class="mb-4 flex items-center justify-between">
+        <div>
+          <p class="text-[18px] font-extrabold text-text-primary">Team</p>
+          <p class="text-[14px] text-text-secondary">People with access to this organizer account.</p>
+        </div>
+        <button type="button" class="flex items-center gap-1.5 rounded-[10px] border border-brand-border bg-brand-tint px-3.5 py-2 text-[13px] font-bold text-brand">
+          <ng-icon name="lucidePlus" size="13" />
+          Invite member
+        </button>
+      </div>
+      <div class="flex flex-col divide-y divide-divider">
+        @for (member of team(); track member.name) {
+          <div class="flex items-center gap-3 py-3">
+            <span class="flex h-[38px] w-[38px] shrink-0 items-center justify-center rounded-[11px] bg-brand-tint text-[13px] font-bold text-brand">{{ member.initials }}</span>
+            <div class="flex-1">
+              <p class="text-[14px] font-bold text-text-primary">{{ member.name }}</p>
+              <p class="text-[12.5px] text-text-tertiary">{{ member.role }}</p>
+            </div>
+            <app-status-badge [status]="member.status" />
+          </div>
+        }
+      </div>
+    </section>
+
+    <!-- Notifications -->
+    <section class="rounded-[18px] border border-border-light bg-white p-6">
+      <p class="mb-1 text-[18px] font-extrabold text-text-primary">Notification preferences</p>
+      <p class="mb-5 text-[14px] text-text-secondary">Choose what you hear about, and how often.</p>
+      <div class="flex flex-col divide-y divide-divider">
+        @for (pref of notifications(); track pref.label) {
+          <div class="flex items-center gap-4 py-3.5">
+            <div class="flex-1">
+              <p class="text-[14px] font-bold text-text-primary">{{ pref.label }}</p>
+              <p class="text-[12.5px] text-text-secondary">{{ pref.description }}</p>
+            </div>
+            <button
+              type="button"
+              (click)="toggleNotification(pref)"
+              class="relative h-6 w-11 shrink-0 rounded-full transition-colors"
+              [class]="pref.enabled ? 'bg-brand' : 'bg-border'"
+              [attr.aria-pressed]="pref.enabled"
+            >
+              <span class="absolute top-0.5 h-5 w-5 rounded-full bg-white transition-transform" [class]="pref.enabled ? 'translate-x-[22px]' : 'translate-x-0.5'"></span>
+            </button>
+          </div>
+        }
+      </div>
+    </section>
+  </div>
+</div>

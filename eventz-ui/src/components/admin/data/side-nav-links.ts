@@ -1,29 +1,14 @@
-import { faHome, faPaperPlane, faTelevision, faUser } from "@fortawesome/free-solid-svg-icons";
 import { ISideNav } from "../../../interfaces/interface";
 
 export const sideNavLinks: ISideNav[] = [
-    {
-        name: 'Dashboard',
-        path: 'dashboard',
-        isActive: true,
-        icon: faHome
-    },
-        {
-        name: 'Events',
-        path: 'events',
-        isActive: false,
-        icon: faTelevision
-    },
-        {
-        name: 'Tickets',
-        path: 'tickets',
-        isActive: false,
-        icon: faPaperPlane
-    },
-        {
-        name: 'Users',
-        path: 'users',
-        isActive: false,
-        icon: faUser
-    }
+    { name: 'Dashboard', path: '', icon: 'lucideLayoutDashboard' },
+    { name: 'Events', path: 'events', icon: 'lucideCalendarDays' },
+    { name: 'Create Event', path: 'create-event', icon: 'lucideCirclePlus' },
+    { name: 'Tickets', path: 'tickets', icon: 'lucideTicket' },
+    { name: 'Orders', path: 'orders', icon: 'lucideReceiptText', badge: '14' },
+    { name: 'Attendees', path: 'attendees', icon: 'lucideUsers' },
+    { name: 'Analytics', path: 'analytics', icon: 'lucideChartColumn' },
+    { name: 'Payouts', path: 'payouts', icon: 'lucideCreditCard' },
+    { name: 'Customers', path: 'users', icon: 'lucideUser' },
+    { name: 'Settings', path: 'settings', icon: 'lucideSettings' },
 ]

@@ -1,0 +1,88 @@
+<div class="px-5 pb-14 pt-6 sm:px-8">
+  <app-admin-page-header title="Analytics" subtitle="All events · last 3 months">
+    <app-admin-period-selector [active]="period()" (periodChange)="period.set($event)" />
+  </app-admin-page-header>
+
+  @if (data(); as d) {
+    <!-- Stat cards -->
+    <div class="mb-5 grid grid-cols-1 gap-[18px] sm:grid-cols-2 lg:grid-cols-4">
+      @for (stat of d.stats; track stat.label) {
+        <app-admin-stat-card [label]="stat.label" [value]="stat.value" [icon]="stat.icon" [delta]="stat.delta" [deltaTone]="stat.deltaTone" />
+      }
+    </div>
+
+    <!-- Charts row 1 -->
+    <div class="mb-5 grid grid-cols-1 gap-[18px] lg:grid-cols-2">
+      <div class="rounded-[18px] border border-border-light bg-white p-6">
+        <p class="text-[16.5px] font-extrabold text-text-primary">Sales over time</p>
+        <p class="mb-5 text-[13.5px] text-text-secondary">Tickets sold per week</p>
+        <div class="flex h-[200px] items-end gap-2.5">
+          @for (bar of d.salesBars; track bar.label) {
+            <div class="flex h-full flex-1 items-end">
+              <div class="w-full rounded-t-[7px] rounded-b-[3px]" [class]="bar.highlight ? 'bg-brand' : 'bg-brand-border'" [style.height.%]="bar.pct"></div>
+            </div>
+          }
+        </div>
+        <div class="mt-2 flex gap-2.5">
+          @for (bar of d.salesBars; track bar.label) {
+            <span class="flex-1 text-center text-[11.5px] font-semibold text-text-tertiary">{{ bar.label }}</span>
+          }
+        </div>
+      </div>
+
+      <div class="rounded-[18px] border border-border-light bg-white p-6">
+        <p class="text-[16.5px] font-extrabold text-text-primary">Ticket type performance</p>
+        <p class="mb-5 text-[13.5px] text-text-secondary">Share of revenue</p>
+        <div class="flex flex-col gap-4">
+          @for (row of d.ticketTypeBreakdown; track row.label) {
+            <div>
+              <div class="mb-1.5 flex items-center justify-between text-[13.5px]">
+                <span class="font-semibold text-text-primary">{{ row.label }}</span>
+                <span class="text-text-tertiary">{{ row.detail }}</span>
+              </div>
+              <div class="h-2 w-full rounded-full bg-brand-tint">
+                <div class="h-full rounded-full" [style.width.%]="row.pct" [style.background]="row.color"></div>
+              </div>
+            </div>
+          }
+        </div>
+      </div>
+    </div>
+
+    <!-- Charts row 2 -->
+    <div class="grid grid-cols-1 gap-[18px] lg:grid-cols-2">
+      <div class="rounded-[18px] border border-border-light bg-white p-6">
+        <p class="mb-5 text-[16.5px] font-extrabold text-text-primary">Best-performing events</p>
+        <div class="flex flex-col gap-4">
+          @for (ev of d.bestPerforming; track ev.title) {
+            <div class="flex items-center gap-3">
+              <span class="h-10 w-10 shrink-0 rounded-[10px]" [style.background]="'linear-gradient(150deg,' + ev.gradient[0] + ',' + ev.gradient[1] + ')'"></span>
+              <div class="min-w-0 flex-1">
+                <p class="truncate text-[14px] font-bold text-text-primary">{{ ev.title }}</p>
+                <p class="text-[12.5px] text-text-tertiary">{{ ev.meta }}</p>
+              </div>
+              <span class="shrink-0 font-bold text-text-primary">{{ ev.revenue }}</span>
+            </div>
+          }
+        </div>
+      </div>
+
+      <div class="rounded-[18px] border border-border-light bg-white p-6">
+        <p class="mb-5 text-[16.5px] font-extrabold text-text-primary">Where buyers come from</p>
+        <div class="flex flex-col gap-4">
+          @for (row of d.buyerCities; track row.label) {
+            <div>
+              <div class="mb-1.5 flex items-center justify-between text-[13.5px]">
+                <span class="font-semibold text-text-primary">{{ row.label }}</span>
+                <span class="text-text-tertiary">{{ row.detail }}</span>
+              </div>
+              <div class="h-2 w-full rounded-full bg-brand-tint">
+                <div class="h-full rounded-full" [style.width.%]="row.pct" [style.background]="row.color"></div>
+              </div>
+            </div>
+          }
+        </div>
+      </div>
+    </div>
+  }
+</div>

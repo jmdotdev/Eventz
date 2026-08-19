@@ -1,111 +1,64 @@
-<div class="flex flex-col bg-white rounded-lg p-4 mx-4 my-6">
-    <div class="flex flex-col justify-between p-2">
-  <div class="flex flex-col md:flex-row items-start md:items-center justify-between mt-0">
-    <div>
-      <h2 class="font-semibold text-lg text-eventTableColor">Users List</h2>
-    </div>
-    <div class="flex items-center">
-     <div class="flex bg-searchBackground rounded-3xl px-4 py-2 w-4/5 md:w-full">
-       <fa-icon class="text-eventTableColor mx-2" [icon]="faSearch" />
-      <input class="border-0 bg-transparent text-sm hover: outline-none" placeholder="search" />
-     </div>
-      <div class="bg-searchBackground rounded-md p-2 ml-2 md:ml-4 cursor-pointer" (click)="openHeaderDropDown()">
-         <fa-icon class="text-deepBlue" [icon]="faEllipsisH" />
-      </div>
-    </div>
-    <div
-            *ngIf="showHeaderDropDown"
-            class="absolute right-4 mt-28 w-28 bg-white border rounded shadow z-10 cursor-pointer"
-          >
-            <button class="block w-full text-left px-4 py-2 hover:bg-gray-100">
-              Add User
-            </button>
-        </div>
+<div class="px-5 pb-14 pt-6 sm:px-8">
+  <app-admin-page-header title="Customers" subtitle="People who have bought tickets from Sondeka.">
+    <button type="button" class="flex items-center gap-1.5 rounded-[10px] bg-brand px-4 py-2.5 text-[13.5px] font-bold text-white hover:bg-brand-hover">
+      <ng-icon name="lucidePlus" size="14" />
+      Add user
+    </button>
+  </app-admin-page-header>
+
+  <app-admin-search-filter-bar
+    placeholder="Search name or email"
+    [searchValue]="search"
+    (searchValueChange)="search = $event; currentPage = 1"
+    [filters]="statusFilters"
+    [activeFilter]="activeFilter()"
+    (activeFilterChange)="setFilter($event)"
+  />
+
+  <div class="w-full overflow-x-auto rounded-[18px] border border-border-light bg-white">
+    <table class="min-w-[860px] w-full text-left text-sm">
+      <thead class="bg-surface-muted">
+        <tr>
+          <th class="px-6 py-3 text-[11.5px] font-bold uppercase tracking-[.07em] text-text-tertiary">Name</th>
+          <th class="px-4 py-3 text-[11.5px] font-bold uppercase tracking-[.07em] text-text-tertiary">Email</th>
+          <th class="px-4 py-3 text-[11.5px] font-bold uppercase tracking-[.07em] text-text-tertiary">Status</th>
+          <th class="px-4 py-3 text-[11.5px] font-bold uppercase tracking-[.07em] text-text-tertiary">Date</th>
+          <th class="px-6 py-3 text-right text-[11.5px] font-bold uppercase tracking-[.07em] text-text-tertiary">Actions</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        @for (user of paginatedUsers; track user.email + $index; let i = $index) {
+          <tr class="border-t border-divider hover:bg-surface-muted">
+            <td class="px-6 py-3.5">
+              <div class="flex items-center gap-3">
+                <span class="flex h-[38px] w-[38px] shrink-0 items-center justify-center rounded-[11px] bg-brand-tint text-[13px] font-bold text-brand">{{ user.name.slice(0, 2) }}</span>
+                <p class="font-bold text-text-primary">{{ user.name }}</p>
+              </div>
+            </td>
+            <td class="px-4 py-3.5 text-text-body">{{ user.email }}</td>
+            <td class="px-4 py-3.5"><app-status-badge [status]="user.active ? 'Active' : 'Inactive'" /></td>
+            <td class="px-4 py-3.5 text-text-body">{{ user.date }}</td>
+
+            <td class="px-6 py-3.5 text-right">
+              <div class="relative inline-flex items-center gap-1.5">
+                <button type="button" class="rounded-[9px] border border-border bg-white px-3 py-1.5 text-[12.5px] font-bold text-text-primary hover:border-border-hover">Profile</button>
+                <button type="button" (click)="toggleMenu(i)" class="flex h-8 w-8 items-center justify-center rounded-[9px] border border-border bg-white text-text-tertiary hover:border-border-hover">
+                  <ng-icon name="lucideEllipsisVertical" size="15" />
+                </button>
+                @if (openMenuIndex === i) {
+                  <div class="absolute right-0 top-9 z-10 w-36 rounded-lg border border-border-light bg-white py-1 shadow-lg">
+                    <button class="block w-full px-4 py-2 text-left text-[13px] hover:bg-surface-muted">View</button>
+                    <button class="block w-full px-4 py-2 text-left text-[13px] text-error hover:bg-error-bg-soft">Deactivate</button>
+                  </div>
+                }
+              </div>
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+
+    <app-admin-pagination [currentPage]="currentPage" [totalPages]="totalPages" [pageSize]="pageSize" [totalItems]="filteredUsers.length" (pageChange)="changePage($event)" />
   </div>
 </div>
-<div class="w-full overflow-x-auto">
-  <table class="min-w-full text-sm text-left">
-    <thead class="uppercase text-xs border-b-[1px] border-b-gray-300 text-eventTableColor">
-      <tr>
-        <th class="px-4 py-3">Name</th>
-        <th class="px-4 py-3">Email</th>
-        <th class="px-4 py-3">Active</th>
-        <th class="px-4 py-3">Date</th>
-        <th class="px-4 py-3 text-right">Actions</th>
-      </tr>
-    </thead>
-
-    <tbody>
-      <tr
-        *ngFor="let user of paginatedUsers; let i = index"
-        class="hover:bg-gray-50 hover:cursor-pointer text-eventTableColor"
-      >
-        <td class="px-4 py-3 font-medium">{{ user.name }}</td>
-        <td class="px-4 py-3">{{ user.email }}</td>
-
-        <!-- Verified -->
-        <td class="px-4 py-3">
-          <div
-            class="flex items-center justify-center w-6 h-6 rounded-full"
-            [ngClass]="user.active ? 'bg-green-600' : 'bg-red-600'"
-          >
-            <fa-icon *ngIf="user.active" [icon]="faCheck" class="text-md cursor-pointer text-white"></fa-icon>
-            <fa-icon *ngIf="!user.active" [icon]="faTimes" class="text-md cursor-pointer text-white"></fa-icon>
-          </div>
-        </td>
-
-        <td class="px-4 py-3">{{ user.date }}</td>
-
-        <!-- Actions -->
-        <td class="px-4 py-3 text-right relative">
-          <button
-            class="p-2 rounded hover:bg-gray-200"
-            (click)="toggleMenu(i)"
-          >
-         <fa-icon [icon]="faElipsis" class="text-lg cursor-pointer"></fa-icon>
-
-          </button>
-
-          <div
-            *ngIf="openMenuIndex === i"
-            class="absolute right-4 mt-2 w-32 bg-white border rounded shadow z-10"
-          >
-            <button class="block w-full text-left px-4 py-2  hover:bg-gray-100">
-              View
-            </button>
-            <button class="block w-full text-left px-4 py-2 text-red-600 hover:bg-gray-100">
-              Deactivate
-            </button>
-          </div>
-        </td>
-      </tr>
-    </tbody>
-  </table>
-
-  <!-- Pagination -->
-  <div class="flex items-center justify-between px-4 py-3 border-t">
-    <span class="text-sm text-eventTableColor">
-      Page {{ currentPage }} of {{ totalPages }}
-    </span>
-
-    <div class="flex gap-2">
-      <button
-        class="px-3 py-1 border rounded disabled:opacity-50"
-        (click)="changePage(currentPage - 1)"
-        [disabled]="currentPage === 1"
-      >
-        Prev
-      </button>
-
-      <button
-        class="px-3 py-1 border rounded disabled:opacity-50"
-        (click)="changePage(currentPage + 1)"
-        [disabled]="currentPage === totalPages"
-      >
-        Next
-      </button>
-    </div>
-  </div>
-</div>
-</div>
-

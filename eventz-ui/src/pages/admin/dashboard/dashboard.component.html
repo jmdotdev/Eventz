@@ -1,32 +1,98 @@
-<div class="p-4">
-  <div
-    class="grid grid-cols-1 md:grid md:grid-cols-2 gap-4 lg:grid lg:grid-cols-4 w-full"
-  >
-    <div class="w-full" *ngFor="let c of count; let i = index">
-      <app-dashboard-card [index]="i"></app-dashboard-card>
+<div class="px-5 pb-14 pt-6 sm:px-8">
+  <app-admin-page-header title="Good morning, John" subtitle="Here's how Sondeka's events are performing today.">
+    <button type="button" class="flex items-center gap-1.5 rounded-[10px] border border-border bg-white px-4 py-2.5 text-[13.5px] font-bold text-text-primary hover:border-border-hover">
+      <ng-icon name="lucideDownload" size="14" />
+      Export
+    </button>
+    <a z-button routerLink="/admin/create-event" class="flex items-center gap-1.5">
+      <ng-icon name="lucidePlus" size="14" />
+      Create event
+    </a>
+  </app-admin-page-header>
+
+  <!-- Stat cards -->
+  <div class="mb-5 grid grid-cols-1 gap-[18px] sm:grid-cols-2 lg:grid-cols-4">
+    @for (stat of stats(); track stat.label) {
+      <app-admin-stat-card [label]="stat.label" [value]="stat.value" [icon]="stat.icon" [delta]="stat.delta" [deltaTone]="stat.deltaTone" />
+    }
+  </div>
+
+  <!-- Charts -->
+  <div class="mb-5 grid grid-cols-1 gap-[18px] lg:grid-cols-2">
+    <div class="rounded-[18px] border border-border-light bg-white p-6">
+      <div class="mb-4 flex flex-wrap items-center justify-between gap-3">
+        <div>
+          <p class="text-[16.5px] font-extrabold text-text-primary">Revenue</p>
+          <p class="text-[13.5px] text-text-secondary">KES 3,421,500 in the last 30 days</p>
+        </div>
+        <app-admin-period-selector active="30d" />
+      </div>
+      <app-admin-revenue-chart [data]="revenue().data" [labels]="revenue().labels" />
+    </div>
+
+    <div class="rounded-[18px] border border-border-light bg-white p-6">
+      <p class="text-[16.5px] font-extrabold text-text-primary">Ticket sales</p>
+      <p class="mb-4 text-[13.5px] text-text-secondary">Nairobi Music Festival capacity</p>
+      @if (capacity(); as cap) {
+        <div class="mb-5 flex items-center gap-5">
+          <app-admin-capacity-donut [percent]="cap.percent" />
+          <div>
+            <p class="text-[26px] font-extrabold text-text-primary">{{ cap.soldLabel }}</p>
+            <p class="text-[13px] text-text-secondary">{{ cap.totalLabel }}</p>
+          </div>
+        </div>
+        <div class="flex flex-col gap-2.5">
+          @for (row of cap.legend; track row.label) {
+            <div class="flex items-center gap-2.5 text-[13.5px]">
+              <span class="h-[9px] w-[9px] shrink-0 rounded-[3px]" [class.border]="row.outline" [style.border-color]="row.outline ? '#E1E5FF' : ''" [style.background]="row.swatch"></span>
+              <span class="flex-1 text-text-secondary">{{ row.label }}</span>
+              <span class="font-bold text-text-primary">{{ row.value }}</span>
+            </div>
+          }
+        </div>
+      }
     </div>
   </div>
-  <div class="flex flex-col bg-white rounded-md my-4 px-2">
-    <h2 class="font-semibold text-xl my-2">Upcoming Events</h2>
-    <div>
-      <app-upcoming-event-card></app-upcoming-event-card>
-      <app-upcoming-event-card></app-upcoming-event-card>
+
+  <!-- Upcoming events -->
+  <div class="overflow-x-auto rounded-[18px] border border-border-light bg-white">
+    <div class="flex items-center justify-between border-b border-border-light px-6 py-5">
+      <p class="text-[16.5px] font-extrabold text-text-primary">Upcoming events</p>
+      <a routerLink="/admin/events" class="text-[13.5px] font-bold text-brand">Manage all events &rarr;</a>
     </div>
-  </div>
-  <div class="flex flex-col md:flex-row items-center w-full my-4 gap-4">
-     <div class="fex flex-col bg-white-rounded-lg bg-white rounded-lg w-full md:w-1/2 p-2">
-      <div class="flex items-center justify-between py-2 px-4"> 
-         <h2 class="font-semibold text-xl">Top 3 Events</h2>
-         <h2 class="font-semibold text-lg">Monthly</h2>
-      </div>
-     <app-pie-chart></app-pie-chart>
-     </div>
-     <div class=" flex flex-col bg-white-rounded-lg bg-white rounded-lg w-full md:w-1/2 p-2">
-      <div class="flex items-center justify-between py-2 px-4"> 
-         <h2 class="font-semibold text-xl">Top 3 Events</h2>
-         <h2 class="font-semibold text-lg">Monthly</h2>
-      </div>
-      <app-bar-chart></app-bar-chart>
-     </div>
+    <table class="w-full min-w-[720px] text-left text-sm">
+      <thead class="bg-surface-muted">
+        <tr>
+          <th class="px-6 py-3 text-[11.5px] font-bold uppercase tracking-[.07em] text-text-tertiary">Event</th>
+          <th class="px-4 py-3 text-[11.5px] font-bold uppercase tracking-[.07em] text-text-tertiary">Date</th>
+          <th class="px-4 py-3 text-[11.5px] font-bold uppercase tracking-[.07em] text-text-tertiary">Tickets sold</th>
+          <th class="px-4 py-3 text-[11.5px] font-bold uppercase tracking-[.07em] text-text-tertiary">Revenue</th>
+          <th class="px-4 py-3 text-[11.5px] font-bold uppercase tracking-[.07em] text-text-tertiary">Status</th>
+          <th class="px-6 py-3 text-right text-[11.5px] font-bold uppercase tracking-[.07em] text-text-tertiary">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (row of upcomingEvents(); track row.title) {
+          <tr class="border-t border-divider hover:bg-surface-muted">
+            <td class="px-6 py-3.5">
+              <div class="flex items-center gap-3">
+                <span class="h-[46px] w-[46px] shrink-0 rounded-[11px]" [style.background]="'linear-gradient(150deg,' + row.gradient[0] + ',' + row.gradient[1] + ')'"></span>
+                <div>
+                  <p class="text-[14.5px] font-bold text-text-primary">{{ row.title }}</p>
+                  <p class="text-[12.5px] text-text-tertiary">{{ row.category }}</p>
+                </div>
+              </div>
+            </td>
+            <td class="px-4 py-3.5 text-text-body">{{ row.date }}</td>
+            <td class="px-4 py-3.5 text-text-body">{{ row.ticketsSold }}</td>
+            <td class="px-4 py-3.5 font-semibold text-text-primary">{{ row.revenue }}</td>
+            <td class="px-4 py-3.5"><app-status-badge [status]="row.status" /></td>
+            <td class="px-6 py-3.5 text-right">
+              <button type="button" class="rounded-[9px] border border-border bg-white px-3 py-1.5 text-[12.5px] font-bold text-text-primary hover:border-border-hover">Manage</button>
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
   </div>
 </div>

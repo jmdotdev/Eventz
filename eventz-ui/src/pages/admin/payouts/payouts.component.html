@@ -1,0 +1,76 @@
+<div class="px-5 pb-14 pt-6 sm:px-8">
+  <app-admin-page-header title="Payouts" subtitle="Paid out weekly, every Friday, to your M-Pesa business number.">
+    <button type="button" class="rounded-[10px] bg-brand px-4 py-2.5 text-[13.5px] font-bold text-white hover:bg-brand-hover">Request early payout</button>
+  </app-admin-page-header>
+
+  @if (summary(); as s) {
+    <div class="mb-5 flex flex-wrap gap-[18px]">
+      <div class="relative min-w-[300px] flex-1 overflow-hidden rounded-[18px] bg-brand p-6 text-white">
+        <div class="absolute inset-0" style="background-image: repeating-linear-gradient(48deg, rgba(255,255,255,.07) 0 12px, transparent 12px 24px)"></div>
+        <div class="relative">
+          <p class="text-[13.5px] text-white/80">Next payout · {{ s.date }}</p>
+          <p class="mb-4 text-[34px] font-extrabold">{{ s.amount }}</p>
+          <div class="grid grid-cols-3 gap-3 border-t border-white/20 pt-4 text-[13px]">
+            <div><p class="text-white/70">Gross sales</p><p class="font-bold">{{ s.gross }}</p></div>
+            <div><p class="text-white/70">Eventz fee (5%)</p><p class="font-bold">{{ s.fee }}</p></div>
+            <div><p class="text-white/70">Refunds</p><p class="font-bold">{{ s.refunds }}</p></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="min-w-[260px] flex-1 rounded-[18px] border border-border-light bg-white p-6">
+        <p class="mb-3 text-[13px] font-bold uppercase tracking-[.07em] text-text-tertiary">Payout account</p>
+        <div class="mb-4 flex items-center gap-3">
+          <span class="flex h-[30px] w-11 items-center justify-center rounded-md bg-success-text text-[10px] font-extrabold text-white">MPESA</span>
+          <div>
+            <p class="text-[14px] font-bold text-text-primary">Sondeka Ltd · 400 200</p>
+            <p class="text-[12.5px] text-text-tertiary">Paybill · verified 12 Mar 2026</p>
+          </div>
+        </div>
+        <div class="mb-4 flex flex-col gap-2 border-t border-divider pt-4 text-[13.5px]">
+          <div class="flex justify-between"><span class="text-text-secondary">Schedule</span><span class="font-semibold text-text-primary">Weekly · Friday</span></div>
+          <div class="flex justify-between"><span class="text-text-secondary">Pending clearance</span><span class="font-semibold text-text-primary">KES 132,400</span></div>
+          <div class="flex justify-between"><span class="text-text-secondary">Paid out in 2026</span><span class="font-semibold text-text-primary">KES 7.62M</span></div>
+        </div>
+        <button type="button" class="w-full rounded-[10px] border border-border bg-white py-2.5 text-[13.5px] font-bold text-text-primary hover:border-border-hover">Change payout account</button>
+      </div>
+    </div>
+  }
+
+  <div class="w-full overflow-x-auto rounded-[18px] border border-border-light bg-white">
+    <div class="flex items-center justify-between border-b border-border-light px-6 py-5">
+      <p class="text-[16.5px] font-extrabold text-text-primary">Payout history</p>
+      <button type="button" class="rounded-[10px] border border-border bg-white px-3.5 py-2 text-[12.5px] font-bold text-text-primary hover:border-border-hover">Download statements</button>
+    </div>
+    <table class="min-w-[860px] w-full text-left text-sm">
+      <thead class="bg-surface-muted">
+        <tr>
+          <th class="px-6 py-3 text-[11.5px] font-bold uppercase tracking-[.07em] text-text-tertiary">Payout</th>
+          <th class="px-4 py-3 text-[11.5px] font-bold uppercase tracking-[.07em] text-text-tertiary">Period</th>
+          <th class="px-4 py-3 text-[11.5px] font-bold uppercase tracking-[.07em] text-text-tertiary">Gross</th>
+          <th class="px-4 py-3 text-[11.5px] font-bold uppercase tracking-[.07em] text-text-tertiary">Fees</th>
+          <th class="px-4 py-3 text-[11.5px] font-bold uppercase tracking-[.07em] text-text-tertiary">Net</th>
+          <th class="px-4 py-3 text-[11.5px] font-bold uppercase tracking-[.07em] text-text-tertiary">Status</th>
+          <th class="px-6 py-3 text-right text-[11.5px] font-bold uppercase tracking-[.07em] text-text-tertiary"></th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (payout of paginatedHistory; track payout.id) {
+          <tr class="border-t border-divider hover:bg-surface-muted">
+            <td class="px-6 py-3.5 font-mono font-bold text-text-primary">{{ payout.id }}</td>
+            <td class="px-4 py-3.5 text-text-body">{{ payout.period }}</td>
+            <td class="px-4 py-3.5 text-text-body">{{ payout.gross }}</td>
+            <td class="px-4 py-3.5 text-text-tertiary">{{ payout.fees }}</td>
+            <td class="px-4 py-3.5 font-semibold text-text-primary">{{ payout.net }}</td>
+            <td class="px-4 py-3.5"><app-status-badge [status]="payout.status" /></td>
+            <td class="px-6 py-3.5 text-right">
+              <button type="button" class="text-[12.5px] font-bold text-brand hover:underline">{{ payout.actionLabel }}</button>
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+
+    <app-admin-pagination [currentPage]="currentPage" [totalPages]="totalPages" [pageSize]="pageSize" [totalItems]="history().length" (pageChange)="changePage($event)" />
+  </div>
+</div>
