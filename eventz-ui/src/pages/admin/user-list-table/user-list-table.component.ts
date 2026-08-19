@@ -1,26 +1,26 @@
-import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { faCheck, faEllipsisV, faTimes, faPlus, faSearch, faEllipsisH } from '@fortawesome/free-solid-svg-icons';
+import { Component, signal } from '@angular/core';
+import { NgIcon, provideIcons } from '@ng-icons/core';
+import { lucideEllipsisVertical, lucidePlus } from '@ng-icons/lucide';
 import { User } from '../../../interfaces/interface';
+import { PageHeaderComponent } from '../../../components/admin/page-header/page-header.component';
+import { StatusBadgeComponent } from '../../../components/admin/status-badge/status-badge.component';
+import { SearchFilterBarComponent } from '../../../components/admin/search-filter-bar/search-filter-bar.component';
+import { PaginationComponent } from '../../../components/admin/pagination/pagination.component';
 
 @Component({
     selector: 'app-user-list-table',
-    imports: [CommonModule, FontAwesomeModule],
+    standalone: true,
+    imports: [NgIcon, PageHeaderComponent, StatusBadgeComponent, SearchFilterBarComponent, PaginationComponent],
+    viewProviders: [provideIcons({ lucideEllipsisVertical, lucidePlus })],
     templateUrl: './user-list-table.component.html',
-    styleUrl: './user-list-table.component.scss'
 })
 export class UserListTableComponent {
   pageSize = 10;
   currentPage = 1;
   openMenuIndex: number | null = null;
-  faElipsis = faEllipsisV;
-  faCheck = faCheck;
-  faTimes = faTimes;
-  faPlus = faPlus;
-  faSearch = faSearch;
-  faEllipsisH = faEllipsisH;
-  showHeaderDropDown: boolean = false;
+  search = '';
+  readonly statusFilters = ['All', 'Active', 'Inactive'];
+  activeFilter = signal('All');
 
   users: User[] = Array.from({ length: 37 }).map((_, i) => ({
     name: `User ${i + 1}`,
@@ -29,13 +29,26 @@ export class UserListTableComponent {
     date: new Date(2025, 0, i + 1).toDateString()
   }));
 
+  get filteredUsers(): User[] {
+    return this.users.filter(u => {
+      const matchesFilter = this.activeFilter() === 'All' || (this.activeFilter() === 'Active') === u.active;
+      const matchesSearch = !this.search || u.name.toLowerCase().includes(this.search.toLowerCase()) || u.email.toLowerCase().includes(this.search.toLowerCase());
+      return matchesFilter && matchesSearch;
+    });
+  }
+
   get totalPages(): number {
-    return Math.ceil(this.users.length / this.pageSize);
+    return Math.max(1, Math.ceil(this.filteredUsers.length / this.pageSize));
   }
 
   get paginatedUsers(): User[] {
     const start = (this.currentPage - 1) * this.pageSize;
-    return this.users.slice(start, start + this.pageSize);
+    return this.filteredUsers.slice(start, start + this.pageSize);
+  }
+
+  setFilter(filter: string) {
+    this.activeFilter.set(filter);
+    this.currentPage = 1;
   }
 
   changePage(page: number) {
@@ -47,9 +60,5 @@ export class UserListTableComponent {
 
   toggleMenu(index: number) {
     this.openMenuIndex = this.openMenuIndex === index ? null : index;
-  }
-
-  openHeaderDropDown () {
-    this.showHeaderDropDown = !this.showHeaderDropDown;
   }
 }

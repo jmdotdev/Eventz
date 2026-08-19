@@ -1,23 +1,28 @@
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { EventItem } from '../../../interfaces/interface';
-import  { CommonModule } from '@angular/common'
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { faEllipsisV, faCheck, faTimes } from '@fortawesome/free-solid-svg-icons';
-
+import { NgIcon, provideIcons } from '@ng-icons/core';
+import { lucideEllipsisVertical } from '@ng-icons/lucide';
+import { StatusBadgeComponent } from '../status-badge/status-badge.component';
+import { SearchFilterBarComponent } from '../search-filter-bar/search-filter-bar.component';
+import { PaginationComponent } from '../pagination/pagination.component';
+import { hashGradient } from '../../../utils/gradient';
 
 @Component({
     selector: 'app-events-table',
-    imports: [CommonModule, FontAwesomeModule],
+    standalone: true,
+    imports: [NgIcon, StatusBadgeComponent, SearchFilterBarComponent, PaginationComponent],
+    viewProviders: [provideIcons({ lucideEllipsisVertical })],
     templateUrl: './events-table.component.html',
-    styleUrl: './events-table.component.scss'
 })
 export class EventsTableComponent {
   pageSize = 10;
   currentPage = 1;
   openMenuIndex: number | null = null;
-  faElipsis = faEllipsisV;
-  faCheck = faCheck;
-  faTimes = faTimes;
+  search = '';
+  readonly statusFilters = ['All', 'Published', 'Draft'];
+  activeFilter = signal('All');
+
+  readonly gradientFor = hashGradient;
 
   events: EventItem[] = Array.from({ length: 37 }).map((_, i) => ({
     name: `Event ${i + 1}`,
@@ -27,13 +32,26 @@ export class EventsTableComponent {
     date: new Date(2025, 0, i + 1).toDateString()
   }));
 
+  get filteredEvents(): EventItem[] {
+    return this.events.filter(e => {
+      const matchesFilter = this.activeFilter() === 'All' || (this.activeFilter() === 'Published') === e.verified;
+      const matchesSearch = !this.search || e.name.toLowerCase().includes(this.search.toLowerCase());
+      return matchesFilter && matchesSearch;
+    });
+  }
+
   get totalPages(): number {
-    return Math.ceil(this.events.length / this.pageSize);
+    return Math.max(1, Math.ceil(this.filteredEvents.length / this.pageSize));
   }
 
   get paginatedEvents(): EventItem[] {
     const start = (this.currentPage - 1) * this.pageSize;
-    return this.events.slice(start, start + this.pageSize);
+    return this.filteredEvents.slice(start, start + this.pageSize);
+  }
+
+  setFilter(filter: string) {
+    this.activeFilter.set(filter);
+    this.currentPage = 1;
   }
 
   changePage(page: number) {

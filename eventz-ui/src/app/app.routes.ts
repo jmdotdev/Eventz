@@ -12,10 +12,15 @@ export const routes: Routes = [
       children: [
          {path: '', loadComponent: () => import('../pages/admin/dashboard/dashboard.component').then(m => m.DashboardComponent)},
          {path: 'events', loadComponent: () => import('../pages/admin/admin-events-list/admin-events-list.component').then(m => m.AdminEventsListComponent)},
+         {path: 'create-event', loadComponent: () => import('../pages/admin/create-event/create-event.component').then(m => m.CreateEventComponent)},
          {path: 'tickets', loadComponent: () => import('../pages/admin/ticket-list-table/ticket-list-table.component').then(m => m.TicketListTableComponent)},
-         {path: 'users', loadComponent: () => import('../pages/admin/user-list-table/user-list-table.component').then(m => m.UserListTableComponent)},
          {path: 'create-ticket', loadComponent: () => import('../pages/admin/create-ticket/create-ticket.component').then(m => m.CreateTicketComponent)},
-         {path: 'create-event', loadComponent: () => import('../pages/admin/create-event/create-event.component').then(m => m.CreateEventComponent)}
+         {path: 'orders', loadComponent: () => import('../pages/admin/orders/orders.component').then(m => m.OrdersComponent)},
+         {path: 'attendees', loadComponent: () => import('../pages/admin/attendees/attendees.component').then(m => m.AttendeesComponent)},
+         {path: 'analytics', loadComponent: () => import('../pages/admin/analytics/analytics.component').then(m => m.AnalyticsComponent)},
+         {path: 'payouts', loadComponent: () => import('../pages/admin/payouts/payouts.component').then(m => m.PayoutsComponent)},
+         {path: 'users', loadComponent: () => import('../pages/admin/user-list-table/user-list-table.component').then(m => m.UserListTableComponent)},
+         {path: 'settings', loadComponent: () => import('../pages/admin/settings/settings.component').then(m => m.SettingsComponent)}
       ]
    }
 ];

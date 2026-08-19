@@ -1,24 +1,21 @@
 import { Component, EventEmitter, Output } from '@angular/core';
-import { CommonModule } from '@angular/common'
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { faEllipsisH, faPlus, faSearch } from '@fortawesome/free-solid-svg-icons';
-import { NgClass } from "../../../../node_modules/@angular/common/index";
 import { Router } from '@angular/router';
+import { NgIcon, provideIcons } from '@ng-icons/core';
+import { lucidePlus } from '@ng-icons/lucide';
+import { PageHeaderComponent } from '../page-header/page-header.component';
 
 @Component({
     selector: 'app-table-header',
-    imports: [FontAwesomeModule, CommonModule],
+    standalone: true,
+    imports: [PageHeaderComponent, NgIcon],
+    viewProviders: [provideIcons({ lucidePlus })],
     templateUrl: './table-header.component.html',
-    styleUrl: './table-header.component.scss'
 })
 export class TableHeaderComponent {
-    faElipsisH = faEllipsisH;
-    faPlus = faPlus;
-    faSearch = faSearch;
     showEventsTable: boolean = true;
     @Output() showEvents = new EventEmitter<boolean>(true);
 
-    constructor ( private router: Router) {}
+    constructor (private router: Router) {}
 
     toggleShowEvents (value: boolean) {
        this.showEvents.emit(value)

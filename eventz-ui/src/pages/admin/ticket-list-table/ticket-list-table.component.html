@@ -1,116 +1,63 @@
-<div class="flex flex-col bg-white rounded-lg p-4 mx-4 my-6">
-    <div class="flex flex-col justify-between p-2">
-  <div class="flex flex-col md:flex-row items-start md:items-center justify-between mt-0">
-    <div>
-      <h2 class="font-semibold text-lg text-eventTableColor">Tickets List</h2>
-    </div>
-    <div class="flex items-center">
-     <div class="flex bg-searchBackground rounded-3xl px-4 py-2 w-4/5 md:w-full">
-       <fa-icon class="text-eventTableColor mx-2" [icon]="faSearch" />
-      <input class="border-0 bg-transparent text-sm hover: outline-none" placeholder="search" />
-     </div>
-      <div class="bg-searchBackground rounded-md p-2 ml-2 md:ml-4 cursor-pointer" (click)="openHeaderDropDown()">
-         <fa-icon class="text-deepBlue" [icon]="faEllipsisH" />
-      </div>
-    </div>
-    <div
-            *ngIf="showHeaderDropDown"
-            class="absolute right-4 mt-28 w-auto bg-white border rounded shadow z-10 cursor-pointer"
-          >
-            <button class="block w-full text-left px-4 py-2 hover:bg-gray-100" (click)="navigateToCreateTicket()">
-              Create Ticket
-            </button>
-        </div>
-  </div>
-</div>
-<div class="w-full overflow-x-auto">
-  <table class="min-w-full text-sm text-left">
-    <thead class="uppercase text-xs border-b-[1px] border-b-gray-300 text-eventTableColor">
-      <tr>
-        <th class="px-4 py-3">Ticket No</th>
-        <th class="px-4 py-3">Event</th>
-        <th class="px-4 py-3">Persons</th>
-        <th class="px-4 py-3">Active</th>
-        <th class="px-4 py-3">Date Booked</th>
-        <th class="px-4 py-3 text-right">Actions</th>
-      </tr>
-    </thead>
+<div class="px-5 pb-14 pt-6 sm:px-8">
+  <app-admin-page-header title="Tickets" subtitle="All ticket types sold across your events.">
+    <button type="button" (click)="navigateToCreateTicket()" class="flex items-center gap-1.5 rounded-[10px] bg-brand px-4 py-2.5 text-[13.5px] font-bold text-white hover:bg-brand-hover">
+      <ng-icon name="lucidePlus" size="14" />
+      Create ticket
+    </button>
+  </app-admin-page-header>
 
-    <tbody>
-      @for (ticket of paginatedTickets; let i = $index; track i) {
-      <tr
-        class="hover:bg-gray-50 hover:cursor-pointer text-eventTableColor"
-      >
-        <td class="px-4 py-3 font-medium">{{ ticket.ticketNo }}</td>
-        <td class="px-4 py-3">{{ ticket.event }}</td>
-        <td class="px-4 py-3">{{ ticket.persons }}</td>
-        <!-- Verified -->
-        <td class="px-4 py-3">
-          <div
-            class="flex items-center justify-center w-6 h-6 rounded-full"
-            [ngClass]="ticket.active ? 'bg-green-600' : 'bg-red-600'"
-          >
-            <fa-icon *ngIf="ticket.active" [icon]="faCheck" class="text-md cursor-pointer text-white"></fa-icon>
-            <fa-icon *ngIf="!ticket.active" [icon]="faTimes" class="text-md cursor-pointer text-white"></fa-icon>
-          </div>
-        </td>
+  <app-admin-search-filter-bar
+    placeholder="Search ticket number or event"
+    [searchValue]="search"
+    (searchValueChange)="search = $event; currentPage = 1"
+    [filters]="statusFilters"
+    [activeFilter]="activeFilter()"
+    (activeFilterChange)="setFilter($event)"
+  />
 
-        <td class="px-4 py-3">{{ ticket.dateBooked }}</td>
-
-        <!-- Actions -->
-        <td class="px-4 py-3 text-right relative">
-          <button
-            class="p-2 rounded hover:bg-gray-200"
-            (click)="toggleMenu(i)"
-          >
-         <fa-icon [icon]="faElipsis" class="text-lg cursor-pointer"></fa-icon>
-
-          </button>
-
-          <div
-            *ngIf="openMenuIndex === i"
-            class="absolute right-4 mt-2 w-32 bg-white border rounded shadow z-10"
-          >
-            <button class="block w-full text-left px-4 py-2 text-red-600 hover:bg-gray-100">
-              Revoke
-            </button>
-          </div>
-        </td>
-      </tr>
-      } @empty {
+  <div class="w-full overflow-x-auto rounded-[18px] border border-border-light bg-white">
+    <table class="min-w-[860px] w-full text-left text-sm">
+      <thead class="bg-surface-muted">
         <tr>
-            <td colspan="6" class="px-4 py-3 text-center text-eventTableColor">
-            No tickets found.
-            </td>
+          <th class="px-6 py-3 text-[11.5px] font-bold uppercase tracking-[.07em] text-text-tertiary">Ticket no.</th>
+          <th class="px-4 py-3 text-[11.5px] font-bold uppercase tracking-[.07em] text-text-tertiary">Event</th>
+          <th class="px-4 py-3 text-[11.5px] font-bold uppercase tracking-[.07em] text-text-tertiary">Persons</th>
+          <th class="px-4 py-3 text-[11.5px] font-bold uppercase tracking-[.07em] text-text-tertiary">Status</th>
+          <th class="px-4 py-3 text-[11.5px] font-bold uppercase tracking-[.07em] text-text-tertiary">Date booked</th>
+          <th class="px-6 py-3 text-right text-[11.5px] font-bold uppercase tracking-[.07em] text-text-tertiary">Actions</th>
         </tr>
-      }
-    </tbody>
-  </table>
+      </thead>
 
-  <!-- Pagination -->
-  <div class="flex items-center justify-between px-4 py-3 border-t">
-    <span class="text-sm text-eventTableColor">
-      Page {{ currentPage }} of {{ totalPages }}
-    </span>
+      <tbody>
+        @for (ticket of paginatedTickets; track ticket.ticketNo; let i = $index) {
+          <tr class="border-t border-divider hover:bg-surface-muted">
+            <td class="px-6 py-3.5 font-mono font-semibold text-text-primary">{{ ticket.ticketNo }}</td>
+            <td class="px-4 py-3.5 text-text-body">{{ ticket.event }}</td>
+            <td class="px-4 py-3.5 text-text-body">{{ ticket.persons }}</td>
+            <td class="px-4 py-3.5"><app-status-badge [status]="ticket.active ? 'Active' : 'Cancelled'" /></td>
+            <td class="px-4 py-3.5 text-text-body">{{ ticket.dateBooked }}</td>
 
-    <div class="flex gap-2">
-      <button
-        class="px-3 py-1 border rounded disabled:opacity-50"
-        (click)="changePage(currentPage - 1)"
-        [disabled]="currentPage === 1"
-      >
-        Prev
-      </button>
+            <td class="px-6 py-3.5 text-right">
+              <div class="relative inline-flex items-center gap-1.5">
+                <button type="button" (click)="toggleMenu(i)" class="flex h-8 w-8 items-center justify-center rounded-[9px] border border-border bg-white text-text-tertiary hover:border-border-hover">
+                  <ng-icon name="lucideEllipsisVertical" size="15" />
+                </button>
+                @if (openMenuIndex === i) {
+                  <div class="absolute right-0 top-9 z-10 w-32 rounded-lg border border-border-light bg-white py-1 shadow-lg">
+                    <button class="block w-full px-4 py-2 text-left text-[13px] text-error hover:bg-error-bg-soft">Revoke</button>
+                  </div>
+                }
+              </div>
+            </td>
+          </tr>
+        } @empty {
+          <tr>
+            <td colspan="6" class="px-6 py-8 text-center text-text-tertiary">No tickets found.</td>
+          </tr>
+        }
+      </tbody>
+    </table>
 
-      <button
-        class="px-3 py-1 border rounded disabled:opacity-50"
-        (click)="changePage(currentPage + 1)"
-        [disabled]="currentPage === totalPages"
-      >
-        Next
-      </button>
-    </div>
+    <app-admin-pagination [currentPage]="currentPage" [totalPages]="totalPages" [pageSize]="pageSize" [totalItems]="filteredTickets.length" (pageChange)="changePage($event)" />
   </div>
 </div>
-</div>
-

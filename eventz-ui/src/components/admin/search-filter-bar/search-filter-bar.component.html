@@ -1,0 +1,27 @@
+<div class="mb-[18px] flex flex-wrap items-center gap-2.5">
+  <div class="flex min-w-[220px] flex-1 items-center gap-2.5 rounded-[11px] border border-border bg-white px-3.5 py-2.5">
+    <ng-icon name="lucideSearch" size="16" color="#8A8A9E" />
+    <input
+      type="text"
+      [placeholder]="placeholder"
+      [ngModel]="searchValue"
+      (ngModelChange)="searchValueChange.emit($event)"
+      class="flex-1 border-0 bg-transparent text-[14px] outline-none"
+    />
+  </div>
+
+  @if (filters.length) {
+    <div class="flex gap-0.5 rounded-[11px] bg-brand-tint p-1">
+      @for (filter of filters; track filter) {
+        <button
+          type="button"
+          (click)="activeFilterChange.emit(filter)"
+          class="rounded-lg px-3.5 py-1.5 text-[13px] font-bold transition-colors"
+          [class]="activeFilter === filter ? 'bg-white text-brand shadow-sm' : 'text-text-secondary'"
+        >{{ filter }}</button>
+      }
+    </div>
+  }
+
+  <ng-content />
+</div>

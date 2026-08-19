@@ -1,0 +1,17 @@
+<div class="rounded-[18px] border border-border-light bg-white p-5">
+  <div class="mb-3 flex items-center justify-between">
+    <p class="text-[13.5px] font-semibold text-text-secondary">{{ label }}</p>
+    <span class="flex h-8 w-8 items-center justify-center rounded-[10px] bg-brand-tint">
+      <ng-icon [name]="iconName" size="15" color="#381DDB" />
+    </span>
+  </div>
+  <p class="mb-2.5 text-[27px] font-extrabold tracking-[-.03em] text-text-primary">{{ value }}</p>
+  @if (delta) {
+    <div class="flex items-center gap-2">
+      <span class="rounded-[7px] px-2 py-0.5 text-[13px] font-bold" [class]="deltaClasses">{{ delta }}</span>
+      @if (deltaTone !== 'neutral') {
+        <span class="text-[12.5px] text-text-tertiary">vs last 30 days</span>
+      }
+    </div>
+  }
+</div>

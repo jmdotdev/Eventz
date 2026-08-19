@@ -17,6 +17,10 @@
         Search events
       </button>
       <a routerLink="/login" class="hidden text-[14.5px] font-semibold text-text-nav md:block">Sign In</a>
+      <a z-button zType="outline" routerLink="/admin" class="hidden items-center gap-1.5 md:flex">
+        <ng-icon name="lucideLayoutDashboard" size="14" />
+        Admin
+      </a>
       <a z-button routerLink="/login" class="shadow-brand-cta">Host an Event</a>
     } @else if (variant === 'account') {
       <nav class="hidden items-center gap-7 text-[14.5px] font-semibold md:flex">
@@ -25,6 +29,10 @@
         <a routerLink="/account" class="text-brand">Saved</a>
       </nav>
       <div class="flex-1"></div>
+      <a z-button zType="outline" routerLink="/admin" class="hidden items-center gap-1.5 sm:flex">
+        <ng-icon name="lucideLayoutDashboard" size="14" />
+        Admin
+      </a>
       <button type="button" class="relative flex h-9 w-9 items-center justify-center rounded-full hover:bg-brand-tint" aria-label="Notifications">
         <ng-icon name="lucideBell" size="18" color="#4A4A5C" />
         <span class="absolute right-2 top-2 h-1.5 w-1.5 rounded-full bg-brand"></span>
@@ -32,6 +40,10 @@
       <div class="flex h-[34px] w-[34px] items-center justify-center rounded-full border border-brand-border bg-brand-tint text-[13px] font-bold text-brand">JM</div>
     } @else {
       <div class="flex-1"></div>
+      <a z-button zType="outline" routerLink="/admin" class="hidden items-center gap-1.5 sm:flex">
+        <ng-icon name="lucideLayoutDashboard" size="14" />
+        Admin
+      </a>
       <a z-button zType="outline" routerLink="/tickets">My tickets</a>
       <a routerLink="/account" class="flex items-center gap-1.5">
         <span class="flex h-[34px] w-[34px] items-center justify-center rounded-full border border-brand-border bg-brand-tint text-[13px] font-bold text-brand">JM</span>

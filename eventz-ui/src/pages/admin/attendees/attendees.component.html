@@ -1,0 +1,55 @@
+<div class="px-5 pb-14 pt-6 sm:px-8">
+  <app-admin-page-header title="Attendees" subtitle="Everyone who has a ticket to one of your events." />
+
+  <div class="mb-5 grid grid-cols-1 gap-[18px] sm:grid-cols-3">
+    @for (stat of stats(); track stat.label) {
+      <app-admin-stat-card [label]="stat.label" [value]="stat.value" [icon]="stat.icon" />
+    }
+  </div>
+
+  <app-admin-search-filter-bar
+    placeholder="Search name or email"
+    [searchValue]="search"
+    (searchValueChange)="search = $event; currentPage = 1"
+    [filters]="statusFilters"
+    [activeFilter]="activeFilter()"
+    (activeFilterChange)="setFilter($event)"
+  />
+
+  <div class="w-full overflow-x-auto rounded-[18px] border border-border-light bg-white">
+    <table class="min-w-[860px] w-full text-left text-sm">
+      <thead class="bg-surface-muted">
+        <tr>
+          <th class="px-6 py-3 text-[11.5px] font-bold uppercase tracking-[.07em] text-text-tertiary">Attendee</th>
+          <th class="px-4 py-3 text-[11.5px] font-bold uppercase tracking-[.07em] text-text-tertiary">Event</th>
+          <th class="px-4 py-3 text-[11.5px] font-bold uppercase tracking-[.07em] text-text-tertiary">Ticket type</th>
+          <th class="px-6 py-3 text-right text-[11.5px] font-bold uppercase tracking-[.07em] text-text-tertiary">Entry status</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (attendee of paginatedAttendees; track attendee.email + attendee.event) {
+          <tr class="border-t border-divider hover:bg-surface-muted">
+            <td class="px-6 py-3.5">
+              <p class="font-bold text-text-primary">{{ attendee.name }}</p>
+              <p class="text-[12.5px] text-text-tertiary">{{ attendee.email }}</p>
+            </td>
+            <td class="px-4 py-3.5 text-text-body">{{ attendee.event }}</td>
+            <td class="px-4 py-3.5 text-text-body">{{ attendee.ticketType }}</td>
+            <td class="px-6 py-3.5 text-right">
+              @if (attendee.checkedIn) {
+                <span class="inline-flex items-center gap-1.5 font-semibold text-success-text">
+                  <ng-icon name="lucideCheck" size="14" />
+                  Checked in · {{ attendee.checkedInAt }}
+                </span>
+              } @else {
+                <button type="button" class="rounded-[9px] border border-brand-border bg-brand-tint px-3 py-1.5 text-[12.5px] font-bold text-brand">Check in</button>
+              }
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+
+    <app-admin-pagination [currentPage]="currentPage" [totalPages]="totalPages" [pageSize]="pageSize" [totalItems]="filteredAttendees.length" (pageChange)="changePage($event)" />
+  </div>
+</div>

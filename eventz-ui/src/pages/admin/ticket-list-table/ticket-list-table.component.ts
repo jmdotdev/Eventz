@@ -1,27 +1,27 @@
-import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { faCheck, faEllipsisV, faTimes, faPlus, faSearch, faEllipsisH } from '@fortawesome/free-solid-svg-icons';
-import { Ticket } from '../../../interfaces/interface';
+import { Component, signal } from '@angular/core';
 import { Router } from '@angular/router';
+import { NgIcon, provideIcons } from '@ng-icons/core';
+import { lucideEllipsisVertical, lucidePlus } from '@ng-icons/lucide';
+import { Ticket } from '../../../interfaces/interface';
+import { PageHeaderComponent } from '../../../components/admin/page-header/page-header.component';
+import { StatusBadgeComponent } from '../../../components/admin/status-badge/status-badge.component';
+import { SearchFilterBarComponent } from '../../../components/admin/search-filter-bar/search-filter-bar.component';
+import { PaginationComponent } from '../../../components/admin/pagination/pagination.component';
 
 @Component({
     selector: 'app-ticket-list-table',
-    imports: [CommonModule, FontAwesomeModule],
+    standalone: true,
+    imports: [NgIcon, PageHeaderComponent, StatusBadgeComponent, SearchFilterBarComponent, PaginationComponent],
+    viewProviders: [provideIcons({ lucideEllipsisVertical, lucidePlus })],
     templateUrl: './ticket-list-table.component.html',
-    styleUrl: './ticket-list-table.component.scss'
 })
 export class TicketListTableComponent {
   pageSize = 10;
   currentPage = 1;
   openMenuIndex: number | null = null;
-  faElipsis = faEllipsisV;
-  faCheck = faCheck;
-  faTimes = faTimes;
-  faPlus = faPlus;
-  faSearch = faSearch;
-  faEllipsisH = faEllipsisH;
-  showHeaderDropDown: boolean = false;
+  search = '';
+  readonly statusFilters = ['All', 'Active', 'Cancelled'];
+  activeFilter = signal('All');
 
   constructor (private router: Router) {}
 
@@ -33,13 +33,26 @@ export class TicketListTableComponent {
     dateBooked: new Date(2025, 0, i + 1).toDateString()
   }));
 
+  get filteredTickets(): Ticket[] {
+    return this.tickets.filter(t => {
+      const matchesFilter = this.activeFilter() === 'All' || (this.activeFilter() === 'Active') === t.active;
+      const matchesSearch = !this.search || t.ticketNo.toLowerCase().includes(this.search.toLowerCase()) || t.event.toLowerCase().includes(this.search.toLowerCase());
+      return matchesFilter && matchesSearch;
+    });
+  }
+
   get totalPages(): number {
-    return Math.ceil(this.tickets.length / this.pageSize);
+    return Math.max(1, Math.ceil(this.filteredTickets.length / this.pageSize));
   }
 
   get paginatedTickets(): Ticket[] {
     const start = (this.currentPage - 1) * this.pageSize;
-    return this.tickets.slice(start, start + this.pageSize);
+    return this.filteredTickets.slice(start, start + this.pageSize);
+  }
+
+  setFilter(filter: string) {
+    this.activeFilter.set(filter);
+    this.currentPage = 1;
   }
 
   changePage(page: number) {
@@ -51,10 +64,6 @@ export class TicketListTableComponent {
 
   toggleMenu(index: number) {
     this.openMenuIndex = this.openMenuIndex === index ? null : index;
-  }
-
-  openHeaderDropDown () {
-    this.showHeaderDropDown = !this.showHeaderDropDown;
   }
 
   navigateToCreateTicket () {

@@ -1,10 +1,8 @@
-<div class="flex flex-col bg-white rounded-lg p-4 mx-4 my-6">
+<div class="px-5 pb-14 pt-6 sm:px-8">
   <app-table-header (showEvents)="toggleEvents($event)"></app-table-header>
-  @if(showEvents) {
+  @if (showEvents) {
     <app-events-table></app-events-table>
-  }
-  @else { 
+  } @else {
     <app-organizers-table></app-organizers-table>
   }
-
 </div>
