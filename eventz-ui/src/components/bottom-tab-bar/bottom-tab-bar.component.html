@@ -1,18 +1,47 @@
 <nav class="fixed inset-x-0 bottom-0 z-40 flex justify-around border-t border-border-light bg-white px-2 pb-3.5 pt-2.5">
-  <a routerLink="/" routerLinkActive="text-brand" [routerLinkActiveOptions]="{ exact: true }" class="flex flex-col items-center gap-1 text-[10.5px] font-semibold text-text-tertiary">
-    <ng-icon name="lucideCompass" size="19" />
+  <a
+    routerLink="/"
+    routerLinkActive
+    #discoverLink="routerLinkActive"
+    [routerLinkActiveOptions]="{ exact: true }"
+    class="flex flex-col items-center gap-1 text-[10.5px] font-semibold"
+    [class.text-brand]="discoverLink.isActive"
+    [class.text-text-tertiary]="!discoverLink.isActive"
+  >
+    <ng-icon name="lucideCompass" size="19" [color]="discoverLink.isActive ? '#381DDB' : '#8A8A9E'" />
     Discover
   </a>
-  <a routerLink="/account" routerLinkActive="text-brand" class="flex flex-col items-center gap-1 text-[10.5px] font-semibold text-text-tertiary">
-    <ng-icon name="lucideHeart" size="19" />
+  <a
+    routerLink="/account"
+    routerLinkActive
+    #savedLink="routerLinkActive"
+    class="flex flex-col items-center gap-1 text-[10.5px] font-semibold"
+    [class.text-brand]="savedLink.isActive"
+    [class.text-text-tertiary]="!savedLink.isActive"
+  >
+    <ng-icon name="lucideHeart" size="19" [color]="savedLink.isActive ? '#381DDB' : '#8A8A9E'" />
     Saved
   </a>
-  <a routerLink="/tickets" routerLinkActive="text-brand" class="flex flex-col items-center gap-1 text-[10.5px] font-semibold text-text-tertiary">
-    <ng-icon name="lucideTicket" size="19" />
+  <a
+    routerLink="/tickets"
+    routerLinkActive
+    #ticketsLink="routerLinkActive"
+    class="flex flex-col items-center gap-1 text-[10.5px] font-semibold"
+    [class.text-brand]="ticketsLink.isActive"
+    [class.text-text-tertiary]="!ticketsLink.isActive"
+  >
+    <ng-icon name="lucideTicket" size="19" [color]="ticketsLink.isActive ? '#381DDB' : '#8A8A9E'" />
     Tickets
   </a>
-  <a routerLink="/account" routerLinkActive="text-brand" class="flex flex-col items-center gap-1 text-[10.5px] font-semibold text-text-tertiary">
-    <ng-icon name="lucideUser" size="19" />
+  <a
+    routerLink="/account"
+    routerLinkActive
+    #profileLink="routerLinkActive"
+    class="flex flex-col items-center gap-1 text-[10.5px] font-semibold"
+    [class.text-brand]="profileLink.isActive"
+    [class.text-text-tertiary]="!profileLink.isActive"
+  >
+    <ng-icon name="lucideUser" size="19" [color]="profileLink.isActive ? '#381DDB' : '#8A8A9E'" />
     Profile
   </a>
 </nav>

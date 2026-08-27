@@ -1,4 +1,5 @@
 import { Component, computed, OnInit, signal } from '@angular/core';
+import { NgTemplateOutlet } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgIcon, provideIcons } from '@ng-icons/core';
 import {
@@ -20,7 +21,7 @@ import { formatFullDate, formatKes, formatTime } from '../../utils/format';
 @Component({
   selector: 'app-event-detail',
   standalone: true,
-  imports: [NavbarComponent, FooterComponent, QuantityStepperComponent, NgIcon],
+  imports: [NavbarComponent, FooterComponent, QuantityStepperComponent, NgIcon, NgTemplateOutlet],
   viewProviders: [provideIcons({ lucideCalendar, lucideClock, lucideMapPin, lucideShare2, lucideHeart, lucideLock })],
   templateUrl: './event-detail.component.html',
 })

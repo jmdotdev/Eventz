@@ -37,9 +37,55 @@
         </div>
       </div>
 
+      <!-- Ticket tier list (shared between mobile section and desktop sidebar) -->
+      <ng-template #ticketTiersTpl>
+        @for (tier of ev.ticketTiers; track tier.id) {
+          @if (tier.soldOut) {
+            <div class="rounded-2xl border border-border-light bg-bg-muted p-3.5 opacity-70">
+              <div class="flex items-center justify-between">
+                <p class="text-[14px] font-bold text-text-tertiary">{{ tier.name }}</p>
+                <span class="rounded-md bg-dark-surface px-2 py-0.5 text-[10.5px] font-bold text-white">SOLD OUT</span>
+              </div>
+              <p class="text-[12.5px] text-text-tertiary">{{ tier.description }}</p>
+            </div>
+          } @else {
+            <div class="rounded-2xl border p-3.5" [class]="quantityFor(tier.id) > 0 ? 'border-[1.5px] border-brand bg-brand-tint-warm' : 'border-border-light'">
+              <div class="mb-1 flex items-center justify-between gap-2">
+                <div class="flex items-center gap-1.5">
+                  <p class="text-[14px] font-bold text-text-primary">{{ tier.name }}</p>
+                  @if (tier.popular) {
+                    <span class="rounded-md bg-brand px-1.5 py-0.5 text-[10.5px] font-bold text-white">POPULAR</span>
+                  }
+                </div>
+                <p class="text-[14px] font-bold text-text-primary">{{ formatPrice(tier.price) }}</p>
+              </div>
+              <div class="flex items-center justify-between gap-2">
+                <p class="text-[12.5px] text-text-secondary">{{ tier.description }}</p>
+                <app-quantity-stepper [value]="quantityFor(tier.id)" [max]="tier.remaining" (valueChange)="setQuantity(tier.id, $event)" />
+              </div>
+            </div>
+          }
+        }
+      </ng-template>
+
       <div class="flex flex-wrap gap-12">
         <!-- Main content -->
         <div class="min-w-[280px] flex-1 sm:min-w-[460px]">
+          <!-- Ticket selection (mobile/tablet — desktop uses the sticky sidebar) -->
+          <section class="mb-10 lg:hidden">
+            <h2 class="mb-4 text-[22px] font-extrabold tracking-[-.02em] text-text-primary">Tickets</h2>
+            <div class="flex flex-col gap-2.5">
+              <ng-container *ngTemplateOutlet="ticketTiersTpl"></ng-container>
+            </div>
+            @if (ticketCount() > 0) {
+              <div class="mt-4 flex flex-col gap-1.5 border-t border-divider pt-4 text-[13.5px]">
+                <div class="flex items-center justify-between text-text-secondary"><span>{{ ticketCount() }} ticket(s)</span><span>{{ formatPrice(subtotal()) }}</span></div>
+                <div class="flex items-center justify-between text-text-secondary"><span>Service fee (6%)</span><span>{{ formatPrice(fees()) }}</span></div>
+                <div class="flex items-center justify-between text-[15px] font-bold text-text-primary"><span>Total</span><span>{{ formatPrice(total()) }}</span></div>
+              </div>
+            }
+          </section>
+
           <!-- About -->
           <section class="mb-10">
             <h2 class="mb-4 text-[22px] font-extrabold tracking-[-.02em] text-text-primary">About this event</h2>
@@ -146,33 +192,7 @@
             </div>
 
             <div class="mb-4 flex flex-col gap-2.5">
-              @for (tier of ev.ticketTiers; track tier.id) {
-                @if (tier.soldOut) {
-                  <div class="rounded-2xl border border-border-light bg-bg-muted p-3.5 opacity-70">
-                    <div class="flex items-center justify-between">
-                      <p class="text-[14px] font-bold text-text-tertiary">{{ tier.name }}</p>
-                      <span class="rounded-md bg-dark-surface px-2 py-0.5 text-[10.5px] font-bold text-white">SOLD OUT</span>
-                    </div>
-                    <p class="text-[12.5px] text-text-tertiary">{{ tier.description }}</p>
-                  </div>
-                } @else {
-                  <div class="rounded-2xl border p-3.5" [class]="quantityFor(tier.id) > 0 ? 'border-[1.5px] border-brand bg-brand-tint-warm' : 'border-border-light'">
-                    <div class="mb-1 flex items-center justify-between gap-2">
-                      <div class="flex items-center gap-1.5">
-                        <p class="text-[14px] font-bold text-text-primary">{{ tier.name }}</p>
-                        @if (tier.popular) {
-                          <span class="rounded-md bg-brand px-1.5 py-0.5 text-[10.5px] font-bold text-white">POPULAR</span>
-                        }
-                      </div>
-                      <p class="text-[14px] font-bold text-text-primary">{{ formatPrice(tier.price) }}</p>
-                    </div>
-                    <div class="flex items-center justify-between gap-2">
-                      <p class="text-[12.5px] text-text-secondary">{{ tier.description }}</p>
-                      <app-quantity-stepper [value]="quantityFor(tier.id)" [max]="tier.remaining" (valueChange)="setQuantity(tier.id, $event)" />
-                    </div>
-                  </div>
-                }
-              }
+              <ng-container *ngTemplateOutlet="ticketTiersTpl"></ng-container>
             </div>
 
             @if (ticketCount() > 0) {
